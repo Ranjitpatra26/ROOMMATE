@@ -28,30 +28,35 @@ export const PersonPreviewCard: React.FC<PersonPreviewCardProps> = ({ person, on
   const [isConnected, setIsConnected] = useState(false);
 
   const handleViewProfile = (e?: React.MouseEvent) => {
+    e?.preventDefault();
     e?.stopPropagation();
     const profileId = person.id || person.userId || 'ananya-sharma';
     navigate(`/profile/${profileId}`);
   };
 
   const handleMessage = (e?: React.MouseEvent) => {
+    e?.preventDefault();
     e?.stopPropagation();
     const convId = person.id || person.userId || 'conversation-ananya';
     navigate(`/messages/${convId}`);
   };
 
   const handleConnectToggle = (e?: React.MouseEvent) => {
+    e?.preventDefault();
     e?.stopPropagation();
     setIsConnected((prev) => !prev);
   };
 
   const handleSendQuickMessage = (e: React.FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     if (!quickMessage.trim()) return;
     setIsSent(true);
     const convId = person.id || person.userId || 'conversation-ananya';
+    const msgToSend = quickMessage;
     setTimeout(() => {
-      navigate(`/messages/${convId}`);
-    }, 500);
+      navigate(`/messages/${convId}?msg=${encodeURIComponent(msgToSend)}`);
+    }, 400);
   };
 
   const isEarlyBird = person.lifestyleDNA?.chronotype === 'early_bird';

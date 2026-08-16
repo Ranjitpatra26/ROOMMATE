@@ -577,9 +577,12 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
       const finalLng = baseCoords[0] + radius * Math.cos(angle);
       const finalLat = baseCoords[1] + radius * Math.sin(angle);
 
+      const compScore = p.compatibilityScore || (91 + ((offsetIndex * 4 + p.displayName.charCodeAt(0)) % 8));
+      const repScore = p.trustProfile?.reputationScore || (880 + ((offsetIndex * 19 + p.displayName.length * 7) % 95));
+
       items.push({
-        id: p._id || p.id,
-        userId: p.userId || p._id,
+        id: p.id || p._id || `user-${offsetIndex}`,
+        userId: p.userId || p._id || p.id || `user-${offsetIndex}`,
         displayName: p.displayName || 'Roommate',
         headline: p.headline || 'Verified Roommate',
         avatarUrl:
@@ -592,9 +595,9 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
         budgetRange: p.budgetRange,
         lifestyleDNA: p.lifestyleDNA,
         visualTags: p.visualTags || ['Verified Resident'],
-        compatibilityScore: 94,
+        compatibilityScore: compScore,
         trustProfile: {
-          reputationScore: 890,
+          reputationScore: repScore,
           verificationTier: 'background_cleared',
           isIdVerified: true,
           isEmploymentVerified: true,

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { Canvas } from '@react-three/fiber';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -198,34 +198,74 @@ export const ProfilePage: React.FC = () => {
 
   const matchedProfile = isMe
     ? myProfile
-    : INDIAN_DEMO_PROFILES.find((p) => p.id === id || p.userId === id || id?.includes(p.id.split('-')[0])) ||
-      INDIAN_DEMO_PROFILES[0];
+    : INDIAN_DEMO_PROFILES.find(
+        (p) =>
+          p.id === id ||
+          p.userId === id ||
+          (id && (p.id.toLowerCase() === id.toLowerCase() || p.userId.toLowerCase() === id.toLowerCase())) ||
+          (id && (id.toLowerCase().includes(p.id.toLowerCase()) || p.id.toLowerCase().includes(id.toLowerCase()))) ||
+          (id && p.displayName.toLowerCase().replace(/\s+/g, '-').includes(id.toLowerCase()))
+      ) || INDIAN_DEMO_PROFILES[0];
 
   const defaultProfile = matchedProfile;
 
-  const stays = [
-    {
-      id: 'stay-indiranagar-1',
-      location: defaultProfile.preferredLocations[0] || 'Indiranagar, Bengaluru',
-      duration: '14 Months',
-      reviewQuote: `${defaultProfile.displayName.split(' ')[0]} is exceptionally disciplined about shared common areas, respects quiet hours after 10:30 PM, and is seamless to coordinate with on household bills.`,
-      reviewerName: 'Rohan Patil',
-      reviewerRole: 'Former Flatmate',
-      reviewerAvatar:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuB2i8SWb4apq6U1es6wns7xbL7M0iATnV9B0tUPVJ8wkAcPPnSxWpkn7RkYeWkoEHQd0963RC1wXOpzAIpyr3-iHi_2rFrr0ee44glSA9C-3IMa8KVBFUuRkLkR7z5xDs39RTkQi5dodR4MExu9kttg4kfvaxAUCMKUutHCViobglnW4KmJvyEBm03D1AT5KE-6Vi3hF7cWFK6G_AwvFQE5R9fiVI_tgFyEztv6vxUoaqk8MaqskJEImQ',
-    },
-    {
-      id: 'stay-pune-2',
-      location: 'Baner, Pune',
-      duration: '8 Months',
-      reviewQuote:
-        'Great communication, proactive about groceries, and kept the living space impeccably clean. Highly recommend living together.',
-      reviewerName: 'Aarav Mehta',
-      reviewerRole: 'Co-tenant',
-      reviewerAvatar:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuAkrXIOQFr_z5E9eGhR9o5GdKIcRJItc5Va0e1s6Pvi2gJW9HstlN__2qqmol8Whb70aPTmU4TPWCvRGbOLjD7wwEDKCt9NMueejAZcpY_mEO-mVGei_3MiHaDq5qLMbEq_gHwvIm6BryawU0LrRMqY-zn1f7WInRW9Ktgdy5sP7qxlaFJIIM0_XJYflVqkUCxY7NYBnJkV6MHSa6RydvmAFN5TiOLhpZP7hGmsrkBOtAB1YJZSX8hYIg',
-    },
-  ];
+  // Dynamically generate individual stay history and authentic endorsement reviews tailored to this profile
+  const stays = useMemo(() => {
+    const loc1 = defaultProfile.preferredLocations[0] || 'Indiranagar, Bengaluru';
+    const loc2 = defaultProfile.preferredLocations[1] || 'Koramangala, Bengaluru';
+    const first = defaultProfile.displayName.split(' ')[0];
+
+    const reviewerPool = [
+      {
+        name: 'Rohan Patil',
+        role: 'Former Flatmate',
+        avatar:
+          'https://lh3.googleusercontent.com/aida-public/AB6AXuB2i8SWb4apq6U1es6wns7xbL7M0iATnV9B0tUPVJ8wkAcPPnSxWpkn7RkYeWkoEHQd0963RC1wXOpzAIpyr3-iHi_2rFrr0ee44glSA9C-3IMa8KVBFUuRkLkR7z5xDs39RTkQi5dodR4MExu9kttg4kfvaxAUCMKUutHCViobglnW4KmJvyEBm03D1AT5KE-6Vi3hF7cWFK6G_AwvFQE5R9fiVI_tgFyEztv6vxUoaqk8MaqskJEImQ',
+      },
+      {
+        name: 'Meera Iyer',
+        role: 'Co-tenant',
+        avatar:
+          'https://lh3.googleusercontent.com/aida-public/AB6AXuC64MbZWsNixcO8McDmNx9O0u22et38koHfzkR1L85nrNCbb5YIzzL6EMVp-HSbJhTQZQIgd_4WaL4w32CrGIgitEkcxxzRW-x-JQAf6rlgr-YzwwE8OYl8iut1Rz_pGMddRzECyh7vPq13cQSlOi5I8C-1wQqo8w9tl5PULqqKuweX89oMHAbseGsUMo0Lbj6JDZU5h4I5k0KmXmVqZMOGnpn_fd63AIUCd4gCyPkqW69Njzrwm3lCYA',
+      },
+      {
+        name: 'Aarav Mehta',
+        role: 'Flat Lead',
+        avatar:
+          'https://lh3.googleusercontent.com/aida-public/AB6AXuAHvMpO73IsC2lGAlRr8a36w9vef0AdMCr2Vkf2wPGWyc-PNq19KyOn91r8y0f8Q-lzfITMOutCzx2-cPpPTEkbmlL8Y-dXkuvAXXgY5FuYEQ63pJp_Xt82aAhcLP0UNo9ec7CAZvZk50NrtBHMLs05I59ZmKQsCZyI6LxngpFa7S1yIG0lIVCS8jKrjs0n-iDl5yrvgm15aZVNTY5ofwt5EypTHeqanc-AMFnP_dB2iBbtnW1pHEI_uQ',
+      },
+      {
+        name: 'Ishita Nair',
+        role: 'Past Flatmate',
+        avatar:
+          'https://lh3.googleusercontent.com/aida-public/AB6AXuDa2JCqF8-uGxjzWrQNLbFq7aayFMyciJunutZhWilYq4pQIvYDUgd9gGDyp90HUgiedWGnwDuJ6TN-apEeDu0qqBhGQkbMFsw26k1xsuR26uKwG2jecFSVTGHGxX5K1Fptb87BYgY7kPfj1Hcg6r_Vaj_5hynyjzDDVTVTsa4vQoneGjIVYeJB2peMufDEDotc7Z_R1N-XtOpKEB1-6oI8JYK1gWbFbji08JqeGfa7gev1gdw9jqX_bw',
+      },
+    ];
+
+    const reviewer1 = reviewerPool.find((r) => r.name !== defaultProfile.displayName) || reviewerPool[0];
+    const reviewer2 = reviewerPool.find((r) => r.name !== defaultProfile.displayName && r.name !== reviewer1.name) || reviewerPool[1];
+
+    return [
+      {
+        id: `stay-${defaultProfile.id}-1`,
+        location: loc1,
+        duration: '14 Months',
+        reviewQuote: `${first} is exceptionally disciplined about shared common areas, respects quiet hours after 10:30 PM, and is seamless to coordinate with on household bills and utility splits.`,
+        reviewerName: reviewer1.name,
+        reviewerRole: reviewer1.role,
+        reviewerAvatar: reviewer1.avatar,
+      },
+      {
+        id: `stay-${defaultProfile.id}-2`,
+        location: loc2,
+        duration: '8 Months',
+        reviewQuote: `Living with ${first} was peaceful and predictable. Proactive about shared house chores, punctual with monthly UPI transfers, and respectful of personal focus time.`,
+        reviewerName: reviewer2.name,
+        reviewerRole: reviewer2.role,
+        reviewerAvatar: reviewer2.avatar,
+      },
+    ];
+  }, [defaultProfile]);
 
   const handleBack = () => {
     if (window.history.length > 1 && window.history.state?.idx > 0) {
@@ -361,11 +401,11 @@ export const ProfilePage: React.FC = () => {
             <Button
               variant="secondary"
               size="lg"
-              onClick={() => navigate('/messages/conversation-' + (matchedProfile.id.includes('rohan') ? 'rohan' : matchedProfile.id.includes('aarav') ? 'aarav' : matchedProfile.id.includes('ishita') ? 'ishita' : 'ananya'))}
+              onClick={() => navigate(`/messages/${matchedProfile.id}`)}
               className="flex-1 py-4 font-bold flex items-center justify-center gap-2 cursor-pointer"
             >
               <MessageSquare className="w-5 h-5" />
-              <span>Message Resident</span>
+              <span>Message {defaultProfile.displayName.split(' ')[0]}</span>
             </Button>
           </>
         )}
@@ -1653,6 +1693,9 @@ export const ConversationPage: React.FC = () => {
     ],
   });
 
+  const [searchParams] = useSearchParams();
+  const initialMsgProcessedRef = useRef(false);
+
   // Sync with route params and dynamically add conversation if not present
   useEffect(() => {
     if (conversationId) {
@@ -1665,9 +1708,9 @@ export const ConversationPage: React.FC = () => {
           (p) =>
             p.id === conversationId ||
             p.userId === conversationId ||
-            conversationId.toLowerCase().includes(p.id.toLowerCase()) ||
-            conversationId.toLowerCase().includes(p.displayName.toLowerCase().replace(/\s+/g, '-')) ||
-            conversationId.toLowerCase().includes(p.displayName.toLowerCase().split(' ')[0])
+            (conversationId && (p.id.toLowerCase().includes(conversationId.toLowerCase()) || conversationId.toLowerCase().includes(p.id.toLowerCase()))) ||
+            (conversationId && p.displayName.toLowerCase().replace(/\s+/g, '-').includes(conversationId.toLowerCase())) ||
+            (conversationId && conversationId.toLowerCase().includes(p.displayName.toLowerCase().split(' ')[0]))
         );
 
         if (demoPerson) {
@@ -1679,7 +1722,7 @@ export const ConversationPage: React.FC = () => {
               role: demoPerson.headline,
               avatarUrl: demoPerson.avatarUrl,
               isOnline: true,
-              compatibilityScore: 94,
+              compatibilityScore: demoPerson.lifestyleDNA?.cleanlinessLevel ? 90 + demoPerson.lifestyleDNA.cleanlinessLevel : 95,
               city: demoPerson.preferredLocations?.[0] || 'Bengaluru',
               tags: demoPerson.visualTags || ['Verified Cohabitant'],
             },
@@ -1695,9 +1738,66 @@ export const ConversationPage: React.FC = () => {
     }
   }, [conversationId]);
 
-  const activeMessages = messagesByConv[activeConvId] || [];
-  const currentConversation =
-    conversations.find((c) => c.id === activeConvId) || conversations[0];
+  const currentConversation = useMemo(() => {
+    const existing = conversations.find(
+      (c) =>
+        c.id === activeConvId ||
+        c.participant?.id === activeConvId ||
+        (activeConvId && c.id?.toLowerCase().includes(activeConvId.toLowerCase()))
+    );
+    if (existing) return existing;
+
+    const demoPerson = INDIAN_DEMO_PROFILES.find(
+      (p) =>
+        p.id === activeConvId ||
+        p.userId === activeConvId ||
+        (activeConvId && (p.id.toLowerCase().includes(activeConvId.toLowerCase()) || activeConvId.toLowerCase().includes(p.id.toLowerCase()))) ||
+        (activeConvId && p.displayName.toLowerCase().replace(/\s+/g, '-').includes(activeConvId.toLowerCase()))
+    );
+
+    if (demoPerson) {
+      return {
+        id: demoPerson.id,
+        participant: {
+          id: demoPerson.userId || demoPerson.id,
+          name: demoPerson.displayName,
+          role: demoPerson.headline,
+          avatarUrl: demoPerson.avatarUrl,
+          isOnline: true,
+          compatibilityScore: 94,
+          city: demoPerson.preferredLocations?.[0] || 'Bengaluru',
+          tags: demoPerson.visualTags || ['Verified Cohabitant'],
+        },
+        lastMessage: 'Connected via Spatial District Map',
+        lastMessageTime: 'Just now',
+        unreadCount: 0,
+        isPinned: true,
+      };
+    }
+
+    return conversations[0];
+  }, [conversations, activeConvId]);
+
+  const activeMessages = useMemo(() => {
+    if (messagesByConv[activeConvId] && messagesByConv[activeConvId].length > 0) {
+      return messagesByConv[activeConvId];
+    }
+    if (messagesByConv[currentConversation.id] && messagesByConv[currentConversation.id].length > 0) {
+      return messagesByConv[currentConversation.id];
+    }
+    return [
+      {
+        id: `welcome-${activeConvId || currentConversation.id}`,
+        senderId: currentConversation.participant.id,
+        senderName: currentConversation.participant.name,
+        senderAvatar: currentConversation.participant.avatarUrl,
+        body: `Namaste! I saw we matched on the Spatial Map in ${currentConversation.participant.city || 'the neighborhood'}. Looking forward to discussing shared co-living!`,
+        createdAt: 'Just now',
+        deliveryStatus: 'read',
+        isMe: false,
+      },
+    ];
+  }, [messagesByConv, activeConvId, currentConversation]);
 
   // Socket.io Realtime Wiring
   useEffect(() => {
@@ -1732,6 +1832,8 @@ export const ConversationPage: React.FC = () => {
 
   // Send Standard Text Message
   const handleSendMessage = (text: string, replyTo?: any) => {
+    if (!text || !text.trim()) return;
+
     const newMsg = {
       id: `msg-${Date.now()}`,
       senderId: 'user-current',
@@ -1743,15 +1845,20 @@ export const ConversationPage: React.FC = () => {
       isMe: true,
     };
 
-    setMessagesByConv((prev) => ({
-      ...prev,
-      [activeConvId]: [...(prev[activeConvId] || []), newMsg],
-    }));
+    const targetConvId = activeConvId || currentConversation.id;
+
+    setMessagesByConv((prev) => {
+      const currentList = prev[targetConvId] || activeMessages;
+      return {
+        ...prev,
+        [targetConvId]: [...currentList, newMsg],
+      };
+    });
 
     // Update conversation list preview
     setConversations((prev) =>
       prev.map((c) =>
-        c.id === activeConvId
+        c.id === targetConvId || c.id === activeConvId
           ? {
               ...c,
               lastMessage: text,
@@ -1766,11 +1873,11 @@ export const ConversationPage: React.FC = () => {
 
     const socket = getSocket();
     socket.emit('message:send', {
-      conversationId: activeConvId,
+      conversationId: targetConvId,
       message: newMsg,
     });
 
-    // Simulate flatmate response after 2.5s for authentic interactive feel
+    // Simulate flatmate response after 2s for authentic interactive feel
     setTimeout(() => {
       setIsTyping(true);
       setTimeout(() => {
@@ -1781,9 +1888,9 @@ export const ConversationPage: React.FC = () => {
           senderName: currentConversation.participant.name,
           senderAvatar: currentConversation.participant.avatarUrl,
           body:
-            activeConvId === 'conversation-ananya'
+            targetConvId === 'conversation-ananya'
               ? 'Sounds great! I will keep fresh South Indian filter coffee ready for our Saturday chat.'
-              : 'Understood, let us coordinate the next steps!',
+              : `Thanks for the message! I'd love to chat more about this. Are you free for a call or walkthrough this week?`,
           createdAt: new Date().toLocaleTimeString([], {
             hour: '2-digit',
             minute: '2-digit',
@@ -1793,11 +1900,20 @@ export const ConversationPage: React.FC = () => {
         };
         setMessagesByConv((prev) => ({
           ...prev,
-          [activeConvId]: [...(prev[activeConvId] || []), replyMsg],
+          [targetConvId]: [...(prev[targetConvId] || []), replyMsg],
         }));
-      }, 2000);
-    }, 1000);
+      }, 1500);
+    }, 800);
   };
+
+  // Automatically send message passed via URL query (from Spatial Map quick message box)
+  useEffect(() => {
+    const urlMsg = searchParams.get('msg');
+    if (urlMsg && !initialMsgProcessedRef.current) {
+      initialMsgProcessedRef.current = true;
+      handleSendMessage(decodeURIComponent(urlMsg));
+    }
+  }, [searchParams, activeConvId]);
 
   // Send Room Card
   const handleSendRoomCard = (room: any) => {
