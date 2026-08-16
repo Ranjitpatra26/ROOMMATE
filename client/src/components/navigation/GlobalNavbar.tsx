@@ -200,7 +200,7 @@ export const GlobalNavbar: React.FC<GlobalNavbarProps> = ({ variant = 'auto' }) 
         {/* Small Circular Button at the VERY Right Corner of Global Navbar */}
         <Link
           to="/reveal"
-          className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border border-surface-dim/80 dark:border-white/10 bg-surface-low/80 dark:bg-white/5 hover:bg-surface-dim dark:hover:bg-white/10 text-secondary dark:text-earth-fixed/60 hover:text-earth-indigo dark:hover:text-white transition-all duration-200 shadow-sm hover:scale-105 cursor-pointer group z-20"
+          className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border border-sky-400/40 dark:border-sky-300/30 bg-sky-400/10 hover:bg-sky-400/20 text-sky-500 dark:text-sky-300 hover:text-sky-600 dark:hover:text-sky-100 transition-all duration-200 shadow-sm hover:shadow-sky-400/25 hover:scale-105 cursor-pointer group z-20"
           title="Explore Living OS Reveal"
           aria-label="Explore Living OS Reveal"
         >
