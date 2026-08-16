@@ -26,6 +26,7 @@ import {
   ScrollTextColumn,
   CinematicSection,
 } from './landing/HomepageScrollVisuals.js';
+import { ScrollHorizontalHero } from './landing/ScrollHorizontalHero.js';
 
 export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
@@ -62,7 +63,7 @@ export const LandingPage: React.FC = () => {
 
   return (
     <div className="bg-clay text-earth-indigo min-h-screen selection:bg-vitality-coral selection:text-white overflow-x-hidden transition-colors duration-200">
-      {/* 1. Hero Masthead with 3D Canvas & Scroll-Driven Parallax */}
+      {/* 1. Hero Masthead with Clean Ambient 3D Scene */}
       <header
         ref={heroRef}
         className="relative min-h-screen flex flex-col justify-center items-center pt-24 px-6 overflow-hidden"
@@ -147,7 +148,10 @@ export const LandingPage: React.FC = () => {
         </motion.div>
       </header>
 
-      {/* 2. Narrative Section (5 / 7 Asymmetric 3D Scroll Plane Composition) */}
+      {/* 2. Scroll-Driven Sticky Horizontal Gallery (Based on Motion.dev reference) */}
+      <ScrollHorizontalHero />
+
+      {/* 3. Narrative Section (5 / 7 Asymmetric 3D Scroll Plane Composition) */}
       <CinematicSection className="py-28 px-6 md:px-12 max-w-7xl mx-auto border-t border-surface-dim/40">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
           <div className="md:col-span-5 space-y-6">
