@@ -31,7 +31,7 @@ export const LandingPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-clay text-earth-indigo min-h-screen selection:bg-vitality-coral selection:text-white overflow-x-hidden transition-colors duration-200">
+    <div className="bg-clay text-earth-indigo min-h-screen selection:bg-vitality-coral selection:text-white transition-colors duration-200">
       {/* 1. Hero Masthead with Clean Ambient 3D Scene */}
       <header className="relative min-h-screen flex flex-col justify-center items-center pt-24 px-6 overflow-hidden">
         {/* Subtle WebGL R3F Scene */}
