@@ -9,7 +9,7 @@ import {
 } from 'motion/react';
 
 // ============================================================================
-// 1. 3D Scroll Plane for Featured Images (Reference: 3D Planes Velocity Scroll)
+// 1. 3D Scroll Plane for Featured Images (Cinematic Scroll-Linked Transforms)
 // ============================================================================
 export interface Scroll3DPlaneProps {
   children: React.ReactNode;
@@ -38,7 +38,7 @@ export const Scroll3DPlane: React.FC<Scroll3DPlaneProps> = ({
   const scrollVelocity = useVelocity(scrollY);
   const smoothVelocity = useSpring(scrollVelocity, { damping: 45, stiffness: 280 });
 
-  // Velocity-driven subtle dynamic tilt (reverses with scroll direction)
+  // Velocity-driven subtle dynamic tilt (reverses naturally with scroll direction)
   const velocityTilt = useTransform(
     smoothVelocity,
     [-2500, 0, 2500],
@@ -48,47 +48,48 @@ export const Scroll3DPlane: React.FC<Scroll3DPlaneProps> = ({
   // Scroll Progress Transforms: Continuous 3D Plane depth
   const dirMultiplier = tiltDirection === 'left' ? 1 : -1;
 
+  // Enters from scaled-down depth (0.86), reaches focus (1.0), exits elevated (1.05)
   const planeY = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    [70 * depthIntensity, 0, -70 * depthIntensity]
+    [90 * depthIntensity, 0, -90 * depthIntensity]
   );
 
   const planeRotateY = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    [5 * dirMultiplier * depthIntensity, 0, -4 * dirMultiplier * depthIntensity]
+    [7 * dirMultiplier * depthIntensity, 0, -6 * dirMultiplier * depthIntensity]
   );
 
   const planeRotateX = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    [-3 * depthIntensity, 0, 2.5 * depthIntensity]
+    [-4 * depthIntensity, 0, 3.5 * depthIntensity]
   );
 
   const planeScale = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    [0.94, 1, 1.02]
+    [0.88, 1, 1.04]
   );
 
   const planeOpacity = useTransform(
     scrollYProgress,
-    [0, 0.15, 0.85, 1],
-    [0.75, 1, 1, 0.75]
+    [0, 0.22, 0.78, 1],
+    [0.15, 1, 1, 0.15]
   );
 
   // Floating Badge Parallax (Moves at a faster independent rate for authentic multiplane depth)
   const badgeY = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    [40 * depthIntensity, 0, -40 * depthIntensity]
+    [50 * depthIntensity, 0, -50 * depthIntensity]
   );
 
   const badgeScale = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    [0.94, 1, 1.04]
+    [0.9, 1, 1.06]
   );
 
   if (shouldReduceMotion) {
@@ -161,8 +162,8 @@ export const ParallaxImage: React.FC<ParallaxImageProps> = ({
     offset: ['start end', 'end start'],
   });
 
-  const innerY = useTransform(scrollYProgress, [0, 0.5, 1], [-25 * speed, 0, 25 * speed]);
-  const innerScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.14, 1.05, 1.14]);
+  const innerY = useTransform(scrollYProgress, [0, 0.5, 1], [-35 * speed, 0, 35 * speed]);
+  const innerScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.18, 1.06, 1.18]);
 
   if (shouldReduceMotion) {
     return <img src={src} alt={alt} className={className} {...props} />;
@@ -209,26 +210,29 @@ export const StaggeredPillarPlane: React.FC<StaggeredPillarPlaneProps> = ({
   // Staggered Y parallax offsets: Center pillar sits slightly recessed, outer pillars elevate
   const yOffset =
     columnIndex === 0
-      ? [-45, 0, 45]
+      ? [60, 0, -60]
       : columnIndex === 1
-      ? [-15, 0, 15]
-      : [-55, 0, 55];
+      ? [20, 0, -20]
+      : [75, 0, -75];
 
   const rotateZ =
     columnIndex === 0
-      ? [-1.5, 0, 1]
+      ? [-2, 0, 1.5]
       : columnIndex === 1
       ? [0, 0, 0]
-      : [1.5, 0, -1];
+      : [2, 0, -1.5];
 
   const scaleOffset =
     columnIndex === 1
-      ? [0.96, 1.03, 0.98]
-      : [0.94, 1, 0.96];
+      ? [0.92, 1.04, 0.94]
+      : [0.9, 1, 0.92];
+
+  const opacityOffset = [0.2, 1, 1, 0.2];
 
   const y = useTransform(scrollYProgress, [0, 0.5, 1], yOffset);
   const rZ = useTransform(scrollYProgress, [0, 0.5, 1], rotateZ);
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], scaleOffset);
+  const opacity = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], opacityOffset);
 
   if (shouldReduceMotion) {
     return <div ref={pillarRef} className={className}>{children}</div>;
@@ -241,6 +245,7 @@ export const StaggeredPillarPlane: React.FC<StaggeredPillarPlaneProps> = ({
         y,
         rotateZ: rZ,
         scale,
+        opacity,
       }}
       className={`will-change-transform ${className}`}
     >
@@ -277,12 +282,12 @@ export const ScrollTextColumn: React.FC<ScrollTextColumnProps> = ({
   const y = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    [35 * multiplier * speed, 0, -35 * multiplier * speed]
+    [45 * multiplier * speed, 0, -45 * multiplier * speed]
   );
   const opacity = useTransform(
     scrollYProgress,
-    [0, 0.2, 0.8, 1],
-    [0.7, 1, 1, 0.7]
+    [0, 0.25, 0.75, 1],
+    [0.3, 1, 1, 0.3]
   );
 
   if (shouldReduceMotion) {
@@ -323,8 +328,8 @@ export const CinematicSection: React.FC<CinematicSectionProps> = ({
     offset: ['start end', 'end start'],
   });
 
-  const scale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.97, 1, 1, 0.97]);
-  const opacity = useTransform(scrollYProgress, [0, 0.12, 0.88, 1], [0.82, 1, 1, 0.82]);
+  const scale = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [0.96, 1, 1, 0.96]);
+  const opacity = useTransform(scrollYProgress, [0, 0.18, 0.82, 1], [0.75, 1, 1, 0.75]);
 
   if (shouldReduceMotion) {
     return <section ref={sectionRef} className={className}>{children}</section>;
