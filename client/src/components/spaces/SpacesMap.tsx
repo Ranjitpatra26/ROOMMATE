@@ -1711,9 +1711,28 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
         onClose={closePrivacyCenter}
       />
 
-      {/* Contextual Preview Cards & Route Navigation Panel (Desktop & Mobile) */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 md:left-auto md:right-8 md:translate-x-0 z-30 pointer-events-auto">
-        {activeRouteState && (
+      {/* Spatial Filters Modal */}
+      <MapFilterModal
+        isOpen={isFilterModalOpen}
+        onClose={() => setIsFilterModalOpen(false)}
+        filters={filterOptions}
+        onApplyFilters={(newFilters) => {
+          setFilterOptions(newFilters);
+        }}
+        onResetFilters={() => {
+          setFilterOptions({
+            minBudget: 0,
+            maxBudget: 50000,
+            chronotypes: [],
+            lifestyleTraits: [],
+            availableNowOnly: false,
+          });
+        }}
+      />
+
+      {/* Route Navigation Panel */}
+      {activeRouteState && (
+        <div className="fixed md:absolute bottom-6 left-1/2 -translate-x-1/2 md:left-auto md:right-8 md:translate-x-0 z-40 pointer-events-auto">
           <RouteNavigationPanel
             routeState={activeRouteState}
             onModeChange={handleRouteModeChange}
@@ -1730,72 +1749,75 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
               }
             }}
           />
-        )}
+        </div>
+      )}
 
-        {!activeRouteState && selectedRoom && (
-          <RoomPreviewCard
-            room={selectedRoom}
-            onClose={() => setSelectedRoom(null)}
-            onDirections={(r) =>
-              handleRequestDirections({
-                title: r.title,
-                subtitle: `${r.neighborhood}, ${r.city}`,
-                coordinates: r.coordinates,
-                type: 'room',
-              })
-            }
-            onExploreNeighborhood={(nName) => {
-              const found = SPACES_NEIGHBORHOODS.find(
-                (n) =>
-                  n.name.toLowerCase().includes(nName.toLowerCase()) ||
-                  nName.toLowerCase().includes(n.name.toLowerCase())
-              );
-              if (found) {
-                setSelectedNeighborhood(found);
-                setSelectedRoom(null);
-                if (mapRef.current) {
-                  mapRef.current.flyTo({
-                    center: found.coordinates,
-                    zoom: 13.8,
-                    duration: 1200,
-                    essential: true,
-                  });
-                }
+      {/* Contextual Popups (Room, Person, Destination, Live, Neighborhood) */}
+      {!activeRouteState && selectedRoom && (
+        <RoomPreviewCard
+          room={selectedRoom}
+          onClose={() => setSelectedRoom(null)}
+          onDirections={(r) =>
+            handleRequestDirections({
+              title: r.title,
+              subtitle: `${r.neighborhood}, ${r.city}`,
+              coordinates: r.coordinates,
+              type: 'room',
+            })
+          }
+          onExploreNeighborhood={(nName) => {
+            const found = SPACES_NEIGHBORHOODS.find(
+              (n) =>
+                n.name.toLowerCase().includes(nName.toLowerCase()) ||
+                nName.toLowerCase().includes(n.name.toLowerCase())
+            );
+            if (found) {
+              setSelectedNeighborhood(found);
+              setSelectedRoom(null);
+              if (mapRef.current) {
+                mapRef.current.flyTo({
+                  center: found.coordinates,
+                  zoom: 13.8,
+                  duration: 1200,
+                  essential: true,
+                });
               }
-            }}
-          />
-        )}
-
-        {!activeRouteState && selectedPerson && (
-          <PersonPreviewCard
-            person={selectedPerson}
-            onClose={() => setSelectedPerson(null)}
-          />
-        )}
-
-        {!activeRouteState && selectedDestination && (
-          <DestinationPreviewCard
-            destination={selectedDestination}
-            onClose={() => setSelectedDestination(null)}
-            onDirections={(d) =>
-              handleRequestDirections({
-                title: d.city,
-                subtitle: d.country,
-                coordinates: d.coordinates,
-                type: 'destination',
-              })
             }
-          />
-        )}
+          }}
+        />
+      )}
 
-        {!activeRouteState && selectedLiveItem && (
-          <LivePreviewCard
-            liveItem={selectedLiveItem}
-            onClose={() => setSelectedLiveItem(null)}
-          />
-        )}
+      {!activeRouteState && selectedPerson && (
+        <PersonPreviewCard
+          person={selectedPerson}
+          onClose={() => setSelectedPerson(null)}
+        />
+      )}
 
-        {!activeRouteState && selectedNeighborhood && (
+      {!activeRouteState && selectedDestination && (
+        <DestinationPreviewCard
+          destination={selectedDestination}
+          onClose={() => setSelectedDestination(null)}
+          onDirections={(d) =>
+            handleRequestDirections({
+              title: d.city,
+              subtitle: d.country,
+              coordinates: d.coordinates,
+              type: 'destination',
+            })
+          }
+        />
+      )}
+
+      {!activeRouteState && selectedLiveItem && (
+        <LivePreviewCard
+          liveItem={selectedLiveItem}
+          onClose={() => setSelectedLiveItem(null)}
+        />
+      )}
+
+      {!activeRouteState && selectedNeighborhood && (
+        <div className="fixed md:absolute bottom-6 left-1/2 -translate-x-1/2 md:left-auto md:right-8 md:translate-x-0 z-40 pointer-events-auto">
           <NeighborhoodIntelligencePanel
             intelligence={computeNeighborhoodIntelligence(
               selectedNeighborhood,
@@ -1819,8 +1841,8 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
               setIsComparisonModalOpen(true);
             }}
           />
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Side-by-Side Neighborhood Comparison Modal */}
       <NeighborhoodComparisonModal
