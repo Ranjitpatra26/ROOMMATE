@@ -1,10 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useId } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Eye, EyeOff, ArrowRight, Check } from 'lucide-react';
 import { authService } from '../services/index.js';
 import { useAuthStore } from '../store/index.js';
-import { UnderlineInput } from '../components/foundation/index.js';
+
+interface CurvedInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  label: string;
+  error?: string;
+  helperText?: string;
+  rightElement?: React.ReactNode;
+}
+
+const CurvedInput: React.FC<CurvedInputProps> = ({
+  label,
+  error,
+  helperText,
+  rightElement,
+  className,
+  id,
+  ...props
+}) => {
+  const generatedId = useId();
+  const inputId = id || generatedId;
+
+  return (
+    <div className="flex flex-col w-full relative group">
+      <label
+        htmlFor={inputId}
+        className="font-sans text-label-caps uppercase tracking-[0.12em] font-bold text-[11px] text-earth-indigo/80 dark:text-earth-fixed/80 mb-2 transition-colors group-focus-within:text-earth-indigo dark:group-focus-within:text-white"
+      >
+        {label}
+      </label>
+      <div className="relative flex items-center w-full">
+        <input
+          id={inputId}
+          className={`w-full rounded-2xl bg-surface-low/80 dark:bg-[#121620]/90 border transition-all duration-200 ease-out py-3.5 pl-4 pr-11 text-body-md font-sans text-earth-indigo dark:text-white placeholder:text-muted/60 focus:outline-none focus:ring-4 focus:ring-vitality-coral/10 focus:border-earth-indigo dark:focus:border-white shadow-inner group-hover:border-earth-indigo/40 dark:group-hover:border-white/30 ${
+            error
+              ? 'border-vitality-coral focus:border-vitality-coral focus:ring-vitality-coral/20'
+              : 'border-surface-dim/80 dark:border-white/10'
+          } ${className || ''}`}
+          {...props}
+        />
+        {rightElement && (
+          <div className="absolute right-3.5 top-1/2 -translate-y-1/2 flex items-center justify-center">
+            {rightElement}
+          </div>
+        )}
+      </div>
+      {error && (
+        <span className="font-sans text-metadata text-vitality-coral font-semibold mt-1.5 ml-1">
+          {error}
+        </span>
+      )}
+      {helperText && !error && (
+        <span className="font-sans text-metadata text-secondary mt-1.5 ml-1">
+          {helperText}
+        </span>
+      )}
+    </div>
+  );
+};
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -94,15 +150,15 @@ export const LoginPage: React.FC = () => {
 
   return (
     <div className="w-full flex flex-col justify-center select-none">
-      <div className="w-full max-w-sm mx-auto">
+      <div className="w-full">
         {/* ============================================================ */}
         {/* 1. AUTH TABS WITH SLIDING INDICATOR */}
         {/* ============================================================ */}
         <motion.nav
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="flex space-x-8 mb-8 border-b border-surface-dim relative"
+          transition={{ duration: 0.45, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+          className="flex space-x-8 mb-7 border-b border-surface-dim/70 dark:border-white/10 relative"
         >
           <button
             type="button"
@@ -112,15 +168,15 @@ export const LoginPage: React.FC = () => {
             }}
             className={`pb-3 font-sans text-label-caps uppercase tracking-widest text-xs transition-colors relative cursor-pointer ${
               !isRegisterTab
-                ? 'text-earth-indigo font-bold'
-                : 'text-secondary hover:text-earth-indigo font-medium'
+                ? 'text-earth-indigo dark:text-white font-bold'
+                : 'text-secondary dark:text-earth-fixed/70 hover:text-earth-indigo dark:hover:text-white font-medium'
             }`}
           >
             Sign In
             {!isRegisterTab && (
               <motion.div
                 layoutId="authTabIndicator"
-                className="absolute bottom-0 left-0 right-0 h-0.5 bg-vitality-coral"
+                className="absolute bottom-0 left-0 right-0 h-0.5 bg-vitality-coral rounded-full"
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
@@ -134,15 +190,15 @@ export const LoginPage: React.FC = () => {
             }}
             className={`pb-3 font-sans text-label-caps uppercase tracking-widest text-xs transition-colors relative cursor-pointer ${
               isRegisterTab
-                ? 'text-earth-indigo font-bold'
-                : 'text-secondary hover:text-earth-indigo font-medium'
+                ? 'text-earth-indigo dark:text-white font-bold'
+                : 'text-secondary dark:text-earth-fixed/70 hover:text-earth-indigo dark:hover:text-white font-medium'
             }`}
           >
             Create Account
             {isRegisterTab && (
               <motion.div
                 layoutId="authTabIndicator"
-                className="absolute bottom-0 left-0 right-0 h-0.5 bg-vitality-coral"
+                className="absolute bottom-0 left-0 right-0 h-0.5 bg-vitality-coral rounded-full"
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
@@ -155,13 +211,13 @@ export const LoginPage: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-8 space-y-2"
+          transition={{ duration: 0.45, delay: 0.14, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-7 space-y-1.5"
         >
-          <h2 className="font-serif text-headline-md text-earth-indigo font-bold tracking-tight">
+          <h2 className="font-serif text-headline-md text-earth-indigo dark:text-white font-bold tracking-tight">
             {isRegisterTab ? 'Begin your chapter' : 'Welcome back'}
           </h2>
-          <p className="font-sans text-body-sm text-secondary leading-relaxed">
+          <p className="font-sans text-body-sm text-secondary dark:text-earth-fixed/75 leading-relaxed">
             {isRegisterTab
               ? 'Create an account to start curating your living experience.'
               : 'Enter your details to access your curated spaces.'}
@@ -174,7 +230,7 @@ export const LoginPage: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.45, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
           <motion.button
             type="button"
@@ -182,9 +238,13 @@ export const LoginPage: React.FC = () => {
             whileHover={{ y: -1, boxShadow: '0 6px 18px -3px rgba(0,0,0,0.06)' }}
             whileTap={{ scale: 0.985 }}
             transition={{ duration: 0.2 }}
-            className="w-full flex items-center justify-center gap-3 border border-surface-dim rounded-xl py-3 px-4 bg-clay dark:bg-surface-dim/30 hover:border-earth-indigo/50 transition-colors duration-200 shadow-sm mb-6 cursor-pointer"
+            className="w-full flex items-center justify-center gap-3 border border-surface-dim dark:border-white/10 rounded-2xl py-3 px-4 bg-white/80 dark:bg-[#121620]/90 hover:border-earth-indigo/40 dark:hover:border-white/30 transition-all duration-200 shadow-sm mb-5 cursor-pointer"
           >
-            <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
+            <svg
+              className="w-5 h-5 shrink-0"
+              style={{ width: '20px', height: '20px', minWidth: '20px', minHeight: '20px' }}
+              viewBox="0 0 24 24"
+            >
               <path
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                 fill="#4285F4"
@@ -202,7 +262,7 @@ export const LoginPage: React.FC = () => {
                 fill="#EA4335"
               />
             </svg>
-            <span className="font-sans text-ui-medium font-semibold text-earth-indigo">
+            <span className="font-sans text-ui-medium font-semibold text-earth-indigo dark:text-white">
               Continue with Google
             </span>
           </motion.button>
@@ -212,14 +272,14 @@ export const LoginPage: React.FC = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.24 }}
-          className="flex items-center space-x-4 mb-6"
+          transition={{ duration: 0.4, delay: 0.22 }}
+          className="flex items-center space-x-4 mb-5"
         >
-          <div className="flex-1 h-px bg-surface-dim" />
-          <span className="font-sans text-label-caps text-secondary uppercase text-[10px] tracking-widest">
+          <div className="flex-1 h-px bg-surface-dim/70 dark:bg-white/10" />
+          <span className="font-sans text-label-caps text-secondary dark:text-earth-fixed/60 uppercase text-[10px] tracking-widest">
             Or
           </span>
-          <div className="flex-1 h-px bg-surface-dim" />
+          <div className="flex-1 h-px bg-surface-dim/70 dark:bg-white/10" />
         </motion.div>
 
         {/* ============================================================ */}
@@ -237,7 +297,7 @@ export const LoginPage: React.FC = () => {
               }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.35, ease: 'easeInOut' }}
-              className="mb-6 p-3 rounded-lg bg-vitality-coral/10 border border-vitality-coral/30 text-vitality-coral font-sans text-xs flex items-center justify-between"
+              className="mb-5 p-3 rounded-xl bg-vitality-coral/10 border border-vitality-coral/30 text-vitality-coral font-sans text-xs flex items-center justify-between"
             >
               <span>{error}</span>
               <button
@@ -252,17 +312,17 @@ export const LoginPage: React.FC = () => {
         </AnimatePresence>
 
         {/* ============================================================ */}
-        {/* 5. EMAIL / PASSWORD FORM FIELDS */}
+        {/* 5. CURVED INPUT FORM FIELDS */}
         {/* ============================================================ */}
         <motion.form
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.45, delay: 0.26, ease: [0.16, 1, 0.3, 1] }}
           onSubmit={handleSubmit}
-          className="space-y-5"
+          className="space-y-4"
         >
           {isRegisterTab && (
-            <UnderlineInput
+            <CurvedInput
               label="Full Name"
               type="text"
               placeholder="e.g. Maya Lin"
@@ -272,7 +332,7 @@ export const LoginPage: React.FC = () => {
             />
           )}
 
-          <UnderlineInput
+          <CurvedInput
             label="Email Address"
             type="email"
             placeholder="name@example.com"
@@ -282,7 +342,7 @@ export const LoginPage: React.FC = () => {
           />
 
           <div className="space-y-1">
-            <UnderlineInput
+            <CurvedInput
               label="Password"
               type={showPassword ? 'text' : 'password'}
               placeholder="••••••••"
@@ -293,7 +353,7 @@ export const LoginPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="text-secondary hover:text-earth-indigo transition-colors p-1.5 focus:outline-none cursor-pointer"
+                  className="text-secondary dark:text-earth-fixed/60 hover:text-earth-indigo dark:hover:text-white transition-colors p-1.5 focus:outline-none cursor-pointer"
                   tabIndex={-1}
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
@@ -313,13 +373,13 @@ export const LoginPage: React.FC = () => {
               }
             />
             {!isRegisterTab && (
-              <div className="text-right pt-1">
+              <div className="text-right pt-0.5">
                 <button
                   type="button"
                   onClick={() =>
                     setError('Password reset instructions sent to your registered email.')
                   }
-                  className="font-sans text-xs text-secondary hover:text-earth-indigo transition-colors cursor-pointer"
+                  className="font-sans text-xs text-secondary dark:text-earth-fixed/70 hover:text-earth-indigo dark:hover:text-white transition-colors cursor-pointer"
                 >
                   Forgot password?
                 </button>
@@ -328,7 +388,7 @@ export const LoginPage: React.FC = () => {
           </div>
 
           {isRegisterTab && (
-            <UnderlineInput
+            <CurvedInput
               label="Confirm Password"
               type={showConfirmPassword ? 'text' : 'password'}
               placeholder="••••••••"
@@ -339,7 +399,7 @@ export const LoginPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="text-secondary hover:text-earth-indigo transition-colors p-1.5 focus:outline-none cursor-pointer"
+                  className="text-secondary dark:text-earth-fixed/60 hover:text-earth-indigo dark:hover:text-white transition-colors p-1.5 focus:outline-none cursor-pointer"
                   tabIndex={-1}
                   aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
                 >
@@ -366,19 +426,19 @@ export const LoginPage: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.36, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.45, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
             className="pt-2"
           >
             <motion.button
               type="submit"
               disabled={loading || success}
-              whileHover={loading || success ? {} : { y: -1, boxShadow: '0 8px 24px -4px rgba(240, 90, 90, 0.25)' }}
+              whileHover={loading || success ? {} : { y: -1, boxShadow: '0 10px 28px -4px rgba(240, 90, 90, 0.28)' }}
               whileTap={loading || success ? {} : { scale: 0.985 }}
               transition={{ duration: 0.2 }}
-              className="w-full mt-4 py-3.5 px-6 rounded-xl bg-earth-indigo text-clay dark:bg-clay dark:text-earth-indigo font-sans text-ui-medium font-bold flex items-center justify-center gap-2 group shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed"
+              className="w-full mt-3 py-3.5 px-6 rounded-2xl bg-earth-indigo text-clay dark:bg-vitality-coral dark:text-white font-sans text-ui-medium font-bold flex items-center justify-center gap-2 group shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed"
             >
               {success ? (
-                <span className="inline-flex items-center gap-1.5 text-emerald-400 dark:text-emerald-600 font-bold">
+                <span className="inline-flex items-center gap-1.5 text-emerald-400 font-bold">
                   <Check className="w-4 h-4" />
                   {isRegisterTab ? 'Account Created' : 'Signed In'}
                 </span>

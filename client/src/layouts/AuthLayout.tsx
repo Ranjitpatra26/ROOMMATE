@@ -132,12 +132,12 @@ export const AuthLayout: React.FC = () => {
       {/* ============================================================ */}
       {/* RIGHT AUTHENTICATION FORM COLUMN */}
       {/* ============================================================ */}
-      <div className="flex-1 flex flex-col justify-between p-6 sm:p-12 lg:p-16 xl:p-20 relative bg-clay dark:bg-earth-container transition-colors duration-200">
+      <div className="flex-1 flex flex-col justify-between p-6 sm:p-10 lg:p-12 xl:p-16 relative bg-clay dark:bg-earth-container transition-colors duration-200 overflow-y-auto">
         {/* Subtle Warm Ambient Glow */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-radial-at-tr from-vitality-coral/5 via-transparent to-transparent pointer-events-none blur-2xl" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-radial-at-tr from-vitality-coral/10 via-trust-teal/5 to-transparent pointer-events-none blur-3xl" />
 
         {/* Mobile Header with ROOMMATE Branding */}
-        <div className="md:hidden flex items-center justify-between pb-6 border-b border-surface-dim mb-8">
+        <div className="md:hidden flex items-center justify-between pb-6 border-b border-surface-dim mb-6">
           <Link to="/" className="cursor-pointer">
             <span className="font-serif text-headline-sm font-bold text-earth-indigo">
               ROOMMATE
@@ -148,13 +148,22 @@ export const AuthLayout: React.FC = () => {
           </span>
         </div>
 
-        {/* Center Main Form Outlet */}
-        <div className="max-w-md w-full mx-auto my-auto py-6 sm:py-8 z-10">
-          <Outlet />
+        {/* Center Main Framed Stage Container */}
+        <div className="w-full max-w-md mx-auto my-auto py-4 sm:py-6 z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 16, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            className="relative rounded-3xl p-7 sm:p-9 bg-white/75 dark:bg-[#161a25]/85 backdrop-blur-2xl border border-white/80 dark:border-white/10 shadow-2xl shadow-earth-indigo/5 dark:shadow-black/50 ring-1 ring-black/5 dark:ring-white/5"
+          >
+            {/* Subtle Top-Right Ambient Micro-Aura */}
+            <div className="absolute -top-12 -right-12 w-32 h-32 bg-vitality-coral/15 rounded-full blur-2xl pointer-events-none" />
+            <Outlet />
+          </motion.div>
         </div>
 
         {/* Bottom Copyright Notice */}
-        <div className="text-center text-metadata text-secondary py-4 z-10">
+        <div className="text-center text-metadata text-secondary py-3 z-10">
           <span>&copy; 2026 ROOMMATE Living OS</span>
         </div>
       </div>
