@@ -60,15 +60,6 @@ export const LandingPage: React.FC = () => {
         {/* Hero Content - Clean & Open Layout without bounding box */}
         <div className="relative z-10 text-center max-w-4xl mx-auto space-y-6">
           <ScrollReveal direction="up" delay={0.1}>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container/80 dark:bg-surface-dim/50 backdrop-blur-md border border-surface-dim/60 shadow-sm mb-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-vitality-coral animate-pulse" />
-              <span className="font-sans text-xs uppercase tracking-widest text-earth-indigo/90 dark:text-earth-fixed font-bold">
-                Art Directed Living OS
-              </span>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal direction="up" delay={0.2}>
             <h1 className="font-serif text-headline-lg-mobile md:text-display-hero text-earth-indigo leading-tight tracking-tight font-bold">
               Who you live with changes how you live.
             </h1>
