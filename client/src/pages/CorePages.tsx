@@ -1653,6 +1653,48 @@ export const ConversationPage: React.FC = () => {
     ],
   });
 
+  // Sync with route params and dynamically add conversation if not present
+  useEffect(() => {
+    if (conversationId) {
+      setActiveConvId(conversationId);
+      setConversations((prev) => {
+        const found = prev.some((c) => c.id === conversationId || c.participant?.id === conversationId);
+        if (found) return prev;
+
+        const demoPerson = INDIAN_DEMO_PROFILES.find(
+          (p) =>
+            p.id === conversationId ||
+            p.userId === conversationId ||
+            conversationId.toLowerCase().includes(p.id.toLowerCase()) ||
+            conversationId.toLowerCase().includes(p.displayName.toLowerCase().replace(/\s+/g, '-')) ||
+            conversationId.toLowerCase().includes(p.displayName.toLowerCase().split(' ')[0])
+        );
+
+        if (demoPerson) {
+          const newThread = {
+            id: conversationId,
+            participant: {
+              id: demoPerson.userId || demoPerson.id,
+              name: demoPerson.displayName,
+              role: demoPerson.headline,
+              avatarUrl: demoPerson.avatarUrl,
+              isOnline: true,
+              compatibilityScore: 94,
+              city: demoPerson.preferredLocations?.[0] || 'Bengaluru',
+              tags: demoPerson.visualTags || ['Verified Cohabitant'],
+            },
+            lastMessage: 'Connected via Spatial District Map',
+            lastMessageTime: 'Just now',
+            unreadCount: 0,
+            isPinned: true,
+          };
+          return [newThread, ...prev];
+        }
+        return prev;
+      });
+    }
+  }, [conversationId]);
+
   const activeMessages = messagesByConv[activeConvId] || [];
   const currentConversation =
     conversations.find((c) => c.id === activeConvId) || conversations[0];

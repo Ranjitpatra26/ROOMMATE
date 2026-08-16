@@ -27,25 +27,35 @@ export const PersonPreviewCard: React.FC<PersonPreviewCardProps> = ({ person, on
   const [isSent, setIsSent] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
 
-  const handleViewProfile = () => {
-    navigate(`/profile/${person.userId || person.id}`);
+  const handleViewProfile = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    const profileId = person.id || person.userId || 'ananya-sharma';
+    navigate(`/profile/${profileId}`);
   };
 
-  const handleMessage = () => {
-    navigate(`/messages/conv-${person.userId || person.id}`);
+  const handleMessage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    const convId = person.id || person.userId || 'conversation-ananya';
+    navigate(`/messages/${convId}`);
+  };
+
+  const handleConnectToggle = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setIsConnected((prev) => !prev);
   };
 
   const handleSendQuickMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (!quickMessage.trim()) return;
     setIsSent(true);
+    const convId = person.id || person.userId || 'conversation-ananya';
     setTimeout(() => {
-      navigate(`/messages/conv-${person.userId || person.id}`);
-    }, 800);
+      navigate(`/messages/${convId}`);
+    }, 500);
   };
 
   const isEarlyBird = person.lifestyleDNA?.chronotype === 'early_bird';
-  const firstName = person.displayName.split(' ')[0];
+  const firstName = person.displayName ? person.displayName.split(' ')[0] : 'Roommate';
 
   const quickPrompts = [
     `👋 Hi ${firstName}! Looking for a roommate?`,
@@ -56,7 +66,7 @@ export const PersonPreviewCard: React.FC<PersonPreviewCardProps> = ({ person, on
   return (
     <>
       {/* Mobile Bottom Sheet (390px - 768px) */}
-      <div className="md:hidden fixed inset-x-0 bottom-0 z-40 bg-white/90 dark:bg-[#181d29]/95 backdrop-blur-2xl border-t border-white/60 dark:border-white/15 rounded-t-3xl p-5 space-y-4 animate-in slide-in-from-bottom duration-300 pointer-events-auto text-left font-sans max-h-[85vh] overflow-y-auto shadow-2xl">
+      <div className="md:hidden fixed inset-x-0 bottom-0 z-40 spatial-glass-card rounded-t-3xl p-5 space-y-4 animate-in slide-in-from-bottom duration-300 pointer-events-auto text-left font-sans max-h-[85vh] overflow-y-auto shadow-2xl">
         {/* Dismiss drag handle */}
         <div className="flex justify-center -mt-2 pb-1">
           <div className="w-10 h-1 rounded-full bg-black/15 dark:bg-white/20" />
@@ -141,8 +151,8 @@ export const PersonPreviewCard: React.FC<PersonPreviewCardProps> = ({ person, on
               type="text"
               value={quickMessage}
               onChange={(e) => setQuickMessage(e.target.value)}
-              placeholder={`Send message to ${firstName}…`}
-              className="w-full pl-3.5 pr-10 py-2.5 rounded-xl bg-white/70 dark:bg-black/20 border border-black/10 dark:border-white/20 text-earth-indigo dark:text-white text-xs placeholder:text-secondary dark:placeholder:text-slate-400 focus:outline-none focus:border-vitality-coral"
+              placeholder={`Message ${firstName} directly…`}
+              className="w-full pl-3.5 pr-10 py-2.5 rounded-xl bg-black/[0.04] dark:bg-black/20 border border-black/10 dark:border-white/20 text-earth-indigo dark:text-white text-xs placeholder:text-secondary dark:placeholder:text-slate-400 focus:outline-none focus:border-vitality-coral"
             />
             <button
               type="submit"
@@ -155,29 +165,43 @@ export const PersonPreviewCard: React.FC<PersonPreviewCardProps> = ({ person, on
         </form>
 
         {/* Action Buttons */}
-        <div className="grid grid-cols-2 gap-2.5 text-xs font-bold pt-1">
+        <div className="grid grid-cols-3 gap-2 text-xs font-bold pt-1">
           <button
             type="button"
             onClick={handleViewProfile}
-            className="py-3 bg-black/[0.05] dark:bg-white/10 hover:bg-black/[0.08] dark:hover:bg-white/20 text-earth-indigo dark:text-white border border-black/10 dark:border-white/20 rounded-xl flex items-center justify-center gap-1.5 cursor-pointer uppercase tracking-wider transition-all"
+            className="py-3 bg-black/[0.05] dark:bg-white/10 hover:bg-black/[0.08] dark:hover:bg-white/20 text-earth-indigo dark:text-white border border-black/10 dark:border-white/20 rounded-xl flex items-center justify-center gap-1 cursor-pointer uppercase tracking-wider transition-all"
           >
             <User className="w-3.5 h-3.5" />
-            <span>View Profile</span>
+            <span>Profile</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleConnectToggle}
+            className={`py-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-1 transition-all cursor-pointer uppercase tracking-wider ${
+              isConnected
+                ? 'bg-trust-teal text-white border-trust-teal shadow-md'
+                : 'bg-black/[0.04] dark:bg-white/10 border-black/10 dark:border-white/20 text-earth-indigo dark:text-white hover:border-trust-teal hover:text-trust-teal'
+            }`}
+            title="Send Connect Match"
+          >
+            <Heart className={`w-3.5 h-3.5 ${isConnected ? 'fill-white' : ''}`} />
+            <span>{isConnected ? 'Matched' : 'Connect'}</span>
           </button>
 
           <button
             type="button"
             onClick={handleMessage}
-            className="py-3 bg-vitality-coral hover:bg-vitality-coral/90 text-white rounded-xl shadow-lg shadow-vitality-coral/30 flex items-center justify-center gap-1.5 cursor-pointer uppercase tracking-wider transition-all"
+            className="py-3 bg-vitality-coral hover:bg-vitality-coral/90 text-white rounded-xl shadow-lg shadow-vitality-coral/30 flex items-center justify-center gap-1 cursor-pointer uppercase tracking-wider transition-all"
           >
             <MessageSquare className="w-3.5 h-3.5" />
-            <span>Open Chat</span>
+            <span>Chat</span>
           </button>
         </div>
       </div>
 
       {/* Desktop Floating Preview Card (>= 768px) */}
-      <div className="hidden md:block fixed top-24 right-8 z-40 w-92 bg-white/85 dark:bg-[#181d29]/85 backdrop-blur-2xl border border-white/60 dark:border-white/15 rounded-3xl p-5 space-y-4 animate-in fade-in zoom-in-95 duration-200 pointer-events-auto text-left font-sans shadow-2xl">
+      <div className="hidden md:block fixed top-24 right-8 z-40 w-92 spatial-glass-card rounded-3xl p-5 space-y-4 animate-in fade-in zoom-in-95 duration-200 pointer-events-auto text-left font-sans shadow-2xl">
         <div className="flex justify-between items-start">
           <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-trust-teal/15 dark:bg-trust-teal/20 text-trust-teal text-[10px] font-bold border border-trust-teal/30">
             <ShieldCheck className="w-3 h-3" />
@@ -284,7 +308,7 @@ export const PersonPreviewCard: React.FC<PersonPreviewCardProps> = ({ person, on
               value={quickMessage}
               onChange={(e) => setQuickMessage(e.target.value)}
               placeholder={`Message ${firstName} directly…`}
-              className="w-full pl-3 pr-9 py-2 rounded-xl bg-white/70 dark:bg-black/20 border border-black/10 dark:border-white/20 text-earth-indigo dark:text-white text-xs placeholder:text-secondary dark:placeholder:text-slate-400 focus:outline-none focus:border-vitality-coral"
+              className="w-full pl-3 pr-9 py-2 rounded-xl bg-black/[0.04] dark:bg-black/20 border border-black/10 dark:border-white/20 text-earth-indigo dark:text-white text-xs placeholder:text-secondary dark:placeholder:text-slate-400 focus:outline-none focus:border-vitality-coral"
             />
             <button
               type="submit"
@@ -310,7 +334,7 @@ export const PersonPreviewCard: React.FC<PersonPreviewCardProps> = ({ person, on
 
           <button
             type="button"
-            onClick={() => setIsConnected(!isConnected)}
+            onClick={handleConnectToggle}
             className={`py-2.5 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-1 transition-all cursor-pointer ${
               isConnected
                 ? 'bg-trust-teal text-white border-trust-teal shadow-md'

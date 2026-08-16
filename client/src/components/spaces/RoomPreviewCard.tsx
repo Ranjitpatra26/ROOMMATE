@@ -28,18 +28,20 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  const handleViewRoom = () => {
+  const handleViewRoom = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     navigate(`/rooms/${room.id}`);
   };
 
-  const handleChatWithHost = () => {
+  const handleChatWithHost = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     navigate(`/messages/room-${room.id}`);
   };
 
   return (
     <>
       {/* Mobile Bottom Sheet (390px - 768px) */}
-      <div className="md:hidden fixed inset-x-0 bottom-0 z-40 bg-white/90 dark:bg-[#181d29]/95 backdrop-blur-2xl border-t border-white/60 dark:border-white/15 rounded-t-3xl p-5 space-y-4 animate-in slide-in-from-bottom duration-300 pointer-events-auto text-left font-sans shadow-2xl">
+      <div className="md:hidden fixed inset-x-0 bottom-0 z-40 spatial-glass-card rounded-t-3xl p-5 space-y-4 animate-in slide-in-from-bottom duration-300 pointer-events-auto text-left font-sans shadow-2xl">
         {/* Dismiss drag handle */}
         <div className="flex justify-center -mt-2 pb-1">
           <div className="w-10 h-1 rounded-full bg-black/15 dark:bg-white/20" />
@@ -136,7 +138,7 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
       </div>
 
       {/* Desktop Floating Preview Card (>= 768px) */}
-      <div className="hidden md:block fixed top-24 right-8 z-40 w-88 bg-white/85 dark:bg-[#181d29]/85 backdrop-blur-2xl border border-white/60 dark:border-white/15 rounded-3xl p-5 space-y-4 animate-in fade-in zoom-in-95 duration-200 pointer-events-auto text-left shadow-2xl font-sans">
+      <div className="hidden md:block fixed top-24 right-8 z-40 w-88 spatial-glass-card rounded-3xl p-5 space-y-4 animate-in fade-in zoom-in-95 duration-200 pointer-events-auto text-left shadow-2xl font-sans">
         <div className="flex justify-between items-start">
           <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-vitality-coral/15 text-vitality-coral font-sans text-[10px] font-bold border border-vitality-coral/20">
             <Home className="w-3 h-3" />
