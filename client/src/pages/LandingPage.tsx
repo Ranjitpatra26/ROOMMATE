@@ -317,15 +317,15 @@ export const LandingPage: React.FC = () => {
         </div>
       </CinematicSection>
 
-      {/* 5. Trust & Verified Stay (Authoritative Earth Indigo Surface with Glow Parallax) */}
-      <CinematicSection className="py-28 bg-earth-indigo text-clay px-6 md:px-12 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-vitality-coral/10 rounded-full blur-3xl pointer-events-none transform translate-x-1/3 -translate-y-1/3" />
+      {/* 5. Trust & Verified Stay (Authoritative Deep Indigo Surface with Glow Parallax) */}
+      <CinematicSection className="py-28 bg-[#1a1f2c] dark:bg-[#10141d] text-white px-6 md:px-12 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-vitality-coral/15 rounded-full blur-3xl pointer-events-none transform translate-x-1/3 -translate-y-1/3" />
         <div className="max-w-7xl mx-auto relative z-10 text-center space-y-6">
           <ScrollReveal direction="up">
-            <span className="font-sans text-label-caps text-vitality-coral uppercase tracking-widest block">
+            <span className="font-sans text-label-caps text-vitality-coral uppercase tracking-widest block font-bold">
               Integrity by Design
             </span>
-            <h2 className="font-serif text-headline-lg-mobile md:text-headline-lg text-clay font-bold">
+            <h2 className="font-serif text-headline-lg-mobile md:text-headline-lg text-white font-bold">
               Peace of mind, built in.
             </h2>
             <p className="font-sans text-body-lg text-white/80 max-w-2xl mx-auto leading-relaxed">
