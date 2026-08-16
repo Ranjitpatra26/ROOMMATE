@@ -71,7 +71,7 @@ export const MapFilterBar: React.FC<MapFilterBarProps> = ({
   ];
 
   return (
-    <div className="flex items-center gap-1.5 p-1 bg-white/80 dark:bg-[#1a1f2c]/80 backdrop-blur-xl border border-white/60 dark:border-white/15 rounded-full shadow-2xl pointer-events-auto max-w-[calc(100vw-2rem)] overflow-x-auto whitespace-nowrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+    <div className="flex items-center gap-1.5 p-1 bg-white/45 dark:bg-black/45 backdrop-blur-xl border border-white/40 dark:border-white/15 rounded-full shadow-lg pointer-events-auto max-w-[calc(100vw-2rem)] overflow-x-auto whitespace-nowrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
       {options.map((opt) => {
         const isActive = filter === opt.id;
         return (

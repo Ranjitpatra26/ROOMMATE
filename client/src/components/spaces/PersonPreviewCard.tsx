@@ -56,7 +56,7 @@ export const PersonPreviewCard: React.FC<PersonPreviewCardProps> = ({ person, on
   return (
     <>
       {/* Mobile Bottom Sheet (390px - 768px) */}
-      <div className="md:hidden fixed inset-x-0 bottom-0 z-40 bg-[#fcf8fa] dark:bg-[#1e2433] border-t border-[#dcd9db] dark:border-white/20 rounded-t-3xl p-5 shadow-2xl space-y-4 animate-in slide-in-from-bottom duration-300 pointer-events-auto text-left font-sans max-h-[85vh] overflow-y-auto">
+      <div className="md:hidden fixed inset-x-0 bottom-0 z-40 bg-white/60 dark:bg-black/60 backdrop-blur-2xl border-t border-white/40 dark:border-white/15 rounded-t-3xl p-5 shadow-2xl space-y-4 animate-in slide-in-from-bottom duration-300 pointer-events-auto text-left font-sans max-h-[85vh] overflow-y-auto">
         {/* Dismiss drag handle */}
         <div className="flex justify-center -mt-2 pb-1">
           <div className="w-10 h-1 rounded-full bg-[#dcd9db] dark:bg-white/20" />
@@ -177,7 +177,7 @@ export const PersonPreviewCard: React.FC<PersonPreviewCardProps> = ({ person, on
       </div>
 
       {/* Desktop Floating Preview Card (>= 768px) */}
-      <div className="hidden md:block absolute top-20 right-8 z-30 w-92 bg-[#fcf8fa] dark:bg-[#1e2433] border border-[#dcd9db] dark:border-white/20 rounded-3xl p-5 shadow-2xl space-y-4 animate-in fade-in zoom-in-95 duration-200 pointer-events-auto text-left font-sans">
+      <div className="hidden md:block absolute top-20 right-8 z-30 w-92 bg-white/60 dark:bg-black/60 backdrop-blur-2xl border border-white/40 dark:border-white/15 rounded-3xl p-5 shadow-2xl space-y-4 animate-in fade-in zoom-in-95 duration-200 pointer-events-auto text-left font-sans">
         <div className="flex justify-between items-start">
           <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-trust-teal/15 text-trust-teal text-[10px] font-bold border border-trust-teal/30">
             <ShieldCheck className="w-3 h-3" />

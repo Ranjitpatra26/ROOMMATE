@@ -573,7 +573,7 @@ export const SpatialCityPage: React.FC = () => {
     <LiveLocationProvider>
       <div className="w-full h-screen bg-clay dark:bg-earth-container text-earth-indigo relative overflow-hidden select-none transition-colors duration-200">
       {/* Top Floating View Mode Switcher */}
-      <div className="absolute top-5 left-1/2 -translate-x-1/2 z-overlay flex items-center gap-1.5 p-1 bg-white/80 dark:bg-[#1a1f2c]/80 backdrop-blur-xl border border-white/60 dark:border-white/15 rounded-full shadow-2xl pointer-events-auto">
+      <div className="absolute top-5 left-1/2 -translate-x-1/2 z-overlay flex items-center gap-1.5 p-1 bg-white/45 dark:bg-black/45 backdrop-blur-xl border border-white/40 dark:border-white/15 rounded-full shadow-lg pointer-events-auto">
         <button
           type="button"
           onClick={() => setViewMode('map')}

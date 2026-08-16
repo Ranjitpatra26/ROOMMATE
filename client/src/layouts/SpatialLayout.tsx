@@ -14,7 +14,7 @@ export const SpatialLayout: React.FC = () => {
         <header className="absolute top-5 left-6 z-overlay flex items-center gap-3">
           <Link
             to="/discover"
-            className="flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-[#1a1f2c]/80 backdrop-blur-xl border border-white/60 dark:border-white/15 rounded-full shadow-md text-ui-medium font-bold text-earth-indigo dark:text-white hover:border-vitality-coral transition-all cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 bg-white/45 dark:bg-black/45 backdrop-blur-xl border border-white/40 dark:border-white/15 rounded-full shadow-md text-ui-medium font-bold text-earth-indigo dark:text-white hover:border-vitality-coral transition-all cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Exit Spatial View</span>

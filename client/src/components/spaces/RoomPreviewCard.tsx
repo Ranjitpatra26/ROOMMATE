@@ -26,10 +26,10 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
   return (
     <>
       {/* Mobile Bottom Sheet (390px - 768px) */}
-      <div className="md:hidden fixed inset-x-0 bottom-0 z-40 bg-clay/95 dark:bg-earth-container/95 backdrop-blur-2xl border-t border-surface-dim dark:border-white/20 rounded-t-3xl p-5 shadow-2xl space-y-4 animate-in slide-in-from-bottom duration-300 pointer-events-auto">
+      <div className="md:hidden fixed inset-x-0 bottom-0 z-40 bg-white/60 dark:bg-black/60 backdrop-blur-2xl border-t border-white/40 dark:border-white/15 rounded-t-3xl p-5 shadow-2xl space-y-4 animate-in slide-in-from-bottom duration-300 pointer-events-auto">
         {/* Dismiss drag handle */}
         <div className="flex justify-center -mt-2 pb-1">
-          <div className="w-10 h-1 rounded-full bg-surface-dim dark:bg-white/20" />
+          <div className="w-10 h-1 rounded-full bg-black/10 dark:bg-white/20" />
         </div>
 
         <div className="flex items-start justify-between gap-3">
@@ -42,7 +42,7 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
               <MapPin className="w-3 h-3 shrink-0" />
               <span className="truncate">{room.neighborhood}, {room.city}</span>
             </button>
-            <h3 className="font-serif text-base font-bold text-earth-indigo dark:text-clay truncate">
+            <h3 className="font-serif text-base font-bold text-earth-indigo dark:text-white truncate">
               {room.title}
             </h3>
           </div>
@@ -50,10 +50,10 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-surface-low dark:bg-white/10 flex items-center justify-center text-secondary dark:text-surface-dim hover:text-earth-indigo cursor-pointer shrink-0"
+            className="w-7 h-7 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-secondary dark:text-surface-dim hover:text-earth-indigo dark:hover:text-white cursor-pointer transition-colors"
             title="Close Preview"
           >
-            <X className="w-4 h-4" />
+            <X className="w-3.5 h-3.5" />
           </button>
         </div>
 
@@ -112,7 +112,7 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
       </div>
 
       {/* Desktop Floating Preview Card (>= 768px) */}
-      <div className="hidden md:block absolute top-20 right-20 z-20 w-84 bg-clay/95 dark:bg-earth-container/95 backdrop-blur-2xl border border-surface-dim dark:border-white/20 rounded-3xl p-5 shadow-2xl space-y-4 animate-in fade-in zoom-in-95 duration-200 pointer-events-auto text-left">
+      <div className="hidden md:block absolute top-20 right-20 z-20 w-84 bg-white/60 dark:bg-black/60 backdrop-blur-2xl border border-white/40 dark:border-white/15 rounded-3xl p-5 shadow-2xl space-y-4 animate-in fade-in zoom-in-95 duration-200 pointer-events-auto text-left">
         <div className="flex justify-between items-start">
           <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-vitality-coral/15 text-vitality-coral font-sans text-[10px] font-bold">
             <Home className="w-3 h-3" />
