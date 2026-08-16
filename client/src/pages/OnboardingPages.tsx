@@ -79,7 +79,7 @@ export const OnboardingChapter1Page: React.FC = () => {
     try {
       await profileService.saveOnboardingChapter1({
         displayName: `${firstName} ${lastName}`.trim() || 'Priya Sundaram',
-        headline: occupation ? `${occupation} in ${city}` : 'Living OS Member',
+        headline: occupation ? `${occupation} in ${city}` : 'Verified Resident',
         budgetRange: { min: Math.max(8000, budget - 4000), max: budget + 4000, currency: 'INR' },
         preferredLocations: [city],
       });
@@ -942,7 +942,7 @@ export const OnboardingChapter4Page: React.FC = () => {
               Match Affinity & Synergy
             </h1>
             <p className="font-sans text-body-lg text-secondary leading-relaxed">
-              Final calibration. Define non-negotiables, select desired roommate archetypes, and generate your Living OS compatibility ledger.
+              Final calibration. Define non-negotiables, select desired roommate archetypes, and generate your shared living compatibility ledger.
             </p>
           </div>
 
@@ -1070,7 +1070,7 @@ export const OnboardingChapter4Page: React.FC = () => {
                 <div className="space-y-3">
                   <SelectionChip
                     orientation="horizontal"
-                    label="Agile Living OS Cadence"
+                    label="Structured Living Cadence"
                     subtitle="Automatic chore rotations, weekly supply checklists, and instant 1-click UPI expense splitting."
                     selected={agreementModel === 'cadence'}
                     onClick={() => setAgreementModel('cadence')}

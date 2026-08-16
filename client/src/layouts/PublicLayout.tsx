@@ -19,7 +19,7 @@ export const PublicLayout: React.FC = () => {
         <Container className="flex flex-col sm:flex-row items-center justify-between gap-6 text-secondary text-metadata">
           <div>
             <p className="font-serif text-body-md font-bold text-earth-indigo">ROOMMATE</p>
-            <p className="mt-0.5">ROOMMATE Living OS &copy; 2026. All rights reserved.</p>
+            <p className="mt-0.5">ROOMMATE &copy; 2026. All rights reserved.</p>
           </div>
           <div className="flex flex-wrap items-center gap-6">
             <Link to="/stay/safety" className="hover:text-earth-indigo transition-colors">

@@ -67,7 +67,7 @@ export const RevealShowcasePage: React.FC = () => {
           >
             <span className="text-label-caps text-vitality-coral font-bold tracking-[0.25em] text-xs uppercase inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-vitality-coral/10 border border-vitality-coral/25">
               <Sparkles className="w-3.5 h-3.5" />
-              The Living OS &bull; 2026 Edition
+              The Living Platform &bull; 2026 Edition
             </span>
           </motion.div>
 
@@ -263,7 +263,7 @@ export const RevealShowcasePage: React.FC = () => {
               ROOMMATE
             </span>
             <span>&bull;</span>
-            <span>Art Directed Living OS</span>
+            <span>Art Directed Living Platform</span>
           </div>
 
           <div>

@@ -630,7 +630,7 @@ export const StayDashboardPage: React.FC = () => {
             >
               <FileText className="w-5 h-5 text-vitality-coral mb-2 group-hover:scale-110 transition-transform" />
               <div className="font-serif text-xs font-bold text-earth-indigo">House Agreement</div>
-              <span className="font-sans text-[10px] text-secondary">v2.1 Living OS</span>
+              <span className="font-sans text-[10px] text-secondary">v2.1 Tenancy</span>
             </button>
 
             <button
@@ -746,7 +746,7 @@ export const AgreementBuilderPage: React.FC = () => {
       id: 'dim-3',
       title: 'Guest & Visitor Policy',
       value: '2 Nights Max / Week',
-      note: 'Notify flatmates via Living OS 24 hours in advance for overnight visitors.',
+      note: 'Notify flatmates via Roommate 24 hours in advance for overnight visitors.',
     },
     {
       id: 'dim-4',
@@ -785,7 +785,7 @@ export const AgreementBuilderPage: React.FC = () => {
             className="flex items-center gap-2 font-sans text-xs font-semibold text-secondary hover:text-earth-indigo transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Back to Living OS</span>
+            <span>Back to Stay Hub</span>
           </button>
 
           <div className="space-y-2">
@@ -811,7 +811,7 @@ export const AgreementBuilderPage: React.FC = () => {
 
         <div className="pt-8 border-t border-surface-dim text-xs font-sans text-secondary">
           <span>Active Version: </span>
-          <strong className="text-earth-indigo">v2.1 Roommate Living OS • Bengaluru</strong>
+          <strong className="text-earth-indigo">v2.1 Roommate Tenancy • Bengaluru</strong>
         </div>
       </div>
 
@@ -966,7 +966,7 @@ export const ExpensesPage: React.FC = () => {
           className="flex items-center gap-2 font-sans text-xs font-semibold text-secondary hover:text-earth-indigo transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to Living OS</span>
+          <span>Back to Stay Hub</span>
         </button>
         <span className="font-serif text-headline-sm font-bold text-earth-indigo">
           Shared Household Ledger
@@ -1166,7 +1166,7 @@ export const SafetyCenterPage: React.FC = () => {
           className="flex items-center gap-2 font-sans text-xs font-semibold text-secondary hover:text-earth-indigo transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to Living OS</span>
+          <span>Back to Stay Hub</span>
         </button>
         <span className="font-serif text-headline-sm font-bold text-earth-indigo">
           Safety Center
@@ -1325,7 +1325,7 @@ export const SafetyCenterPage: React.FC = () => {
                 <span className="text-secondary text-[11px]">Direct transfer or settlement upon verified replacement.</span>
               </div>
               <div className="bg-surface-low dark:bg-surface-container p-4 rounded-xl space-y-1">
-                <span className="font-bold text-earth-indigo block">3. Living OS Concierge</span>
+                <span className="font-bold text-earth-indigo block">3. Roommate Concierge</span>
                 <span className="text-secondary text-[11px]">Assistance with replacement vetting & handover.</span>
               </div>
             </div>
@@ -1416,7 +1416,7 @@ export const TravelModePage: React.FC = () => {
           <div className="space-y-4 max-w-3xl">
             <div className="flex items-center gap-2">
               <span className="px-3.5 py-1 rounded-full bg-vitality-coral text-white font-sans text-[10px] font-bold uppercase tracking-widest shadow-md">
-                ROOMMATE Living OS • Travel Mode
+                ROOMMATE • Travel Mode
               </span>
               <span className="hidden sm:inline-flex items-center gap-1 font-sans text-xs font-bold text-trust-teal">
                 <ShieldCheck className="w-3.5 h-3.5" />

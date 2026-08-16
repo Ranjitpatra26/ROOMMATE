@@ -1151,7 +1151,7 @@ export const RoomDetailPage: React.FC = () => {
           <section className="bg-clay p-6 rounded-2xl border border-surface-dim shadow-sm space-y-4">
             <h3 className="font-serif text-headline-sm font-bold text-earth-indigo flex items-center gap-2">
               <ShieldCheck className="w-5 h-5 text-trust-teal" />
-              <span>Living OS Household Standards</span>
+              <span>House Living Standards</span>
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-sans">
               <div className="p-3.5 bg-surface-low rounded-xl border border-surface-dim space-y-1">
@@ -1300,7 +1300,7 @@ export const RoomDetailPage: React.FC = () => {
                 </div>
 
                 <div className="p-4 bg-surface-low rounded-xl border border-surface-dim space-y-1">
-                  <div className="font-bold text-earth-indigo">Automated Living OS Guarantee</div>
+                  <div className="font-bold text-earth-indigo">Verified Resident Guarantee</div>
                   <div className="text-[11px] text-secondary">
                     Your application includes your Aadhaar Verified Trust Score (960) and Circadian Match (98%).
                   </div>

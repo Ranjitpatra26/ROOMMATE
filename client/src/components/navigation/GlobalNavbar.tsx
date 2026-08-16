@@ -202,8 +202,8 @@ export const GlobalNavbar: React.FC<GlobalNavbarProps> = ({ variant = 'auto' }) 
           <Link
             to="/reveal"
             className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border border-sky-400/40 dark:border-sky-300/30 bg-sky-400/10 hover:bg-sky-400/20 text-sky-500 dark:text-sky-300 hover:text-sky-600 dark:hover:text-sky-100 transition-all duration-200 shadow-sm hover:shadow-sky-400/25 hover:scale-105 cursor-pointer group z-20"
-            title="Explore Living OS Reveal"
-            aria-label="Explore Living OS Reveal"
+            title="Explore Reveal Showcase"
+            aria-label="Explore Reveal Showcase"
           >
             <Sparkles className="w-3.5 h-3.5 group-hover:rotate-12 transition-transform" />
           </Link>
@@ -267,7 +267,7 @@ export const GlobalNavbar: React.FC<GlobalNavbarProps> = ({ variant = 'auto' }) 
 
                 <div className="pt-4 border-t border-surface-dim">
                   <span className="text-[10px] font-bold tracking-widest uppercase text-vitality-coral block mb-3">
-                    Living OS & Tenancy
+                    Stay & Tenancy
                   </span>
                   <div className="space-y-1">
                     {OPERATIONAL_NAV_ITEMS.map((item) => {

@@ -68,7 +68,7 @@ export const AuthLayout: React.FC = () => {
           >
             <span className="text-label-caps text-vitality-coral font-bold tracking-[0.2em] uppercase text-xs inline-flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-vitality-coral animate-pulse" />
-              The Living OS
+              Art-Directed Living
             </span>
           </motion.div>
 
@@ -144,7 +144,7 @@ export const AuthLayout: React.FC = () => {
             </span>
           </Link>
           <span className="text-label-caps text-vitality-coral font-bold tracking-[0.15em] text-[10px]">
-            The Living OS
+            Curated Living
           </span>
         </div>
 
@@ -164,7 +164,7 @@ export const AuthLayout: React.FC = () => {
 
         {/* Bottom Copyright Notice */}
         <div className="text-center text-metadata text-secondary py-3 z-10">
-          <span>&copy; 2026 ROOMMATE Living OS</span>
+          <span>&copy; 2026 ROOMMATE. All rights reserved.</span>
         </div>
       </div>
     </div>

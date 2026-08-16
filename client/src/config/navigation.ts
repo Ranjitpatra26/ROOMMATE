@@ -47,8 +47,8 @@ export const MAIN_NAV_ITEMS: NavItemConfig[] = [
     description: 'Multidimensional lifestyle resonance',
   },
   {
-    id: 'living-os',
-    name: 'Living OS',
+    id: 'living-stay',
+    name: 'My Stay',
     path: '/stay',
     icon: Home,
     category: 'primary',

@@ -109,7 +109,7 @@ export const LandingPage: React.FC = () => {
           <div className="md:col-span-5 space-y-6">
             <ScrollReveal direction="left">
               <span className="font-sans text-label-caps text-vitality-coral uppercase tracking-widest block font-bold">
-                The Living OS Manifesto
+                The Living Manifesto
               </span>
               <h2 className="font-serif text-headline-lg-mobile md:text-headline-lg text-earth-indigo leading-tight font-bold">
                 People + Spaces + Connections.
