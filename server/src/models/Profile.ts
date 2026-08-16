@@ -1,22 +1,22 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface ILifestyleDNA {
-  chronotype: 'early_bird' | 'night_owl' | 'flexible';
+  chronotype: 'early_bird' | 'night_owl' | 'flexible' | 'balanced';
   cleanlinessLevel: number; // 1-5
   socialEnergy: number; // 1-5
-  workStyle: 'wfh_full' | 'hybrid' | 'office_only';
-  guestPolicy: 'rarely' | 'weekends_only' | 'open';
+  workStyle: 'wfh_full' | 'remote' | 'hybrid' | 'office_only' | 'in_office';
+  guestPolicy: 'rarely' | 'weekends_only' | 'open' | 'flexible';
   petTolerance: string[];
   smokingTolerance: boolean;
 }
 
 export const LifestyleDNASchema = new Schema<ILifestyleDNA>(
   {
-    chronotype: { type: String, enum: ['early_bird', 'night_owl', 'flexible'], default: 'flexible' },
+    chronotype: { type: String, enum: ['early_bird', 'night_owl', 'flexible', 'balanced'], default: 'flexible' },
     cleanlinessLevel: { type: Number, min: 1, max: 5, default: 3 },
     socialEnergy: { type: Number, min: 1, max: 5, default: 3 },
-    workStyle: { type: String, enum: ['wfh_full', 'hybrid', 'office_only'], default: 'hybrid' },
-    guestPolicy: { type: String, enum: ['rarely', 'weekends_only', 'open'], default: 'weekends_only' },
+    workStyle: { type: String, enum: ['wfh_full', 'remote', 'hybrid', 'office_only', 'in_office'], default: 'hybrid' },
+    guestPolicy: { type: String, enum: ['rarely', 'weekends_only', 'open', 'flexible'], default: 'weekends_only' },
     petTolerance: [{ type: String }],
     smokingTolerance: { type: Boolean, default: false },
   },

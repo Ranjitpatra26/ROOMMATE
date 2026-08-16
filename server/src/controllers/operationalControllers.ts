@@ -14,18 +14,52 @@ export const getFeatured = async (_req: Request, res: Response, next: NextFuncti
 
 export const queryDiscover = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { city, minRent, maxRent } = req.query;
+    const { city, chronotype, minRent, maxRent, search } = req.query;
     const roomFilter: Record<string, unknown> = { status: 'available' };
-    if (city) roomFilter['address.city'] = new RegExp(String(city), 'i');
-    if (minRent || maxRent) {
-      roomFilter['pricing.monthlyRent'] = {
-        ...(minRent ? { $gte: Number(minRent) } : {}),
-        ...(maxRent ? { $lte: Number(maxRent) } : {}),
-      };
+    const profileFilter: Record<string, unknown> = {};
+
+    if (city && city !== 'all') {
+      const cityRegex = new RegExp(String(city), 'i');
+      roomFilter['$or'] = [
+        { 'address.city': cityRegex },
+        { 'address.street': cityRegex },
+        { title: cityRegex },
+      ];
+      profileFilter['$or'] = [
+        { preferredLocations: cityRegex },
+        { bio: cityRegex },
+      ];
     }
 
-    const rooms = await RoomModel.find(roomFilter).limit(20);
-    const profiles = await ProfileModel.find().limit(20);
+    if (search) {
+      const searchRegex = new RegExp(String(search), 'i');
+      const existingOr = Array.isArray(profileFilter['$or']) ? (profileFilter['$or'] as any[]) : [];
+      profileFilter['$or'] = [
+        ...existingOr,
+        { displayName: searchRegex },
+        { headline: searchRegex },
+        { bio: searchRegex },
+        { preferredLocations: searchRegex },
+        { visualTags: searchRegex },
+      ];
+    }
+
+    if (chronotype && chronotype !== 'all') {
+      profileFilter['lifestyleDNA.chronotype'] = chronotype;
+    }
+
+    if (minRent || maxRent) {
+      const rentCond: Record<string, number> = {};
+      if (minRent) rentCond['$gte'] = Number(minRent);
+      if (maxRent) rentCond['$lte'] = Number(maxRent);
+      roomFilter['pricing.monthlyRent'] = rentCond;
+      if (maxRent) {
+        profileFilter['budgetRange.min'] = { $lte: Number(maxRent) };
+      }
+    }
+
+    const rooms = await RoomModel.find(roomFilter).limit(60);
+    const profiles = await ProfileModel.find(profileFilter).limit(60);
     res.status(200).json({ success: true, data: { rooms, profiles } });
   } catch (error) {
     next(error);

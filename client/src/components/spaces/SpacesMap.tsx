@@ -315,6 +315,92 @@ export const SPACES_NEIGHBORHOODS: NeighborhoodMapItem[] = [
     vibe: 'Corporate Skyline & Nightlife',
     description: 'Futuristic glass towers, CyberHub fine dining, top MNC offices, and high-rise living.',
   },
+
+  // --- Hyderabad ---
+  {
+    id: 'jubilee-hills',
+    name: 'Jubilee Hills',
+    city: 'Hyderabad',
+    cityId: 'hyderabad',
+    coordinates: [78.4068, 17.4319],
+    roomsCount: 4,
+    avgRent: '₹26,000 / mo',
+    walkability: '89/100',
+    transit: 'Blue Line Metro',
+    vibe: 'Hillside Studios & Gourmet Cafés',
+    description: 'Picturesque granite boulder views, high-end design studios, specialty roasters, and peaceful residential lanes.',
+  },
+  {
+    id: 'gachibowli',
+    name: 'Gachibowli',
+    city: 'Hyderabad',
+    cityId: 'hyderabad',
+    coordinates: [78.3489, 17.4401],
+    roomsCount: 3,
+    avgRent: '₹18,000 / mo',
+    walkability: '86/100',
+    transit: 'HITEC Tech Corridor',
+    vibe: 'Modern Tech & Gated Communities',
+    description: 'Proximity to global tech giants, Olympic sports complexes, wide roads, and active roommate communities.',
+  },
+
+  // --- Goa ---
+  {
+    id: 'assagao',
+    name: 'Assagao',
+    city: 'Goa',
+    cityId: 'goa',
+    coordinates: [73.7712, 15.5910],
+    roomsCount: 3,
+    avgRent: '₹32,000 / mo',
+    walkability: '92/100',
+    transit: 'Coastal Arterial Link',
+    vibe: 'Portuguese Villas & Slow Living',
+    description: 'Heritage laterite cottages, lush banyan canopies, organic farm-to-table eateries, and creative artists.',
+  },
+  {
+    id: 'anjuna',
+    name: 'Anjuna',
+    city: 'Goa',
+    cityId: 'goa',
+    coordinates: [73.7445, 15.5800],
+    roomsCount: 2,
+    avgRent: '₹28,000 / mo',
+    walkability: '88/100',
+    transit: 'Beach Road Spine',
+    vibe: 'Coastal Breezes & Creative Studios',
+    description: 'Tranquil coconut groves, ocean air, indie game developers, and mindful communal living.',
+  },
+
+  // --- Chennai ---
+  {
+    id: 'adyar',
+    name: 'Adyar',
+    city: 'Chennai',
+    cityId: 'chennai',
+    coordinates: [80.2565, 13.0067],
+    roomsCount: 3,
+    avgRent: '₹19,000 / mo',
+    walkability: '94/100',
+    transit: 'MRTS & OMR Spine',
+    vibe: 'Estuary Views & Cultural Heritage',
+    description: 'Theosophical Society greenery, breezy river estuary balconies, classical music riyaaz, and quiet lanes.',
+  },
+
+  // --- Kolkata ---
+  {
+    id: 'ballygunge',
+    name: 'Ballygunge',
+    city: 'Kolkata',
+    cityId: 'kolkata',
+    coordinates: [88.3639, 22.5280],
+    roomsCount: 3,
+    avgRent: '₹17,500 / mo',
+    walkability: '95/100',
+    transit: 'Circular Transit & Metro',
+    vibe: 'High Ceilings & Literary Adda',
+    description: 'Vintage red-oxide floors, louvered teak balconies, tranquil lake walks at Rabindra Sarobar, and rich cultural heritage.',
+  },
 ];
 
 // Privacy-safe neighborhood coordinate mapping
@@ -325,6 +411,8 @@ const NEIGHBORHOOD_COORDINATES: Record<string, [number, number]> = {
   koramangala: [77.6200, 12.9350],
   'hsr layout': [77.6430, 12.9120],
   whitefield: [77.7500, 12.9698],
+  'lavelle road': [77.5975, 12.9719],
+  malleshwaram: [77.5700, 13.0050],
   bengaluru: [77.5946, 12.9716],
 
   // Mumbai
@@ -332,24 +420,52 @@ const NEIGHBORHOOD_COORDINATES: Record<string, [number, number]> = {
   bandra: [72.8300, 19.0600],
   'khar west': [72.8350, 19.0700],
   juhu: [72.8270, 19.1075],
+  versova: [72.8150, 19.1350],
+  colaba: [72.8280, 18.9067],
   mumbai: [72.8258, 19.0596],
 
   // Pune
   baner: [73.7900, 18.5600],
   balewadi: [73.7740, 18.5760],
   'koregaon park': [73.8950, 18.5360],
+  'kalyani nagar': [73.9020, 18.5480],
   aundh: [73.8050, 18.5580],
   pune: [73.7997, 18.5590],
 
   // Delhi NCR
   'hauz khas': [77.2065, 28.5494],
+  'greater kailash': [77.2410, 28.5380],
+  'vasant kunj': [77.1580, 28.5290],
+  'golf course road': [77.0878, 28.4595],
+  'cyber city': [77.0880, 28.4950],
   saket: [77.2150, 28.5245],
   delhi: [77.2090, 28.6139],
+
+  // Hyderabad
+  'jubilee hills': [78.4068, 17.4319],
+  'banjara hills': [78.4350, 17.4150],
+  gachibowli: [78.3489, 17.4401],
+  madhapur: [78.3870, 17.4480],
+  hyderabad: [78.4867, 17.3850],
+
+  // Goa
+  assagao: [73.7712, 15.5910],
+  anjuna: [73.7445, 15.5800],
+  siolim: [73.7650, 15.6200],
+  goa: [73.8180, 15.4909],
 
   // Chennai
   adyar: [80.2565, 13.0067],
   'besant nagar': [80.2660, 12.9980],
+  alwarpet: [80.2490, 13.0330],
   chennai: [80.2707, 13.0827],
+
+  // Kolkata
+  ballygunge: [88.3639, 22.5280],
+  'park street': [88.3530, 22.5530],
+  'salt lake': [88.4150, 22.5850],
+  'new town': [88.4680, 22.5920],
+  kolkata: [88.3639, 22.5726],
 };
 
 function getApproximateCoords(locationStr?: string, cityStr?: string): [number, number] {
@@ -364,6 +480,10 @@ function getApproximateCoords(locationStr?: string, cityStr?: string): [number, 
   if (cityStr?.toLowerCase().includes('mumbai')) return NEIGHBORHOOD_COORDINATES.mumbai;
   if (cityStr?.toLowerCase().includes('pune')) return NEIGHBORHOOD_COORDINATES.pune;
   if (cityStr?.toLowerCase().includes('delhi')) return NEIGHBORHOOD_COORDINATES.delhi;
+  if (cityStr?.toLowerCase().includes('hyderabad')) return NEIGHBORHOOD_COORDINATES.hyderabad;
+  if (cityStr?.toLowerCase().includes('goa')) return NEIGHBORHOOD_COORDINATES.goa;
+  if (cityStr?.toLowerCase().includes('chennai')) return NEIGHBORHOOD_COORDINATES.chennai;
+  if (cityStr?.toLowerCase().includes('kolkata')) return NEIGHBORHOOD_COORDINATES.kolkata;
   return NEIGHBORHOOD_COORDINATES.bengaluru;
 }
 

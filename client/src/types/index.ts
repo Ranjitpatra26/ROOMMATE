@@ -12,16 +12,16 @@ export interface User {
 }
 
 export interface Chronotype {
-  type: 'early_bird' | 'night_owl' | 'flexible';
+  type: 'early_bird' | 'night_owl' | 'flexible' | 'balanced';
   score: number; // 0-100
 }
 
 export interface LifestyleDNA {
-  chronotype: 'early_bird' | 'night_owl' | 'flexible';
+  chronotype: 'early_bird' | 'night_owl' | 'flexible' | 'balanced';
   cleanlinessLevel: number; // 1-5
   socialEnergy: number; // 1-5
-  workStyle: 'wfh_full' | 'hybrid' | 'office_only';
-  guestPolicy: 'rarely' | 'weekends_only' | 'open';
+  workStyle: 'wfh_full' | 'remote' | 'hybrid' | 'office_only' | 'in_office';
+  guestPolicy: 'rarely' | 'weekends_only' | 'open' | 'flexible';
   petTolerance: string[];
   smokingTolerance: boolean;
 }

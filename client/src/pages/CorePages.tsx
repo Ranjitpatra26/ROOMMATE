@@ -49,16 +49,16 @@ import { LiveLocationProvider } from '../context/LiveLocationContext.js';
 export const DiscoveryPage: React.FC = () => {
   const [locationFilter, setLocationFilter] = useState('');
   const [chronotypeFilter, setChronotypeFilter] = useState('all');
-  const [maxBudget, setMaxBudget] = useState(35000);
+  const [maxBudget, setMaxBudget] = useState(100000);
   const [selectedCity, setSelectedCity] = useState('all');
 
   const { data: serverData } = useQuery({
-    queryKey: ['discover', locationFilter, chronotypeFilter, maxBudget],
+    queryKey: ['discover', selectedCity, locationFilter, chronotypeFilter, maxBudget],
     queryFn: () =>
       discoverService.queryDiscover({
-        city: locationFilter,
+        city: selectedCity !== 'all' ? selectedCity : locationFilter || undefined,
         chronotype: chronotypeFilter !== 'all' ? chronotypeFilter : undefined,
-        maxRent: maxBudget,
+        maxRent: maxBudget < 100000 ? maxBudget : undefined,
       }),
   });
 
@@ -69,21 +69,51 @@ export const DiscoveryPage: React.FC = () => {
 
   // Filter against Indian demo criteria
   const profiles = baseProfiles.filter((p) => {
-    if (locationFilter.trim()) {
-      const query = locationFilter.toLowerCase();
-      const locMatch = p.preferredLocations.some((loc) => loc.toLowerCase().includes(query));
-      const bioMatch = p.bio.toLowerCase().includes(query);
-      const headlineMatch = p.headline.toLowerCase().includes(query);
-      if (!locMatch && !bioMatch && !headlineMatch) return false;
+    // 1. City / Metro filter
+    if (selectedCity && selectedCity !== 'all') {
+      const cityQuery = selectedCity.toLowerCase();
+      const cityMatch =
+        p.preferredLocations?.some((loc) => loc.toLowerCase().includes(cityQuery)) ||
+        (p.bio && p.bio.toLowerCase().includes(cityQuery));
+      if (!cityMatch) return false;
     }
+
+    // 2. Keyword / Neighborhood Search
+    if (locationFilter.trim()) {
+      const query = locationFilter.toLowerCase().trim();
+      const locMatch = p.preferredLocations?.some((loc) => loc.toLowerCase().includes(query));
+      const bioMatch = p.bio?.toLowerCase().includes(query);
+      const headlineMatch = p.headline?.toLowerCase().includes(query);
+      const nameMatch = p.displayName?.toLowerCase().includes(query);
+      const tagMatch = p.visualTags?.some((t) => t.toLowerCase().includes(query));
+      if (!locMatch && !bioMatch && !headlineMatch && !nameMatch && !tagMatch) return false;
+    }
+
+    // 3. Chronotype / Circadian Rhythm
     if (chronotypeFilter !== 'all') {
       if (p.lifestyleDNA?.chronotype !== chronotypeFilter) return false;
     }
-    if (p.budgetRange.min > maxBudget) {
+
+    // 4. Budget Range
+    if (p.budgetRange && p.budgetRange.min > maxBudget) {
       return false;
     }
+
     return true;
   });
+
+  const activeFilterCount =
+    (selectedCity !== 'all' ? 1 : 0) +
+    (locationFilter.trim() ? 1 : 0) +
+    (chronotypeFilter !== 'all' ? 1 : 0) +
+    (maxBudget < 100000 ? 1 : 0);
+
+  const handleResetFilters = () => {
+    setLocationFilter('');
+    setSelectedCity('all');
+    setChronotypeFilter('all');
+    setMaxBudget(100000);
+  };
 
   const compatibilityScores = [98, 95, 94, 93, 92, 91, 90, 89, 88, 87, 86, 85];
 
@@ -102,7 +132,7 @@ export const DiscoveryPage: React.FC = () => {
             Harmonic Cohabitants
           </h1>
           <p className="font-sans text-body-md text-secondary max-w-2xl leading-relaxed">
-            Curated Indian roommates mapped across acoustic profiles, circadian rhythms, and verified rental track records in Bengaluru, Mumbai, Pune, Delhi NCR, Hyderabad, and Goa.
+            Curated Indian roommates mapped across acoustic profiles, circadian rhythms, and verified rental track records in Bengaluru, Mumbai, Pune, Delhi NCR, Hyderabad, Goa, Kolkata, and Chennai.
           </p>
         </div>
 
@@ -125,6 +155,8 @@ export const DiscoveryPage: React.FC = () => {
         onBudgetChange={setMaxBudget}
         selectedCity={selectedCity}
         onCityChange={setSelectedCity}
+        onResetFilters={handleResetFilters}
+        activeFilterCount={activeFilterCount}
       />
 
       {/* Results Grid / Showcase */}
@@ -140,24 +172,19 @@ export const DiscoveryPage: React.FC = () => {
           ))}
         </StaggerContainer>
       ) : (
-        <div className="text-center py-16 bg-surface-low rounded-3xl border border-surface-dim space-y-4">
+        <div className="text-center py-16 bg-surface-low dark:bg-surface-high rounded-3xl border border-surface-dim space-y-4">
           <p className="font-serif text-headline-sm text-earth-indigo font-bold">
             No cohabitants found matching your current filter.
           </p>
           <p className="font-sans text-xs text-secondary">
-            Try searching for "Indiranagar", "Bandra", "Baner", "Hauz Khas", or adjusting your maximum budget.
+            Try searching for "Indiranagar", "Bandra", "Baner", "Hauz Khas", "Assagao", or resetting your filters.
           </p>
           <Button
             variant="secondary"
             size="md"
-            onClick={() => {
-              setLocationFilter('');
-              setSelectedCity('all');
-              setChronotypeFilter('all');
-              setMaxBudget(35000);
-            }}
+            onClick={handleResetFilters}
           >
-            Reset Filters
+            Reset All Filters
           </Button>
         </div>
       )}
