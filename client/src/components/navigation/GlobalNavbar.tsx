@@ -68,7 +68,7 @@ export const GlobalNavbar: React.FC<GlobalNavbarProps> = ({ variant = 'auto' }) 
               className="flex items-center gap-2 group cursor-pointer shrink-0"
               onClick={closeMobileMenu}
             >
-              <span className="font-serif text-headline-sm font-bold tracking-tight text-earth-indigo">
+              <span className="font-serif text-headline-sm font-bold tracking-tight text-earth-indigo group-hover:text-vitality-coral transition-colors duration-200">
                 ROOMMATE
               </span>
             </Link>
