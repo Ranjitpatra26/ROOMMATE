@@ -7,9 +7,9 @@ export const MapLegend: React.FC<{ className?: string }> = ({ className = '' }) 
   return (
     <div className={`relative pointer-events-auto text-left hidden sm:block ${className}`}>
       {isOpen ? (
-        <div className="absolute bottom-full mb-2 left-0 bg-white/60 dark:bg-black/60 backdrop-blur-2xl border border-white/40 dark:border-white/15 rounded-3xl p-3.5 shadow-2xl space-y-2.5 w-64 animate-in fade-in zoom-in-95 duration-200 z-40">
-          <div className="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-2">
-            <span className="font-sans text-[11px] font-bold text-[#0f172a] dark:text-white uppercase tracking-wider flex items-center gap-1.5">
+        <div className="absolute bottom-full mb-2 left-0 bg-[#fcf8fa]/95 dark:bg-[#1e2433]/95 backdrop-blur-2xl border border-[#dcd9db]/60 dark:border-white/20 rounded-3xl p-3.5 shadow-2xl space-y-2.5 w-64 animate-in fade-in zoom-in-95 duration-200 z-40">
+          <div className="flex items-center justify-between border-b border-surface-dim dark:border-white/10 pb-2">
+            <span className="font-sans text-[11px] font-bold text-earth-indigo dark:text-white uppercase tracking-wider flex items-center gap-1.5">
               <Info className="w-3.5 h-3.5 text-vitality-coral" />
               <span>Map Legend</span>
             </span>
@@ -29,7 +29,7 @@ export const MapLegend: React.FC<{ className?: string }> = ({ className = '' }) 
                 🏠
               </span>
               <div>
-                <span className="font-bold text-[#0f172a] dark:text-white block text-[11px]">
+                <span className="font-bold text-earth-indigo dark:text-white block text-[11px]">
                   Verified Rooms
                 </span>
                 <span className="text-[9px] text-secondary dark:text-surface-dim block">
@@ -43,7 +43,7 @@ export const MapLegend: React.FC<{ className?: string }> = ({ className = '' }) 
                 👤
               </span>
               <div>
-                <span className="font-bold text-[#0f172a] dark:text-white block text-[11px]">
+                <span className="font-bold text-earth-indigo dark:text-white block text-[11px]">
                   People Discovery
                 </span>
                 <span className="text-[9px] text-secondary dark:text-surface-dim block">
@@ -57,7 +57,7 @@ export const MapLegend: React.FC<{ className?: string }> = ({ className = '' }) 
                 <span className="w-2 h-2 rounded-full bg-vitality-coral animate-ping" />
               </span>
               <div>
-                <span className="font-bold text-[#0f172a] dark:text-white block text-[11px]">
+                <span className="font-bold text-earth-indigo dark:text-white block text-[11px]">
                   Live Location (~110m)
                 </span>
                 <span className="text-[9px] text-secondary dark:text-surface-dim block">
@@ -71,7 +71,7 @@ export const MapLegend: React.FC<{ className?: string }> = ({ className = '' }) 
                 <Ghost className="w-3 h-3 text-purple-500" />
               </span>
               <div>
-                <span className="font-bold text-[#0f172a] dark:text-white block text-[11px]">
+                <span className="font-bold text-earth-indigo dark:text-white block text-[11px]">
                   Ghost Mode
                 </span>
                 <span className="text-[9px] text-secondary dark:text-surface-dim block">
@@ -85,7 +85,7 @@ export const MapLegend: React.FC<{ className?: string }> = ({ className = '' }) 
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="px-3.5 py-2.5 bg-white/45 dark:bg-black/45 backdrop-blur-xl border border-white/40 dark:border-white/15 rounded-full shadow-md font-sans text-xs font-bold text-[#0f172a] dark:text-white hover:border-vitality-coral flex items-center gap-1.5 transition-all cursor-pointer"
+          className="px-3.5 py-2.5 bg-[#fcf8fa]/90 dark:bg-[#1e2433]/90 backdrop-blur-xl border border-[#dcd9db]/60 dark:border-white/20 rounded-full shadow-lg font-sans text-xs font-bold text-secondary dark:text-surface-dim hover:text-earth-indigo dark:hover:text-white hover:border-vitality-coral flex items-center gap-1.5 transition-all cursor-pointer"
           title="Open Map Legend"
           aria-label="Map Legend"
         >

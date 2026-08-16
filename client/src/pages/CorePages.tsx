@@ -573,18 +573,18 @@ export const SpatialCityPage: React.FC = () => {
     <LiveLocationProvider>
       <div className="w-full h-screen bg-clay dark:bg-earth-container text-earth-indigo relative overflow-hidden select-none transition-colors duration-200">
       {/* Top Floating View Mode Switcher */}
-      <div className="absolute top-5 left-1/2 -translate-x-1/2 z-overlay flex items-center gap-1.5 p-1 bg-white/45 dark:bg-black/45 backdrop-blur-xl border border-white/40 dark:border-white/15 rounded-full shadow-lg pointer-events-auto">
+      <div className="absolute top-5 left-1/2 -translate-x-1/2 z-overlay flex items-center gap-1.5 p-1 bg-[#1e2433]/95 backdrop-blur-xl border border-white/10 rounded-full shadow-2xl pointer-events-auto">
         <button
           type="button"
           onClick={() => setViewMode('map')}
           className={`px-4 py-1.5 rounded-full font-sans text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
             viewMode === 'map'
               ? 'bg-vitality-coral text-white shadow-md'
-              : 'text-[#1a1f2c] dark:text-white hover:text-vitality-coral'
+              : 'text-white/80 hover:text-white'
           }`}
         >
-          <Globe className={`w-3.5 h-3.5 ${viewMode === 'map' ? 'text-white' : 'text-[#1a1f2c] dark:text-white'}`} />
-          <span className={viewMode === 'map' ? 'text-white font-bold' : 'text-[#1a1f2c] dark:text-white font-bold'}>
+          <Globe className={`w-3.5 h-3.5 ${viewMode === 'map' ? 'text-white' : 'text-white/80'}`} />
+          <span className={viewMode === 'map' ? 'text-white font-bold' : 'text-white/80 font-bold'}>
             Real Map
           </span>
         </button>
@@ -594,11 +594,11 @@ export const SpatialCityPage: React.FC = () => {
           className={`px-4 py-1.5 rounded-full font-sans text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
             viewMode === '3d'
               ? 'bg-vitality-coral text-white shadow-md'
-              : 'text-[#1a1f2c] dark:text-white hover:text-vitality-coral'
+              : 'text-white/80 hover:text-white'
           }`}
         >
-          <Layers className={`w-3.5 h-3.5 ${viewMode === '3d' ? 'text-white' : 'text-[#1a1f2c] dark:text-white'}`} />
-          <span className={viewMode === '3d' ? 'text-white font-bold' : 'text-[#1a1f2c] dark:text-white font-bold'}>
+          <Layers className={`w-3.5 h-3.5 ${viewMode === '3d' ? 'text-white' : 'text-white/80'}`} />
+          <span className={viewMode === '3d' ? 'text-white font-bold' : 'text-white/80 font-bold'}>
             3D Canvas
           </span>
         </button>

@@ -34,7 +34,7 @@ export const NearbyDrawer: React.FC<NearbyDrawerProps> = ({
   );
 
   return (
-    <div className="absolute top-24 left-6 md:left-8 z-50 max-w-sm sm:max-w-md w-full bg-white/60 dark:bg-black/60 backdrop-blur-2xl border border-white/40 dark:border-white/15 rounded-3xl p-5 shadow-2xl space-y-4 animate-in fade-in slide-in-from-top-4 duration-200 pointer-events-auto text-left">
+    <div className="absolute top-24 left-6 md:left-8 z-50 max-w-sm sm:max-w-md w-full bg-[#fcf8fa]/95 dark:bg-[#1e2433]/95 backdrop-blur-2xl border border-[#dcd9db]/60 dark:border-white/20 rounded-3xl p-5 shadow-2xl space-y-4 animate-in fade-in slide-in-from-top-4 duration-200 pointer-events-auto text-left">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-surface-dim/40 dark:border-white/10 pb-3">
         <div className="flex items-center gap-2">

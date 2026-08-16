@@ -1580,12 +1580,12 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
 
       {/* Upper-Left Editorial Hero Header in a Translucent Frosted Glass Card */}
       <div className="absolute top-36 sm:top-40 left-6 sm:left-8 z-30 pointer-events-none max-w-sm sm:max-w-md lg:max-w-lg select-none">
-        <div className="bg-white/45 dark:bg-black/45 backdrop-blur-xl border border-white/40 dark:border-white/15 rounded-3xl p-6 sm:p-7 shadow-xl space-y-2 pointer-events-auto transition-all">
+        <div className="bg-[#fcf8fa]/90 dark:bg-[#1e2433]/90 backdrop-blur-xl border border-[#dcd9db]/60 dark:border-white/20 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-2 pointer-events-auto transition-all">
           <div className="flex items-center gap-2 text-vitality-coral font-sans text-xs font-bold tracking-widest uppercase">
             <span className="w-5 h-[2px] bg-vitality-coral inline-block"></span>
             <span>Interactive Geographic Map</span>
           </div>
-          <h1 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-[#0f172a] dark:text-white leading-tight">
+          <h1 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-earth-indigo dark:text-white leading-tight">
             Spatial District <br />
             <span className="font-serif italic font-normal text-secondary dark:text-surface-dim">Geographic Vector Canvas</span>
           </h1>
@@ -1634,7 +1634,7 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
               className={`px-3.5 py-1.5 rounded-full font-sans text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 backdrop-blur-xl border shrink-0 ${
                 activeCity === c.id
                   ? 'bg-vitality-coral text-white border-vitality-coral shadow-lg'
-                  : 'bg-white/45 dark:bg-black/45 text-[#0f172a] dark:text-white border-white/40 dark:border-white/15 shadow-md hover:border-vitality-coral'
+                  : 'bg-[#fcf8fa]/90 dark:bg-[#1e2433]/90 text-earth-indigo dark:text-white border-[#dcd9db]/60 dark:border-white/20 shadow-md hover:border-vitality-coral'
               }`}
             >
               <MapPin className="w-3 h-3" />
@@ -1915,7 +1915,7 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
           type="button"
           onClick={handleLocateMe}
           disabled={locatingUser}
-          className="p-3 bg-white/45 dark:bg-black/45 backdrop-blur-xl border border-white/40 dark:border-white/15 text-[#0f172a] dark:text-white rounded-2xl shadow-lg hover:border-vitality-coral hover:text-vitality-coral transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center"
+          className="p-3 bg-[#fcf8fa]/90 dark:bg-[#1e2433]/90 backdrop-blur-xl border border-[#dcd9db]/60 dark:border-white/20 text-earth-indigo dark:text-white rounded-2xl shadow-xl hover:border-vitality-coral hover:text-vitality-coral transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center"
           title="Near Me — Locate your device position"
           aria-label="Near Me"
         >
@@ -1930,7 +1930,7 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
         <button
           type="button"
           onClick={handleResetView}
-          className="p-3 bg-white/45 dark:bg-black/45 backdrop-blur-xl border border-white/40 dark:border-white/15 text-[#0f172a] dark:text-white rounded-2xl shadow-lg hover:border-vitality-coral hover:text-vitality-coral transition-all cursor-pointer flex items-center justify-center"
+          className="p-3 bg-[#fcf8fa]/90 dark:bg-[#1e2433]/90 backdrop-blur-xl border border-[#dcd9db]/60 dark:border-white/20 text-earth-indigo dark:text-white rounded-2xl shadow-xl hover:border-vitality-coral hover:text-vitality-coral transition-all cursor-pointer flex items-center justify-center"
           title="Reset View — Return to default city perspective"
           aria-label="Reset View"
         >
@@ -1941,10 +1941,10 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
         <button
           type="button"
           onClick={handleTogglePitch}
-          className={`p-3 backdrop-blur-xl border rounded-2xl shadow-lg transition-all cursor-pointer flex items-center justify-center font-sans text-xs font-bold ${
+          className={`p-3 backdrop-blur-xl border rounded-2xl shadow-xl transition-all cursor-pointer flex items-center justify-center font-sans text-xs font-bold ${
             isPitch3D
               ? 'bg-vitality-coral text-white border-vitality-coral shadow-lg'
-              : 'bg-white/45 dark:bg-black/45 border-white/40 dark:border-white/15 text-[#0f172a] dark:text-white hover:border-vitality-coral'
+              : 'bg-[#fcf8fa]/90 dark:bg-[#1e2433]/90 border-[#dcd9db]/60 dark:border-white/20 text-earth-indigo dark:text-white hover:border-vitality-coral'
           }`}
           title="Toggle 3D Perspective"
           aria-label="Toggle 3D Perspective"
@@ -1956,7 +1956,7 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
         <button
           type="button"
           onClick={handleResetNorth}
-          className="p-3 bg-white/45 dark:bg-black/45 backdrop-blur-xl border border-white/40 dark:border-white/15 text-[#0f172a] dark:text-white rounded-2xl shadow-lg hover:border-vitality-coral hover:text-vitality-coral transition-all cursor-pointer flex items-center justify-center"
+          className="p-3 bg-[#fcf8fa]/90 dark:bg-[#1e2433]/90 backdrop-blur-xl border border-[#dcd9db]/60 dark:border-white/20 text-earth-indigo dark:text-white rounded-2xl shadow-xl hover:border-vitality-coral hover:text-vitality-coral transition-all cursor-pointer flex items-center justify-center"
           title="Reset Bearing to North"
           aria-label="Reset Bearing to North"
         >
@@ -1964,21 +1964,21 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
         </button>
 
         {/* Zoom Controls */}
-        <div className="flex flex-col rounded-2xl overflow-hidden border border-white/40 dark:border-white/15 shadow-lg bg-white/45 dark:bg-black/45 backdrop-blur-xl">
+        <div className="flex flex-col rounded-2xl overflow-hidden border border-[#dcd9db]/60 dark:border-white/20 shadow-xl bg-[#fcf8fa]/90 dark:bg-[#1e2433]/90 backdrop-blur-xl">
           <button
             type="button"
             onClick={handleZoomIn}
-            className="p-3 text-[#0f172a] dark:text-white hover:bg-black/5 dark:hover:bg-white/10 hover:text-vitality-coral transition-all cursor-pointer flex items-center justify-center"
+            className="p-3 text-earth-indigo dark:text-white hover:bg-surface-dim dark:hover:bg-white/10 hover:text-vitality-coral transition-all cursor-pointer flex items-center justify-center"
             title="Zoom In"
             aria-label="Zoom In"
           >
             <Plus className="w-5 h-5" />
           </button>
-          <div className="h-[1px] bg-black/10 dark:bg-white/10 w-full" />
+          <div className="h-[1px] bg-surface-dim/60 dark:bg-white/10 w-full" />
           <button
             type="button"
             onClick={handleZoomOut}
-            className="p-3 text-[#0f172a] dark:text-white hover:bg-black/5 dark:hover:bg-white/10 hover:text-vitality-coral transition-all cursor-pointer flex items-center justify-center"
+            className="p-3 text-earth-indigo dark:text-white hover:bg-surface-dim dark:hover:bg-white/10 hover:text-vitality-coral transition-all cursor-pointer flex items-center justify-center"
             title="Zoom Out"
             aria-label="Zoom Out"
           >

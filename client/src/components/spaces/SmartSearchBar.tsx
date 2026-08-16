@@ -280,7 +280,7 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
   return (
     <div ref={containerRef} className={`relative pointer-events-auto ${className}`}>
       {/* Search Input Bar */}
-      <div className="flex items-center gap-2.5 bg-white/45 dark:bg-black/45 backdrop-blur-xl px-3.5 py-2.5 rounded-full border border-white/40 dark:border-white/15 shadow-md transition-all focus-within:ring-2 focus-within:ring-vitality-coral/40 focus-within:border-vitality-coral">
+      <div className="flex items-center gap-2.5 bg-[#fcf8fa]/90 dark:bg-[#1e2433]/90 backdrop-blur-xl px-3.5 py-2.5 rounded-full border border-[#dcd9db]/60 dark:border-white/20 shadow-2xl transition-all focus-within:ring-2 focus-within:ring-vitality-coral/40 focus-within:border-vitality-coral">
         <div className="text-vitality-coral flex items-center justify-center">
           {isGeocodingLoading ? (
             <Loader2 className="w-4 h-4 animate-spin text-vitality-coral" />
@@ -301,7 +301,7 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
           onFocus={() => setIsOpen(true)}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
-          className="bg-transparent border-none font-sans text-xs sm:text-sm text-[#0f172a] dark:text-white placeholder-secondary/70 dark:placeholder-slate-400 w-44 sm:w-72 md:w-84 focus:outline-none"
+          className="bg-transparent border-none font-sans text-xs sm:text-sm text-earth-indigo dark:text-white placeholder-secondary/70 dark:placeholder-slate-400 w-44 sm:w-72 md:w-84 focus:outline-none"
         />
 
         {query && (
@@ -312,7 +312,7 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
               setIsOpen(false);
               inputRef.current?.focus();
             }}
-            className="text-secondary dark:text-surface-dim hover:text-earth-indigo dark:hover:text-white transition-colors p-0.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 cursor-pointer"
+            className="text-secondary dark:text-surface-dim hover:text-earth-indigo dark:hover:text-white transition-colors p-0.5 rounded-full hover:bg-surface-low dark:hover:bg-white/10 cursor-pointer"
             aria-label="Clear search"
           >
             <X className="w-3.5 h-3.5" />
@@ -322,7 +322,7 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({
 
       {/* Autocomplete Dropdown Panel (Opens upward from bottom search bar) */}
       {isOpen && (
-        <div className="absolute bottom-full mb-2 left-0 w-[calc(100vw-3rem)] sm:w-[360px] md:w-[400px] max-w-[calc(100vw-2rem)] bg-white/60 dark:bg-black/60 backdrop-blur-2xl border border-white/40 dark:border-white/15 rounded-3xl shadow-2xl overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-150">
+        <div className="absolute bottom-full mb-2 left-0 w-[calc(100vw-3rem)] sm:w-[360px] md:w-[400px] max-w-[calc(100vw-2rem)] bg-[#fcf8fa]/95 dark:bg-[#1e2433]/95 backdrop-blur-2xl border border-[#dcd9db]/60 dark:border-white/20 rounded-3xl shadow-2xl overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-150">
           {query.trim().length >= 2 ? (
             <div>
               {/* Header */}
