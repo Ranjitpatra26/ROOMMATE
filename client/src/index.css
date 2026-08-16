@@ -46,13 +46,13 @@
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
 
   /* Spatial Frosted Glass Material Tokens - Light Mode */
-  --spatial-glass-bg: rgba(255, 255, 255, 0.28);
-  --spatial-glass-card-bg: rgba(255, 255, 255, 0.38);
-  --spatial-glass-blur: 12px;
-  --spatial-glass-card-blur: 16px;
-  --spatial-glass-border: rgba(255, 255, 255, 0.45);
-  --spatial-glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
-  --spatial-glass-shadow-lg: 0 12px 40px 0 rgba(31, 38, 135, 0.12);
+  --spatial-glass-bg: rgba(255, 255, 255, 0.16);
+  --spatial-glass-card-bg: rgba(255, 255, 255, 0.24);
+  --spatial-glass-blur: 10px;
+  --spatial-glass-card-blur: 14px;
+  --spatial-glass-border: rgba(255, 255, 255, 0.35);
+  --spatial-glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.06);
+  --spatial-glass-shadow-lg: 0 12px 40px 0 rgba(31, 38, 135, 0.10);
 }
 
 [data-theme="dark"],
@@ -90,13 +90,13 @@
   --color-text-on-dark-secondary: #c6c6cc;
 
   /* Spatial Frosted Glass Material Tokens - Dark Mode */
-  --spatial-glass-bg: rgba(20, 24, 36, 0.30);
-  --spatial-glass-card-bg: rgba(20, 24, 36, 0.42);
-  --spatial-glass-blur: 12px;
-  --spatial-glass-card-blur: 16px;
-  --spatial-glass-border: rgba(255, 255, 255, 0.12);
-  --spatial-glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-  --spatial-glass-shadow-lg: 0 12px 40px 0 rgba(0, 0, 0, 0.55);
+  --spatial-glass-bg: rgba(18, 22, 34, 0.18);
+  --spatial-glass-card-bg: rgba(18, 22, 34, 0.26);
+  --spatial-glass-blur: 10px;
+  --spatial-glass-card-blur: 14px;
+  --spatial-glass-border: rgba(255, 255, 255, 0.10);
+  --spatial-glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35);
+  --spatial-glass-shadow-lg: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
 }
 
 /* Spatial Frosted Glass Utility Classes */
