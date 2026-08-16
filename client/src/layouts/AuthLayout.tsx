@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'motion/react';
 import { ShieldCheck } from 'lucide-react';
+import { ElasticGridPro } from '../components/effects/ElasticGridPro.js';
 
 export const AuthLayout: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
@@ -23,7 +24,7 @@ export const AuthLayout: React.FC = () => {
   }, [shouldReduceMotion]);
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-clay text-earth-indigo selection:bg-vitality-coral/20">
+    <div className="min-h-screen flex flex-col md:flex-row bg-clay text-earth-indigo selection:bg-vitality-coral/20 relative overflow-hidden">
       {/* ============================================================ */}
       {/* LEFT EDITORIAL COLUMN (Desktop & Tablet) */}
       {/* ============================================================ */}
@@ -44,6 +45,28 @@ export const AuthLayout: React.FC = () => {
           <div className="absolute inset-0 bg-radial-at-tl from-vitality-coral/15 via-transparent to-transparent" />
           <div className="absolute inset-0 bg-radial-at-br from-trust-teal/10 via-transparent to-transparent" />
         </motion.div>
+
+        {/* Framer Elastic Grid Pro Canvas Background */}
+        <ElasticGridPro
+          cellSize={46}
+          elasticStrength={0.09}
+          damping={0.86}
+          interactionRadius={280}
+          interactionStrength={3.6}
+          interactionMode="push"
+          lineColor="rgba(255, 255, 255, 0.14)"
+          baseOpacity={0.4}
+          glowColor="#E06D53"
+          glowIntensity={26}
+          glowRadius={280}
+          lineWidth={1.1}
+          showDots={true}
+          dotRadius={1.6}
+          ambientWaveAmplitude={3.5}
+          ambientWaveFrequency={0.0012}
+          listenToWindow={true}
+          className="z-1 pointer-events-none"
+        />
 
         {/* Top: ROOMMATE Brand Logo */}
         <motion.div
@@ -133,8 +156,30 @@ export const AuthLayout: React.FC = () => {
       {/* RIGHT AUTHENTICATION FORM COLUMN */}
       {/* ============================================================ */}
       <div className="flex-1 flex flex-col justify-between p-6 sm:p-10 lg:p-12 xl:p-16 relative bg-clay dark:bg-earth-container transition-colors duration-200 overflow-y-auto">
+        {/* Subtle Ambient Elastic Grid Pro Canvas for Right Column */}
+        <ElasticGridPro
+          cellSize={54}
+          elasticStrength={0.08}
+          damping={0.88}
+          interactionRadius={240}
+          interactionStrength={2.8}
+          interactionMode="push"
+          lineColor="rgba(24, 28, 36, 0.06)"
+          baseOpacity={0.4}
+          glowColor="#E06D53"
+          glowIntensity={16}
+          glowRadius={220}
+          lineWidth={0.9}
+          showDots={true}
+          dotRadius={1.3}
+          ambientWaveAmplitude={2.5}
+          ambientWaveFrequency={0.001}
+          listenToWindow={true}
+          className="z-0 pointer-events-none opacity-75 dark:opacity-40"
+        />
+
         {/* Subtle Warm Ambient Glow */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-radial-at-tr from-vitality-coral/10 via-trust-teal/5 to-transparent pointer-events-none blur-3xl" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-radial-at-tr from-vitality-coral/10 via-trust-teal/5 to-transparent pointer-events-none blur-3xl z-0" />
 
         {/* Mobile Header with ROOMMATE Branding */}
         <div className="md:hidden flex items-center justify-between pb-6 border-b border-surface-dim mb-6">
