@@ -17,6 +17,7 @@ import {
   User,
   Menu,
   X,
+  Sparkles,
 } from 'lucide-react';
 
 export interface GlobalNavbarProps {
@@ -190,6 +191,15 @@ export const GlobalNavbar: React.FC<GlobalNavbarProps> = ({ variant = 'auto' }) 
                   <Button size="sm" variant="primary" className="font-bold cursor-pointer">
                     Enter Visual DNA
                   </Button>
+                </Link>
+                {/* Reveal Showcase Preview Button */}
+                <Link
+                  to="/reveal"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-vitality-coral/40 bg-vitality-coral/10 hover:bg-vitality-coral hover:text-white text-vitality-coral font-sans text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-sm cursor-pointer group shrink-0"
+                  title="Explore Interactive Anime.js Reveal Showcase"
+                >
+                  <Sparkles className="w-3.5 h-3.5 group-hover:rotate-12 transition-transform" />
+                  <span>Reveal</span>
                 </Link>
               </>
             )}
