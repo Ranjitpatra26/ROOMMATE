@@ -46,54 +46,78 @@ const ITEMS = [
 ];
 
 export const ScrollHorizontalHero: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
+  const [scrollDistance, setScrollDistance] = useState(0);
   const shouldReduceMotion = useReducedMotion();
-  const [windowWidth, setWindowWidth] = useState(
-    typeof window !== 'undefined' ? window.innerWidth : 1200
-  );
 
+  // Dynamically calculate the real total distance to travel based on rendered layout
   useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    const updateDistance = () => {
+      if (galleryRef.current) {
+        const galleryWidth = galleryRef.current.scrollWidth;
+        const viewportWidth = window.innerWidth;
+        const distance = Math.max(0, galleryWidth - viewportWidth);
+        setScrollDistance(distance);
+      }
+    };
 
-  const isMobile = windowWidth < 640;
-  const itemWidth = isMobile ? 280 : 400;
-  const gap = isMobile ? 15 : 30;
+    updateDistance();
+
+    window.addEventListener('resize', updateDistance);
+    const ro = new ResizeObserver(updateDistance);
+    if (galleryRef.current) ro.observe(galleryRef.current);
+    if (containerRef.current) ro.observe(containerRef.current);
+
+    return () => {
+      window.removeEventListener('resize', updateDistance);
+      ro.disconnect();
+    };
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
 
-  // Exactly matching Motion.dev scroll distance: from 1st item centered to last item centered
-  const totalDistance = (ITEMS.length - 1) * (itemWidth + gap);
-  const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
+  const x = useTransform(scrollYProgress, [0, 1], [0, -scrollDistance]);
 
   return (
-    <div className="w-full relative overflow-visible">
-      <div ref={containerRef} className="scroll-container-300">
-        <div className="sticky-wrapper-centered">
+    <section ref={containerRef} className="relative h-[260vh] md:h-[300vh] w-full">
+      {/* Full-width Vertically Centered Sticky Viewport */}
+      <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden">
+        {/* Section Label */}
+        <div className="w-full px-6 md:px-16 max-w-7xl mx-auto mb-4 md:mb-6 shrink-0 z-10">
+          <span className="font-sans text-label-caps text-vitality-coral uppercase tracking-widest block font-bold text-xs md:text-sm">
+            Curated Cohabitations &middot; Living Visual DNA
+          </span>
+        </div>
+
+        {/* Horizontal Track Area */}
+        <div className="w-full overflow-hidden flex items-center">
           {shouldReduceMotion ? (
-            <div className="flex gap-4 overflow-x-auto w-full py-6">
+            <div
+              ref={galleryRef}
+              className="flex gap-6 md:gap-10 px-6 md:px-16 overflow-x-auto w-full py-4"
+            >
               {ITEMS.map((item) => (
                 <div
                   key={item.id}
-                  className="gallery-item-card"
-                  style={
-                    {
-                      '--item-color': item.color,
-                      '--item-image': `url(${item.image})`,
-                    } as React.CSSProperties
-                  }
+                  className="shrink-0 w-[280px] sm:w-[360px] md:w-[420px] h-[380px] sm:h-[440px] md:h-[500px] max-h-[62vh] rounded-2xl relative overflow-hidden shadow-2xl border border-surface-dim/40 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${item.image})` }}
                 >
-                  <div className="item-content-box">
-                    <span className="item-number-badge" style={{ color: item.color }}>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent" />
+                  <div className="absolute bottom-6 left-6 right-6 z-10 text-white space-y-1.5">
+                    <span
+                      className="font-mono text-xs tracking-wider uppercase block font-bold"
+                      style={{ color: item.color }}
+                    >
                       0{item.id} &middot; {item.category}
                     </span>
-                    <h2 className="font-serif">{item.label}</h2>
-                    <div className="flex items-center gap-1 text-white/70 font-sans text-xs pt-1">
+                    <h2 className="font-serif text-xl sm:text-2xl font-bold leading-tight">
+                      {item.label}
+                    </h2>
+                    <div className="flex items-center gap-1.5 text-white/75 font-sans text-xs pt-1">
                       <MapPin className="w-3.5 h-3.5 text-vitality-coral shrink-0" />
                       <span>{item.location}</span>
                     </div>
@@ -102,23 +126,39 @@ export const ScrollHorizontalHero: React.FC = () => {
               ))}
             </div>
           ) : (
-            <motion.div className="gallery-track" style={{ x }}>
+            <motion.div
+              ref={galleryRef}
+              style={{ x }}
+              className="flex gap-6 md:gap-10 px-6 md:px-16 will-change-transform shrink-0"
+            >
               {ITEMS.map((item) => (
                 <div
                   key={item.id}
-                  className="gallery-item-card"
-                  style={
-                    {
-                      '--item-color': item.color,
-                      '--item-image': `url(${item.image})`,
-                    } as React.CSSProperties
-                  }
+                  className="shrink-0 w-[280px] sm:w-[360px] md:w-[420px] h-[380px] sm:h-[440px] md:h-[500px] max-h-[62vh] rounded-2xl relative overflow-hidden shadow-2xl border border-surface-dim/40 bg-cover bg-center group transition-transform duration-500 hover:scale-[1.02]"
+                  style={{ backgroundImage: `url(${item.image})` }}
                 >
-                  <div className="item-content-box">
-                    <span className="item-number-badge" style={{ color: item.color }}>
+                  {/* Bottom Gradient Scrim */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
+
+                  {/* Corner Glow Accent */}
+                  <div
+                    className="absolute top-0 right-0 w-32 h-32 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity"
+                    style={{
+                      background: `radial-gradient(circle at top right, ${item.color}, transparent 70%)`,
+                    }}
+                  />
+
+                  {/* Card Typography & Details */}
+                  <div className="absolute bottom-6 left-6 right-6 z-10 text-white space-y-1.5">
+                    <span
+                      className="font-mono text-xs tracking-wider uppercase block font-bold"
+                      style={{ color: item.color }}
+                    >
                       0{item.id} &middot; {item.category}
                     </span>
-                    <h2 className="font-serif">{item.label}</h2>
+                    <h2 className="font-serif text-xl sm:text-2xl font-bold leading-tight">
+                      {item.label}
+                    </h2>
                     <div className="flex items-center gap-1.5 text-white/75 font-sans text-xs pt-1">
                       <MapPin className="w-3.5 h-3.5 text-vitality-coral shrink-0" />
                       <span>{item.location}</span>
@@ -130,129 +170,6 @@ export const ScrollHorizontalHero: React.FC = () => {
           )}
         </div>
       </div>
-
-      <style>{`
-        .scroll-container-300 {
-          height: 300vh;
-          position: relative;
-        }
-
-        .sticky-wrapper-centered {
-          position: sticky;
-          top: 0;
-          height: 100vh;
-          width: 400px;
-          margin: 0 auto;
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
-          overflow: visible;
-        }
-
-        .gallery-track {
-          display: flex;
-          gap: 30px;
-          will-change: transform;
-        }
-
-        .gallery-item-card {
-          flex-shrink: 0;
-          width: 400px;
-          height: 500px;
-          border-radius: 16px;
-          position: relative;
-          overflow: hidden;
-          background-image: var(--item-image);
-          background-size: cover;
-          background-position: center;
-          border: 1px solid rgba(255, 255, 255, 0.15);
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-          transition: transform 0.4s ease;
-        }
-
-        .gallery-item-card:hover {
-          transform: translateY(-4px) scale(1.01);
-        }
-
-        .gallery-item-card::before {
-          content: "";
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            to bottom,
-            transparent 40%,
-            rgba(15, 18, 28, 0.5) 65%,
-            rgba(15, 18, 28, 0.95) 100%
-          );
-        }
-
-        .item-content-box {
-          position: absolute;
-          bottom: 30px;
-          left: 30px;
-          right: 30px;
-          z-index: 1;
-        }
-
-        .item-number-badge {
-          font-size: 13px;
-          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-          font-weight: 700;
-          letter-spacing: 0.08em;
-          display: block;
-          margin-bottom: 8px;
-          text-transform: uppercase;
-        }
-
-        .gallery-item-card h2 {
-          font-size: 26px;
-          font-weight: 700;
-          color: #ffffff;
-          margin: 0;
-          line-height: 1.25;
-        }
-
-        @media (max-width: 640px) {
-          .sticky-wrapper-centered {
-            width: 280px;
-          }
-
-          .gallery-track {
-            gap: 15px;
-          }
-
-          .gallery-item-card {
-            width: 280px;
-            height: 380px;
-          }
-
-          .gallery-item-card h2 {
-            font-size: 20px;
-          }
-
-          .item-content-box {
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .gallery-track {
-            transform: none !important;
-          }
-          .scroll-container-300 {
-            height: auto;
-          }
-          .sticky-wrapper-centered {
-            position: relative;
-            height: auto;
-            width: 100%;
-            overflow-x: auto;
-            padding: 40px 0;
-          }
-        }
-      `}</style>
-    </div>
+    </section>
   );
 };
