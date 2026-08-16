@@ -38,66 +38,18 @@ const ITEMS = [
   {
     id: 5,
     color: '#f05a5a',
-    category: 'LIVING OS',
-    label: 'Curated Co-living Space',
-    location: 'Baner, Pune',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCizJ3f4c7EY30dIWEJ8ZA1N24Iu3EmeKUF7FJCMfBFTL2bxx4wUTi-snMIY-1nWssyvuITIJy9BTbVEQqY7MQfUk1-N8fpGTt3W3YU7G5KhlO6hlMcW5xqORptC5z1WZOrLo7yUpSBwc5Viov1TF3TNbLEOfxXDOYLf-R6__3Z6olBJNEuwvVszLLyYT9mZ7yKaD76MiIoaMLwx9Kt0b-KnYUizV5T4JncLYNX6EnwNL4Gs7Gl4PLDrQ',
-  },
-  {
-    id: 6,
-    color: '#476253',
-    category: 'DEEP WORK',
-    label: 'Deep Focus Teak Study',
-    location: 'HSR Layout, Bengaluru',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA0ZyjxDjRQuQZHNkpfNglORcqnfU8Ka1u6AT7THzvX-MKZrhyurNd8JMBcrDTQL8NWFu1MT_xR_CxSS-HhFSvxMuwFw50QHbPsnpHEBGJGIuzHVyENdJvbXue--YmTiuUVii_iTT2Egjeng4WJnPiHXhgmf6SKl9r8OwP1_8tFCo8b-bmEFf4dIRggWJaEZGYb3IpwnhD9R8lTDKMVUN-qRnAR8VC-2J9pR9skoAQNIcqFQJ5xvkPY-A',
-  },
-  {
-    id: 7,
-    color: '#f05a5a',
     category: 'OUTDOOR LIVING',
     label: 'Private Rain-Tree Balcony',
-    location: 'Indiranagar, Bengaluru',
+    location: 'Baner, Pune',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDEWrgUNcRr6nebRXtPIO7abqFux49UUUAf66KOSsOl5mVkYNETBXTiw6QlCfbFRfTotsPvyasktRwzMrgX0B_nIObb7a3VTaoQalieqgFd_kqqyy5Ts97sYEKclvpJF9RHSuDqr4I_9ZNr5dolPXBQbOozBYZM9OyWdM1dmDB8S6igPiKPLH1JRVqKAgMCndxEEsZOTcWYeB9LnKsQqchwfK70j85fh3pcUD5S95U3JxgNfypN9EmqBw',
   },
   {
-    id: 8,
+    id: 6,
     color: '#476253',
     category: 'HERITAGE SUITE',
     label: 'Heritage Master Living Lounge',
     location: 'Koregaon Park, Pune',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDcPyLH-KHdtS72x-hr5aPCs6xyEcUEmITkP5TRXSn-oG2C8akFaJT_vZDf8BEjVan9T-esm9GYSrfOoNY26kY-TxpKGLGgPdTzGHR-g1ye90LLaOerp0adDCc-LDyfOLVdi2QsZey0oN9H6JqEegvVB_k7GX5IESd5ysRopJZSU68x_vfwS04XnUzlAajbCHf8NeAncqqm2_lYRBRJ2kf8oL3bYkgQu2sOAiOVvQYhw1bzIqYF-ufI7w',
-  },
-  {
-    id: 9,
-    color: '#f05a5a',
-    category: 'SUNLIT LIVING',
-    label: 'Sun-Drenched Garden Suite',
-    location: 'Gachibowli, Hyderabad',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBJfZh2AkHLiWeIMVRiVBEvrekrs7IqEWr1Py0aJiWvJUzogR0emd_5v9JVwH7_iaqfEm7F8OgNWv2FEuO5i3JX6NVx8mHfnRvL_MGzQUqiooVHoMBMTN-PvnWtN1YACurcrHKjKugPhuEO-Nti6CRMfZMO0zleQ9utZd-3NtXA1Y7jXz-z_6l_5Yo3BGT1bVcjTwUg73KD8Oggs-EtspKVWQgGvWnEvFl6ynyVewg0nCTxMHVYLFVcmQ',
-  },
-  {
-    id: 10,
-    color: '#476253',
-    category: 'ACOUSTIC CALM',
-    label: 'Minimalist Study Sanctuary',
-    location: 'Powai, Mumbai',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA0ZyjxDjRQuQZHNkpfNglORcqnfU8Ka1u6AT7THzvX-MKZrhyurNd8JMBcrDTQL8NWFu1MT_xR_CxSS-HhFSvxMuwFw50QHbPsnpHEBGJGIuzHVyENdJvbXue--YmTiuUVii_iTT2Egjeng4WJnPiHXhgmf6SKl9r8OwP1_8tFCo8b-bmEFf4dIRggWJaEZGYb3IpwnhD9R8lTDKMVUN-qRnAR8VC-2J9pR9skoAQNIcqFQJ5xvkPY-A',
-  },
-  {
-    id: 11,
-    color: '#f05a5a',
-    category: 'BOTANICAL CALM',
-    label: 'Botanical Canopy Lounge',
-    location: 'Whitefield, Bengaluru',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC5Lpc9u2aZCtgjopQ0TRZVFPKFfQzIjgHuC1qf8fVSg5kxDC8EyodcC-Q1opMznw0iwCs2gvLXnaLMICStorMrCM_OPqpQH56tLukWLZ9xClheiDO9M2z1WswSW2v9fc-Yfe5zAt8-v1L1WteZqhzk07izp609Hdba77aehbabVs2weaGtmGac_1vVMybPM_v0QAE61sPkZhvP46AdIuDrTj1Xk6ItNKqBDKBNnJZW7XoybewuPEwrww',
-  },
-  {
-    id: 12,
-    color: '#476253',
-    category: 'MODERN STUDIO',
-    label: 'Minimalist Penthouse Studio',
-    location: 'Alwarpet, Chennai',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCU9qF-fRppSg_q_fHfIvpbWCQztObHtKg4yVaXXXeo9oB1qPQzUOhyZIf1uLDnnEx-9EVOuVUWDtqt1Mewgv9HEJJQLSc2f7c_9N9ysGvebCQrk9RNuUFpF8RsDbV1fxablWYKIoi68jnTcmUCVZr8IwKYqe7rQvgjiyO8MZo5kYxQ22cneNF-zn7i8zqMFb-M9UyU_059zcCzriaF642s21ynSvKxj7_02LmJQv7dMjY3kFUSffi0dg',
   },
 ];
 
@@ -105,7 +57,7 @@ export const ScrollHorizontalHero: React.FC = () => {
   const containerRef = useRef<HTMLElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
-  const [totalDistance, setTotalDistance] = useState(3000);
+  const [totalDistance, setTotalDistance] = useState(1800);
 
   // Measure actual rendered scrollWidth of the gallery minus window innerWidth
   useEffect(() => {
