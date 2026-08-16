@@ -1012,7 +1012,6 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
       validPeople.forEach((person) => {
         const el = document.createElement('div');
         el.className = 'roommate-person-marker group cursor-pointer relative';
-        el.style.zIndex = '35';
 
         const firstName = person.displayName.split(' ')[0];
         el.innerHTML = `
