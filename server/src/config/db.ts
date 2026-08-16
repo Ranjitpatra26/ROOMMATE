@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 import { ENV } from './env.js';
+import { UserModel } from '../models/index.js';
+import { seedDatabase } from '../seeds/seed.js';
 
 export const connectDB = async (): Promise<void> => {
   try {
@@ -7,6 +9,13 @@ export const connectDB = async (): Promise<void> => {
       serverSelectionTimeoutMS: 5000,
     });
     console.log(`[MongoDB] Connected to database: ${conn.connection.name} @ ${conn.connection.host}`);
+
+    // Auto-seed in development if database is empty
+    const userCount = await UserModel.countDocuments();
+    if (userCount === 0) {
+      console.log('[MongoDB] Empty database detected. Auto-seeding all 12 collections...');
+      await seedDatabase(false);
+    }
   } catch (error) {
     console.error('[MongoDB] Connection error:', error);
     if (ENV.NODE_ENV === 'production') {

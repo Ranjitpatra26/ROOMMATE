@@ -16,11 +16,13 @@ import {
   DestinationModel,
 } from '../models/index.js';
 
-export const seedDatabase = async (): Promise<void> => {
+export const seedDatabase = async (disconnectAfter: boolean = true): Promise<void> => {
   try {
-    console.log('[Seed] Connecting to MongoDB to seed authentic India-first development dataset...');
-    await mongoose.connect(ENV.MONGODB_URI);
-    console.log(`[Seed] Connected to database: ${mongoose.connection.name} @ ${mongoose.connection.host}`);
+    if (mongoose.connection.readyState !== 1) {
+      console.log('[Seed] Connecting to MongoDB to seed authentic India-first development dataset...');
+      await mongoose.connect(ENV.MONGODB_URI);
+      console.log(`[Seed] Connected to database: ${mongoose.connection.name} @ ${mongoose.connection.host}`);
+    }
 
     // Clear existing collections safely in development
     await Promise.all([
@@ -659,8 +661,10 @@ export const seedDatabase = async (): Promise<void> => {
     console.error('[Seed] Error seeding database:', error);
     throw error;
   } finally {
-    await mongoose.disconnect();
-    console.log('[Seed] Disconnected from MongoDB.');
+    if (disconnectAfter) {
+      await mongoose.disconnect();
+      console.log('[Seed] Disconnected from MongoDB.');
+    }
   }
 };
 

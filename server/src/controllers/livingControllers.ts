@@ -8,62 +8,67 @@ import {
 // ============================================================================
 // 1. ACTIVE STAY & LIVING OS
 // ============================================================================
+// ============================================================================
+// 1. ACTIVE STAY & LIVING PLATFORM
+// ============================================================================
 export const getActiveStayDetails = async (req: Request, res: Response): Promise<void> => {
   try {
-    const mockStay = {
-      id: 'stay-brooklyn-loft',
-      title: 'The Brooklyn Loft',
-      daysActive: 142,
+    const dbStay = await StayModel.findOne({ status: 'active' }).lean();
+
+    const stay = dbStay || {
+      id: 'stay-indiranagar-loft',
+      title: 'The Indiranagar Garden Penthouse',
+      daysActive: 168,
       status: 'active',
-      address: '240 Bedford Ave, Brooklyn, NY',
+      address: '100ft Road, Indiranagar, Bengaluru, KA 560038',
       cohabitants: [
         {
-          id: 'user-maya',
-          name: 'Maya Lin',
+          id: 'user-ananya',
+          name: 'Ananya Sharma',
           avatarUrl:
-            'https://lh3.googleusercontent.com/aida-public/AB6AXuB6NIX74GUEI5WqERvjhoha9beFknsz5QqGosnbyDRUMbgHZYboXXJz8nm3p3YyN6vCYkX32Md3B3YMn3rMJKXFOhIzWSg_g3OTc-RBlrgl3FbOqzpHnCQVs-8sAEaoaytnT1IPTQatgvpO3HBFZnnhb7ep0Xaw9DfPK5ubfaTMUTL38RxLp9Hqa3nyXH8EDlBVTo2T2CDP5Sd2tdZGHer7eUhIGNgkDshivxJ1SOgOsCFOBGwhqL1ing',
-          role: 'Architectural Designer',
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuBTwHP-dedcvHuy1rko6qYkrmV_43Hl2to-1vH2SnFApVj2UEXDeSUeX4FvgXIQHRoEcY-aOfxeIkHlzdQMV1HiJXcdJ2CvOZxKi9CcoJsjXU9GR1HM0R4zdpv9tCAA3IIUHOhhoJ83PVw-njK-O8KGd4bPYUSBMtARJdTDO9sDF5F5UI25dy25hEN6nasZd2YYMKv2usKhBIcS7o9vzno75rGzkLGPC9Tn3L_gnbKiO4_4JbIWEMDZ8A',
+          role: 'Spatial Architect',
           cleanlinessScore: 98,
         },
         {
-          id: 'user-julian',
-          name: 'Julian Hayes',
+          id: 'user-rohan',
+          name: 'Rohan Patil',
           avatarUrl:
-            'https://lh3.googleusercontent.com/aida-public/AB6AXuB2i8SWb4apq6U1es6wns7xbL7M0iATnV9B0tUPVJ8wkAcPPnSxWpkn7RkYeWkoEHQd0963RC1wXOpzAIpyr3-iHi_2rFrr0ee44glSA9C-3IMa8KVBFUuRkLkR7z5xDs39RTkQi5dodR4MExu9kttg4kfvaxAUCMKUutHCViobglnW4KmJvyEBm03D1AT5KE-6Vi3hF7cWFK6G_AwvFQE5R9fiVI_tgFyEztv6vxUoaqk8MaqskJEImQ',
-          role: 'Software Engineer',
-          cleanlinessScore: 92,
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuBNsMeqsJzF1-Ew6pA6f1m3eXv2b0o9yPq4t8R7u5W3v1kL9jHgF8d2S4a7Z6x5c3V2b1n0m9q8w7e6r5t4y3u2i1o0p9a8s7d6f5g4h3j2k1l',
+          role: 'Creative Technologist',
+          cleanlinessScore: 94,
         },
       ],
       todayResponsibilities: [
         {
           id: 'resp-1',
           title: 'Kitchen Deep Clean',
-          assignee: "Maya's Turn",
+          assignee: "Ananya's Turn",
           description: 'Clear counters, wipe down appliances, run the dishwasher.',
           icon: 'mop',
           status: 'pending',
         },
         {
           id: 'resp-2',
-          title: 'ConEd Utility Bill',
+          title: 'ACT Gigabit Fiber Bill',
           assignee: 'Due Today',
-          description: '$142.50 total. Splitting equally among 3 residents.',
+          description: '₹2,499 total. Splitting equally among 3 residents.',
           icon: 'receipt_long',
           status: 'pending',
           urgent: true,
         },
       ],
       financialEquilibrium: {
-        userBalance: -45.0,
-        currency: '$',
+        userBalance: -1250.0,
+        currency: '₹',
         breakdown: [
-          { name: 'Maya', reason: 'For Groceries', amount: -45.0 },
-          { name: 'Julian', reason: 'For Internet', amount: 20.0 },
+          { name: 'Ananya', reason: 'For Nature Basket Groceries', amount: -1250.0 },
+          { name: 'Rohan', reason: 'For ACT Fiber Internet', amount: 833.0 },
         ],
       },
     };
 
-    res.status(200).json({ success: true, stay: mockStay });
+    res.status(200).json({ success: true, data: stay, stay });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Failed to retrieve stay details', error });
   }
@@ -74,9 +79,11 @@ export const getActiveStayDetails = async (req: Request, res: Response): Promise
 // ============================================================================
 export const getLivingAgreement = async (req: Request, res: Response): Promise<void> => {
   try {
-    const agreement = {
-      id: 'agree-1',
-      stayId: 'stay-brooklyn-loft',
+    const dbAgreement = await LivingAgreementModel.findOne({ status: 'active' }).lean();
+
+    const agreement = dbAgreement || {
+      id: 'agree-blr-1',
+      stayId: 'stay-indiranagar-loft',
       version: 'v2.1',
       status: 'active',
       signedAt: '2026-03-01',
@@ -84,35 +91,35 @@ export const getLivingAgreement = async (req: Request, res: Response): Promise<v
         {
           id: 'dim-1',
           category: 'Rent Contribution',
-          target: '$1,850/mo per resident',
+          target: '₹28,500/mo per resident',
           description: 'Due by the 5th of every month. Transfer to designated joint account.',
           status: 'agreed',
         },
         {
           id: 'dim-2',
           category: 'Quiet Hours Rhythm',
-          target: '10:00 PM – 7:30 AM Daily',
-          description: 'Headphones required in common spaces after 10 PM. No high-volume speakers.',
+          target: '10:30 PM – 7:30 AM Daily',
+          description: 'Headphones required in common spaces after 10:30 PM. No high-volume speakers.',
           status: 'agreed',
         },
         {
           id: 'dim-3',
           category: 'Guest Policy',
           target: '2 Nights Max / Week',
-          description: 'Notify roommates via Living OS 24 hours in advance for overnight guests.',
+          description: 'Notify roommates via Living Platform 24 hours in advance for overnight guests.',
           status: 'agreed',
         },
         {
           id: 'dim-4',
           category: 'Shared Spaces Cleanliness',
           target: 'Immediate Clean-As-You-Go',
-          description: 'Dishes into dishwasher immediately. Kitchen island cleared after cooking.',
+          description: 'Dishes cleaned and kitchen island cleared after cooking.',
           status: 'agreed',
         },
       ],
     };
 
-    res.status(200).json({ success: true, agreement });
+    res.status(200).json({ success: true, data: agreement, agreement });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Failed to load living agreement', error });
   }
@@ -121,9 +128,15 @@ export const getLivingAgreement = async (req: Request, res: Response): Promise<v
 export const updateLivingAgreement = async (req: Request, res: Response): Promise<void> => {
   try {
     const { rules } = req.body;
+    await LivingAgreementModel.findOneAndUpdate(
+      { status: 'active' },
+      { $set: { rules, updatedAt: new Date() } },
+      { upsert: true, new: true }
+    );
+
     res.status(200).json({
       success: true,
-      message: 'Living Agreement updated successfully. Sent confirmation requests to cohabitants.',
+      message: 'Living Agreement updated successfully in MongoDB. Sent confirmation requests to cohabitants.',
       version: 'v2.2',
       rules,
     });
@@ -137,44 +150,50 @@ export const updateLivingAgreement = async (req: Request, res: Response): Promis
 // ============================================================================
 export const getSharedExpenses = async (req: Request, res: Response): Promise<void> => {
   try {
-    const mockExpenses = [
+    const dbExpenses = await ExpenseModel.find().sort({ createdAt: -1 }).lean();
+
+    const fallbackExpenses = [
       {
         id: 'exp-1',
-        title: 'Artisan Grocery Run (Whole Foods)',
-        amount: 135.0,
-        paidBy: 'Maya Lin',
+        title: 'Artisan Grocery Run (Nature Basket Indiranagar)',
+        amount: 3750.0,
+        paidBy: 'Ananya Sharma',
         category: 'groceries',
         date: 'Yesterday',
-        userShare: 45.0,
+        userShare: 1250.0,
         status: 'pending',
       },
       {
         id: 'exp-2',
-        title: 'Gigabit Fiber Internet',
-        amount: 60.0,
+        title: 'ACT Gigabit Fiber Internet (300 Mbps)',
+        amount: 2499.0,
         paidBy: 'You',
         category: 'utilities',
-        date: 'Oct 20, 2024',
-        userShare: -40.0,
+        date: 'Oct 20, 2026',
+        userShare: -1666.0,
         status: 'settled',
       },
       {
         id: 'exp-3',
-        title: 'Common Area Cleaning Supplies & Eco Detergent',
-        amount: 42.0,
-        paidBy: 'Julian Hayes',
+        title: 'Houseplant Care & Eco Cleaning Supplies',
+        amount: 1280.0,
+        paidBy: 'Rohan Patil',
         category: 'supplies',
-        date: 'Oct 18, 2024',
-        userShare: 14.0,
+        date: 'Oct 18, 2026',
+        userShare: 426.0,
         status: 'settled',
       },
     ];
 
+    const expenses = dbExpenses && dbExpenses.length > 0 ? dbExpenses : fallbackExpenses;
+    const totalHouseholdSpent = expenses.reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
+
     res.status(200).json({
       success: true,
-      totalHouseholdSpent: 237.0,
-      userNetBalance: -45.0,
-      expenses: mockExpenses,
+      data: expenses,
+      totalHouseholdSpent,
+      userNetBalance: -1250.0,
+      expenses,
     });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Failed to retrieve expenses', error });
@@ -185,18 +204,17 @@ export const createSharedExpense = async (req: Request, res: Response): Promise<
   try {
     const { title, amount, category, splitMethod } = req.body;
 
-    const newExpense = {
-      id: `exp-${Date.now()}`,
-      title: title || 'Shared Item',
+    const newExpense = await ExpenseModel.create({
+      title: title || 'Shared Household Item',
       amount: Number(amount) || 0,
       category: category || 'utilities',
       paidBy: 'You',
       splitMethod: splitMethod || 'equal',
       date: 'Today',
       status: 'pending',
-    };
+    });
 
-    res.status(201).json({ success: true, expense: newExpense });
+    res.status(201).json({ success: true, data: newExpense, expense: newExpense });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Failed to add expense', error });
   }

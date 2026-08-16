@@ -11,41 +11,44 @@ import { TrustService } from '../services/trustService.js';
 // ============================================================================
 // MATCH CONTROLLERS
 // ============================================================================
+// ============================================================================
+// MATCH CONTROLLERS
+// ============================================================================
 export const getMatchById = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
+    const dbMatch = await MatchModel.findById(id).lean();
 
-    // Fallback/mock response if mock ID or database match
-    const mockMatch = {
-      id: id || 'match-elena-v',
+    const mockMatch = dbMatch || {
+      id: id || 'match-ananya-sharma',
       user: {
-        id: 'user-elena',
-        name: 'Elena Rostova',
-        title: 'Architectural Designer & Early Riser',
+        id: 'user-ananya',
+        name: 'Ananya Sharma',
+        title: 'Spatial Architect & Ceramicist',
         avatarUrl:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuDa2JCqF8-uGxjzWrQNLbFq7aayFMyciJunutZhWilYq4pQIvYDUgd9gGDyp90HUgiedWGnwDuJ6TN-apEeDu0qqBhGQkbMFsw26k1xsuR26uKwG2jecFSVTGHGxX5K1Fptb87BYgY7kPfj1Hcg6r_Vaj_5hynyjzDDVTVTsa4vQoneGjIVYeJB2peMufDEDotc7Z_R1N-XtOpKEB1-6oI8JYK1gWbFbji08JqeGfa7gev1gdw9jqX_bw',
-        location: 'Kyoto / Brooklyn',
+          'https://lh3.googleusercontent.com/aida-public/AB6AXuBTwHP-dedcvHuy1rko6qYkrmV_43Hl2to-1vH2SnFApVj2UEXDeSUeX4FvgXIQHRoEcY-aOfxeIkHlzdQMV1HiJXcdJ2CvOZxKi9CcoJsjXU9GR1HM0R4zdpv9tCAA3IIUHOhhoJ83PVw-njK-O8KGd4bPYUSBMtARJdTDO9sDF5F5UI25dy25hEN6nasZd2YYMKv2usKhBIcS7o9vzno75rGzkLGPC9Tn3L_gnbKiO4_4JbIWEMDZ8A',
+        location: 'Indiranagar, Bengaluru',
       },
       currentCurator: {
         id: 'user-current',
         name: 'You',
         avatarUrl:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuDGQ-ozjyyc6Eupf8aRCKD-Gfs143df1Ghb7uzTJ4SOClrK2QuZDJip7o5pj1ro4g_bFE27qxxvpHIPuRPR6bW6I41fOXfLGi3tWmDGwhZ_vAlQMpjaIKe2cIXm6FOa7wfsGRujM2d9uqvVOXgezykAM4MUyuGnel8eYZnfT0HFL4KvB7uNudvifiiImCYS4L8fPKO0C7VUnYfVukgLsDznY-OpMfhb0hbdnOjEvq5yWJo0f4v6nK4uNA',
+          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
       },
       compatibilityScore: 98,
       sharedStrengths: [
         { title: 'Early Risers', description: '5:30 AM peaceful morning quiet hours' },
-        { title: 'Minimalist Style', description: 'Zero visual clutter in common areas' },
-        { title: 'Quiet Evenings', description: 'Low acoustic threshold after 9:00 PM' },
-        { title: 'Coffee Rituals', description: 'Shared morning brewing and artisan appreciation' },
+        { title: 'Minimalist Spatial Order', description: 'Zero visual clutter in common areas' },
+        { title: 'Quiet Evenings', description: 'Low acoustic threshold after 10:00 PM' },
+        { title: 'Filter Coffee Rituals', description: 'Shared morning brewing and mindful living' },
       ],
       potentialFrictions: [
-        { title: 'Guest Frequency', description: 'Advance 24hr notice required for weekend visitors' },
+        { title: 'Guest Frequency', description: 'Advance 24hr notice requested for weekend visitors' },
       ],
       status: 'confirmed',
     };
 
-    res.status(200).json({ success: true, match: mockMatch });
+    res.status(200).json({ success: true, data: mockMatch, match: mockMatch });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Failed to retrieve match details', error });
   }
@@ -56,44 +59,52 @@ export const getMatchById = async (req: Request, res: Response): Promise<void> =
 // ============================================================================
 export const getConversations = async (req: Request, res: Response): Promise<void> => {
   try {
-    const mockConversations = [
+    const dbConversations = await ConversationModel.find().sort({ updatedAt: -1 }).lean();
+
+    const fallbackConversations = [
       {
-        id: 'conversation-maya',
+        id: 'conversation-ananya',
         participant: {
-          id: 'user-maya',
-          name: 'Maya Lin',
+          id: 'user-ananya',
+          name: 'Ananya Sharma',
           avatarUrl:
-            'https://lh3.googleusercontent.com/aida-public/AB6AXuC64MbZWsNixcO8McDmNx9O0u22et38koHfzkR1L85nrNCbb5YIzzL6EMVp-HSbJhTQZQIgd_4WaL4w32CrGIgitEkcxxzRW-x-JQAf6rlgr-YzwwE8OYl8iut1Rz_pGMddRzECyh7vPq13cQSlOi5I8C-1wQqo8w9tl5PULqqKuweX89oMHAbseGsUMo0Lbj6JDZU5h4I5k0KmXmVqZMOGnpn_fd63AIUCd4gCyPkqW69Njzrwm3lCYA',
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuBTwHP-dedcvHuy1rko6qYkrmV_43Hl2to-1vH2SnFApVj2UEXDeSUeX4FvgXIQHRoEcY-aOfxeIkHlzdQMV1HiJXcdJ2CvOZxKi9CcoJsjXU9GR1HM0R4zdpv9tCAA3IIUHOhhoJ83PVw-njK-O8KGd4bPYUSBMtARJdTDO9sDF5F5UI25dy25hEN6nasZd2YYMKv2usKhBIcS7o9vzno75rGzkLGPC9Tn3L_gnbKiO4_4JbIWEMDZ8A',
           isOnline: true,
           compatibilityScore: 98,
         },
-        lastMessage: 'I think the second floor corner room gets the best light in the morning.',
+        lastMessage: 'I think the second floor corner room gets the best morning sunlight in Indiranagar.',
         lastMessageTime: '10:42 AM',
         unreadCount: 0,
         roomContext: {
-          title: 'The Williamsburg Loft',
-          price: '$1,850/mo',
+          title: 'The Indiranagar Garden Penthouse',
+          price: '₹28,500/mo',
           imageUrl:
-            'https://lh3.googleusercontent.com/aida-public/AB6AXuBJfZh2AkHLiWeIMVRiVBEvrekrs7IqEWr1Py0aJiWvJUzogR0emd_5v9JVwH7_iaqfEm7F8OgNWv2FEuO5i3JX6NVx8mHfnRvL_MGzQUqiooVHoMBMTN-PvnWtN1YACurcrHKjKugPhuEO-Nti6CRMfZMO0zleQ9utZd-3NtXA1Y7jXz-z_6l_5Yo3BGT1bVcjTwUg73KD8Oggs-EtspKVWQgGvWnEvFl6ynyVewg0nCTxMHVYLFVcmQ',
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuDYbWd_pE2tWjXwK0sE7g_Fq1yH3kJ8lN5vM4oP6rT8uA2cB7xZ9eD0fG1hI3jK5lM7nO9pQ1rS3tU5vW7xY9zA1bC3dE5fG7hI9jK1lM3nO5pQ7r',
         },
       },
       {
-        id: 'conversation-julian',
+        id: 'conversation-rohan',
         participant: {
-          id: 'user-julian',
-          name: 'Julian Hayes',
+          id: 'user-rohan',
+          name: 'Rohan Patil',
           avatarUrl:
-            'https://lh3.googleusercontent.com/aida-public/AB6AXuCK_9NnhlZkr6Pkn0lhOlguCm2SQeh6OMQXhu0IpHtite7Jkyg01pOI5ETUDoiA9qRorQhh07HrHK62hEG2nPDpODQhaWKN8MQ0ZlIpv4MGVZa62ojUIBYOS55qT6NN-mBOOVDMC3MUL8mgol6VTGmKT5WKKWJ2saeFSKqpTQOk98w9RkkYl7eldJmIT1F6xc8RHR3vdB1uzkpY7lnlIRpvEE8h64G6A-JxwQsX73invKkEaJ6lPkdtcw',
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuBNsMeqsJzF1-Ew6pA6f1m3eXv2b0o9yPq4t8R7u5W3v1kL9jHgF8d2S4a7Z6x5c3V2b1n0m9q8w7e6r5t4y3u2i1o0p9a8s7d6f5g4h3j2k1l',
           isOnline: false,
-          compatibilityScore: 88,
+          compatibilityScore: 94,
         },
-        lastMessage: 'Are you bringing any furniture? I have a large sectional we could use.',
+        lastMessage: 'Are you bringing any acoustic gear? I have sound-dampening acoustic curtains for our living suite.',
         lastMessageTime: 'Yesterday',
         unreadCount: 0,
       },
     ];
 
-    res.status(200).json({ success: true, conversations: mockConversations });
+    const conversations = dbConversations && dbConversations.length > 0 ? dbConversations : fallbackConversations;
+
+    res.status(200).json({
+      success: true,
+      data: conversations,
+      conversations,
+    });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Failed to retrieve conversations', error });
   }
@@ -102,25 +113,26 @@ export const getConversations = async (req: Request, res: Response): Promise<voi
 export const getConversationById = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
+    const dbMessages = await MessageModel.find({ conversationId: id }).sort({ createdAt: 1 }).lean();
 
-    const mockMessages = [
+    const fallbackMessages = [
       {
         id: 'msg-1',
-        senderId: 'user-maya',
-        senderName: 'Maya',
+        senderId: 'user-ananya',
+        senderName: 'Ananya',
         senderAvatar:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuDPEq_t3wsCyapXNBS865uHThQBZujCO3GiaPOfGBQzvmerZwqxLhKZ-ur2iSb2xCtFNuH7QFVc6-th58KsttfXVaPuUYHEQOhe0ZKc8lPpYDvN5NPqy_bF3jUqBjuLvvOZu0CC3Qg_q8cemmVa71PJXG89iqoX4SMRkJsufIeTWBL3QpYQCR6BMcuYQqnHSquicrX8LGb1KPLy5a66czJkWlo3wiHOfu7j3bI5hOaWYH8WgRXNg7dQKw',
-        body: 'Hi there! I loved your profile. It seems like we have very similar aesthetics and living habits.',
+          'https://lh3.googleusercontent.com/aida-public/AB6AXuBTwHP-dedcvHuy1rko6qYkrmV_43Hl2to-1vH2SnFApVj2UEXDeSUeX4FvgXIQHRoEcY-aOfxeIkHlzdQMV1HiJXcdJ2CvOZxKi9CcoJsjXU9GR1HM0R4zdpv9tCAA3IIUHOhhoJ83PVw-njK-O8KGd4bPYUSBMtARJdTDO9sDF5F5UI25dy25hEN6nasZd2YYMKv2usKhBIcS7o9vzno75rGzkLGPC9Tn3L_gnbKiO4_4JbIWEMDZ8A',
+        body: 'Namaste! I loved your resident compatibility profile. It seems our living rhythms align seamlessly.',
         createdAt: '10:30 AM',
         isMe: false,
       },
       {
         id: 'msg-2',
-        senderId: 'user-maya',
-        senderName: 'Maya',
+        senderId: 'user-ananya',
+        senderName: 'Ananya',
         senderAvatar:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuDPEq_t3wsCyapXNBS865uHThQBZujCO3GiaPOfGBQzvmerZwqxLhKZ-ur2iSb2xCtFNuH7QFVc6-th58KsttfXVaPuUYHEQOhe0ZKc8lPpYDvN5NPqy_bF3jUqBjuLvvOZu0CC3Qg_q8cemmVa71PJXG89iqoX4SMRkJsufIeTWBL3QpYQCR6BMcuYQqnHSquicrX8LGb1KPLy5a66czJkWlo3wiHOfu7j3bI5hOaWYH8WgRXNg7dQKw',
-        body: 'I was looking at the listing in the Arts District. Have you checked out the floor plan?',
+          'https://lh3.googleusercontent.com/aida-public/AB6AXuBTwHP-dedcvHuy1rko6qYkrmV_43Hl2to-1vH2SnFApVj2UEXDeSUeX4FvgXIQHRoEcY-aOfxeIkHlzdQMV1HiJXcdJ2CvOZxKi9CcoJsjXU9GR1HM0R4zdpv9tCAA3IIUHOhhoJ83PVw-njK-O8KGd4bPYUSBMtARJdTDO9sDF5F5UI25dy25hEN6nasZd2YYMKv2usKhBIcS7o9vzno75rGzkLGPC9Tn3L_gnbKiO4_4JbIWEMDZ8A',
+        body: 'I was reviewing the sanctuary listing in Indiranagar. Have you explored the floor plan?',
         createdAt: '10:31 AM',
         isMe: false,
       },
@@ -128,7 +140,7 @@ export const getConversationById = async (req: Request, res: Response): Promise<
         id: 'msg-3',
         senderId: 'user-current',
         senderName: 'You',
-        body: "Hello Maya! Thank you, your profile stood out to me as well. The 'Rituals' section really resonated.",
+        body: "Hello Ananya! Your profile stood out immediately. The 'Morning Rituals' section resonated deeply.",
         createdAt: '10:35 AM',
         isMe: true,
       },
@@ -136,42 +148,48 @@ export const getConversationById = async (req: Request, res: Response): Promise<
         id: 'msg-4',
         senderId: 'user-current',
         senderName: 'You',
-        body: 'I did see that listing. It looks stunning and has generous natural sunlight.',
+        body: 'I did check that Indiranagar sanctuary. It looks stunning and has abundant natural morning light.',
         createdAt: '10:36 AM',
         isMe: true,
       },
       {
         id: 'msg-5',
-        senderId: 'user-maya',
-        senderName: 'Maya',
+        senderId: 'user-ananya',
+        senderName: 'Ananya',
         senderAvatar:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuAHyt4KRDIw7RGLkhJSttYv3I0QeuHDW-sqRHaJ2ClbdvrvUNl4IQTzEiJnnVBZqTaEN5DwWzrMnDUMyMbFuGAysEkeiJAcj60k3RpTv2oQAyqU01paG0uVQBQAfc1y8Y92ePknF7Q4InVJ07JX3rLCmHqnE5RqV8nmboL0AjAXPH830gN7u7kr7HNJtaZSPWqoiVAH6Mc2z0mZqO-bkVcziUZIW_F9wfLIRfo41t9GavmRQgP4pd5DPg',
-        body: 'I think the second floor corner room gets the best light in the morning.',
+          'https://lh3.googleusercontent.com/aida-public/AB6AXuBTwHP-dedcvHuy1rko6qYkrmV_43Hl2to-1vH2SnFApVj2UEXDeSUeX4FvgXIQHRoEcY-aOfxeIkHlzdQMV1HiJXcdJ2CvOZxKi9CcoJsjXU9GR1HM0R4zdpv9tCAA3IIUHOhhoJ83PVw-njK-O8KGd4bPYUSBMtARJdTDO9sDF5F5UI25dy25hEN6nasZd2YYMKv2usKhBIcS7o9vzno75rGzkLGPC9Tn3L_gnbKiO4_4JbIWEMDZ8A',
+        body: 'I think the second floor corner suite gets the best light for morning focus.',
         createdAt: '10:42 AM',
         isMe: false,
       },
     ];
 
+    const messages = dbMessages && dbMessages.length > 0 ? dbMessages : fallbackMessages;
+
     res.status(200).json({
       success: true,
+      data: {
+        conversationId: id,
+        participant: {
+          id: 'user-ananya',
+          name: 'Ananya Sharma',
+          role: 'Spatial Architect · 28',
+          avatarUrl:
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuBTwHP-dedcvHuy1rko6qYkrmV_43Hl2to-1vH2SnFApVj2UEXDeSUeX4FvgXIQHRoEcY-aOfxeIkHlzdQMV1HiJXcdJ2CvOZxKi9CcoJsjXU9GR1HM0R4zdpv9tCAA3IIUHOhhoJ83PVw-njK-O8KGd4bPYUSBMtARJdTDO9sDF5F5UI25dy25hEN6nasZd2YYMKv2usKhBIcS7o9vzno75rGzkLGPC9Tn3L_gnbKiO4_4JbIWEMDZ8A',
+          isOnline: true,
+          compatibilityScore: 98,
+          tags: ['Early Riser', 'Minimalist', 'ID Verified'],
+        },
+        roomContext: {
+          title: 'The Indiranagar Garden Penthouse',
+          price: '₹28,500/mo Total',
+          imageUrl:
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuDYbWd_pE2tWjXwK0sE7g_Fq1yH3kJ8lN5vM4oP6rT8uA2cB7xZ9eD0fG1hI3jK5lM7nO9pQ1rS3tU5vW7xY9zA1bC3dE5fG7hI9jK1lM3nO5pQ7r',
+        },
+        messages,
+      },
       conversationId: id,
-      participant: {
-        id: 'user-maya',
-        name: 'Maya Lin',
-        role: 'Architectural Designer · 28',
-        avatarUrl:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuBommkV4DLPt6GJCejGF2iQ9uT-P9wRS5mHuief1hVSrolxQIJrtBI0kZPD0erbrxdY8geGv-3mnfSu0JIVbeS_FdojbdduEqEHPIybpnYlIIeC0WZ-ItuwvMQ2ULlw4tJkLq0YQjy2ex5BQFJ26OB7hsAXxOQr_GdjK4wVY-q7PCl3_8DsTsCCl9HLR8RsAj1SsqMygz9lWOqnX_fU6R_NEAKImBCmabGKb48b_XMMyd2Yf7ZmGPXD-A',
-        isOnline: true,
-        compatibilityScore: 98,
-        tags: ['Early Riser', 'Minimalist'],
-      },
-      roomContext: {
-        title: 'Arts District Loft Space',
-        price: '$3,200/mo Total',
-        imageUrl:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuBJfZh2AkHLiWeIMVRiVBEvrekrs7IqEWr1Py0aJiWvJUzogR0emd_5v9JVwH7_iaqfEm7F8OgNWv2FEuO5i3JX6NVx8mHfnRvL_MGzQUqiooVHoMBMTN-PvnWtN1YACurcrHKjKugPhuEO-Nti6CRMfZMO0zleQ9utZd-3NtXA1Y7jXz-z_6l_5Yo3BGT1bVcjTwUg73KD8Oggs-EtspKVWQgGvWnEvFl6ynyVewg0nCTxMHVYLFVcmQ',
-      },
-      messages: mockMessages,
+      messages,
     });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Failed to retrieve conversation', error });
@@ -183,17 +201,16 @@ export const sendMessage = async (req: Request, res: Response): Promise<void> =>
     const { id } = req.params;
     const { body } = req.body;
 
-    const newMessage = {
-      id: `msg-${Date.now()}`,
-      conversationId: id,
+    const newMessage = await MessageModel.create({
+      conversationId: id || 'conversation-ananya',
       senderId: 'user-current',
       senderName: 'You',
       body: body || '',
-      createdAt: 'Just now',
+      createdAt: new Date(),
       isMe: true,
-    };
+    });
 
-    res.status(201).json({ success: true, message: newMessage });
+    res.status(201).json({ success: true, data: newMessage, message: newMessage });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Failed to send message', error });
   }
