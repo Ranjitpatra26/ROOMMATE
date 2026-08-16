@@ -56,7 +56,7 @@ export const LiveLocationControlPanel: React.FC = () => {
         <button
           type="button"
           onClick={() => setIsCollapsed(false)}
-          className="px-3.5 py-2 bg-clay/95 dark:bg-earth-container/95 backdrop-blur-xl border border-surface-dim dark:border-white/20 rounded-full shadow-2xl flex items-center gap-2 font-sans text-xs font-bold text-earth-indigo hover:border-vitality-coral transition-all cursor-pointer"
+          className="px-3.5 py-2 bg-white/80 dark:bg-[#1a1f2c]/80 backdrop-blur-xl border border-white/60 dark:border-white/15 rounded-full shadow-2xl flex items-center gap-2 font-sans text-xs font-bold text-[#0f172a] dark:text-white hover:border-vitality-coral transition-all cursor-pointer"
           aria-label="Expand live location panel"
         >
           {isGhostMode ? (
@@ -78,19 +78,19 @@ export const LiveLocationControlPanel: React.FC = () => {
               <span>Paused</span>
             </span>
           ) : (
-            <span className="flex items-center gap-1.5 text-secondary">
+            <span className="flex items-center gap-1.5 text-secondary dark:text-surface-dim">
               <Radio className="w-3.5 h-3.5 text-vitality-coral" />
               <span>Live Location</span>
             </span>
           )}
-          <Maximize2 className="w-3 h-3 text-secondary ml-0.5" />
+          <Maximize2 className="w-3 h-3 text-secondary dark:text-surface-dim ml-0.5" />
         </button>
       </div>
     );
   }
 
   return (
-    <div className="absolute bottom-6 right-4 md:bottom-8 md:right-8 z-20 w-[calc(100vw-2rem)] max-w-xs sm:max-w-sm md:w-80 bg-clay/95 dark:bg-earth-container/95 backdrop-blur-2xl border border-surface-dim dark:border-white/20 rounded-3xl p-4 shadow-2xl space-y-3 animate-in fade-in zoom-in-95 duration-200 pointer-events-auto text-left">
+    <div className="absolute bottom-6 right-4 md:bottom-8 md:right-8 z-20 w-[calc(100vw-2rem)] max-w-xs sm:max-w-sm md:w-80 bg-white/85 dark:bg-[#1a1f2c]/85 backdrop-blur-2xl border border-white/60 dark:border-white/15 rounded-3xl p-4 shadow-2xl space-y-3 animate-in fade-in zoom-in-95 duration-200 pointer-events-auto text-left">
       {/* Header with Status Indicator, Privacy Center CTA & Collapse */}
       <div className="flex items-center justify-between border-b border-surface-dim/40 dark:border-white/10 pb-2.5">
         <div className="flex items-center gap-2">

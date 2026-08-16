@@ -16,6 +16,7 @@ import {
 import { useTheme } from '../../context/ThemeContext.js';
 import { discoverService, travelService } from '../../services/index.js';
 import { useLiveLocation } from '../../context/LiveLocationContext.js';
+import { INDIAN_DEMO_ROOMS, INDIAN_DEMO_PROFILES } from '../../data/indianDemoData.js';
 import {
   MapFilterType,
   RoomMapItem,
@@ -493,11 +494,16 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
 
   // Normalize Room Items with budget filter
   const validRooms: RoomMapItem[] = useMemo(() => {
-    const rooms = discoverData?.data?.rooms || [];
+    const rawRooms = discoverData?.data?.rooms || [];
+    const roomsSource = rawRooms.length > 0 ? rawRooms : INDIAN_DEMO_ROOMS;
     const items: RoomMapItem[] = [];
 
-    rooms.forEach((r: any) => {
-      const coords = r.address?.coordinates;
+    roomsSource.forEach((r: any) => {
+      let coords = r.address?.coordinates;
+      if (!coords || !Array.isArray(coords) || coords.length !== 2) {
+        coords = getApproximateCoords(r.neighborhood || r.address?.city || '', r.city || r.address?.city || 'Bengaluru');
+      }
+
       if (
         Array.isArray(coords) &&
         coords.length === 2 &&
@@ -506,7 +512,7 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
         !isNaN(coords[0]) &&
         !isNaN(coords[1])
       ) {
-        const rent = r.pricing?.monthlyRent || 0;
+        const rent = r.pricing?.monthlyRent || r.monthlyRent || 0;
         if (filterOptions.maxBudget && rent > filterOptions.maxBudget) {
           return;
         }
@@ -515,15 +521,15 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
           id: r._id || r.id,
           title: r.title || 'Living Space',
           description: r.description || '',
-          city: r.address?.city || 'Bengaluru',
-          neighborhood: r.address?.street?.split(',')[0] || r.address?.city || 'Central',
-          state: r.address?.state || 'India',
+          city: r.city || r.address?.city || 'Bengaluru',
+          neighborhood: r.neighborhood || r.address?.street?.split(',')[0] || r.address?.city || 'Central',
+          state: r.state || r.address?.state || 'India',
           coordinates: [coords[0], coords[1]],
           monthlyRent: rent,
-          deposit: r.pricing?.deposit,
-          status: r.status || 'available',
-          imageUrl: r.photos?.[0],
-          roommatesCount: r.roommates?.length || 0,
+          deposit: r.pricing?.deposit || r.deposit,
+          status: r.status || (r.isAvailable !== false ? 'available' : 'occupied'),
+          imageUrl: r.photos?.[0] || r.imageUrl,
+          roommatesCount: r.roommates?.length || r.cohabitants?.length || 0,
         });
       }
     });
@@ -540,12 +546,13 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
 
   // Normalize Real Database People (Discovery layer)
   const validPeople: PersonMapItem[] = useMemo(() => {
-    const profiles = discoverData?.data?.profiles || [];
+    const rawProfiles = discoverData?.data?.profiles || [];
+    const profilesSource = rawProfiles.length > 0 ? rawProfiles : INDIAN_DEMO_PROFILES;
     const items: PersonMapItem[] = [];
 
     const coordCounts: Record<string, number> = {};
 
-    profiles.forEach((p: any) => {
+    profilesSource.forEach((p: any) => {
       // Filter by chronotype if active
       if (
         filterOptions.chronotypes.length > 0 &&
@@ -556,8 +563,8 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
       }
 
       const locStr = p.preferredLocations?.[0] || 'Indiranagar, Bengaluru';
-      const city = locStr.split(',')[1]?.trim() || 'Bengaluru';
-      const neighborhood = locStr.split(',')[0]?.trim() || 'Indiranagar';
+      const city = locStr.split(',')[1]?.trim() || p.city || 'Bengaluru';
+      const neighborhood = locStr.split(',')[0]?.trim() || p.neighborhood || 'Indiranagar';
 
       const baseCoords = getApproximateCoords(locStr, city);
       const coordKey = `${baseCoords[0].toFixed(3)},${baseCoords[1].toFixed(3)}`;
@@ -1573,16 +1580,16 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
 
       {/* Upper-Left Editorial Hero Header in a Translucent Frosted Glass Card */}
       <div className="absolute top-36 sm:top-40 left-6 sm:left-8 z-30 pointer-events-none max-w-sm sm:max-w-md lg:max-w-lg select-none">
-        <div className="bg-clay/95 dark:bg-earth-container/95 backdrop-blur-2xl border border-surface-dim dark:border-white/20 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-2 pointer-events-auto transition-all">
+        <div className="bg-white/80 dark:bg-[#1a1f2c]/80 backdrop-blur-2xl border border-white/60 dark:border-white/15 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-2 pointer-events-auto transition-all">
           <div className="flex items-center gap-2 text-vitality-coral font-sans text-xs font-bold tracking-widest uppercase">
             <span className="w-5 h-[2px] bg-vitality-coral inline-block"></span>
             <span>Interactive Geographic Map</span>
           </div>
-          <h1 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-earth-indigo leading-tight">
+          <h1 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-earth-indigo dark:text-white leading-tight">
             Spatial District <br />
-            <span className="font-serif italic font-normal text-secondary">Geographic Vector Canvas</span>
+            <span className="font-serif italic font-normal text-secondary dark:text-surface-dim">Geographic Vector Canvas</span>
           </h1>
-          <p className="text-xs sm:text-sm text-secondary font-sans leading-relaxed pt-1">
+          <p className="text-xs sm:text-sm text-secondary dark:text-surface-dim font-sans leading-relaxed pt-1">
             Explore neighborhoods, transport hubs, and curated roommate clusters across Bengaluru, Mumbai, and Pune.
           </p>
         </div>
@@ -1624,13 +1631,13 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
               key={c.id}
               type="button"
               onClick={() => handleSwitchCity(c.id)}
-              className={`px-3 py-1 rounded-full font-sans text-xs font-bold transition-all cursor-pointer flex items-center gap-1 backdrop-blur-xl border shrink-0 ${
+              className={`px-3.5 py-1.5 rounded-full font-sans text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 backdrop-blur-xl border shrink-0 ${
                 activeCity === c.id
-                  ? 'bg-vitality-coral text-white border-vitality-coral shadow-md'
-                  : 'bg-clay/90 dark:bg-earth-container/90 text-earth-indigo border-surface-dim dark:border-white/20 hover:border-vitality-coral'
+                  ? 'bg-vitality-coral text-white border-vitality-coral shadow-lg'
+                  : 'bg-white/80 dark:bg-[#1a1f2c]/80 text-[#0f172a] dark:text-white border-white/60 dark:border-white/15 shadow-md hover:border-vitality-coral'
               }`}
             >
-              <MapPin className="w-2.5 h-2.5" />
+              <MapPin className="w-3 h-3" />
               <span>{c.name}</span>
             </button>
           ))}
@@ -1908,7 +1915,7 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
           type="button"
           onClick={handleLocateMe}
           disabled={locatingUser}
-          className="p-3 bg-clay/90 dark:bg-earth-container/90 backdrop-blur-xl border border-surface-dim dark:border-white/20 text-earth-indigo rounded-2xl shadow-2xl hover:border-vitality-coral hover:text-vitality-coral transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center"
+          className="p-3 bg-white/80 dark:bg-[#1a1f2c]/80 backdrop-blur-xl border border-white/60 dark:border-white/15 text-[#0f172a] dark:text-white rounded-2xl shadow-xl hover:border-vitality-coral hover:text-vitality-coral transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center"
           title="Near Me — Locate your device position"
           aria-label="Near Me"
         >
@@ -1923,7 +1930,7 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
         <button
           type="button"
           onClick={handleResetView}
-          className="p-3 bg-clay/90 dark:bg-earth-container/90 backdrop-blur-xl border border-surface-dim dark:border-white/20 text-earth-indigo rounded-2xl shadow-2xl hover:border-vitality-coral hover:text-vitality-coral transition-all cursor-pointer flex items-center justify-center"
+          className="p-3 bg-white/80 dark:bg-[#1a1f2c]/80 backdrop-blur-xl border border-white/60 dark:border-white/15 text-[#0f172a] dark:text-white rounded-2xl shadow-xl hover:border-vitality-coral hover:text-vitality-coral transition-all cursor-pointer flex items-center justify-center"
           title="Reset View — Return to default city perspective"
           aria-label="Reset View"
         >
@@ -1934,10 +1941,10 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
         <button
           type="button"
           onClick={handleTogglePitch}
-          className={`p-3 backdrop-blur-xl border rounded-2xl shadow-2xl transition-all cursor-pointer flex items-center justify-center font-sans text-xs font-bold ${
+          className={`p-3 backdrop-blur-xl border rounded-2xl shadow-xl transition-all cursor-pointer flex items-center justify-center font-sans text-xs font-bold ${
             isPitch3D
-              ? 'bg-vitality-coral text-white border-vitality-coral'
-              : 'bg-clay/90 dark:bg-earth-container/90 border-surface-dim dark:border-white/20 text-earth-indigo hover:border-vitality-coral'
+              ? 'bg-vitality-coral text-white border-vitality-coral shadow-lg'
+              : 'bg-white/80 dark:bg-[#1a1f2c]/80 border-white/60 dark:border-white/15 text-[#0f172a] dark:text-white hover:border-vitality-coral'
           }`}
           title="Toggle 3D Perspective"
           aria-label="Toggle 3D Perspective"
@@ -1949,7 +1956,7 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
         <button
           type="button"
           onClick={handleResetNorth}
-          className="p-3 bg-clay/90 dark:bg-earth-container/90 backdrop-blur-xl border border-surface-dim dark:border-white/20 text-earth-indigo rounded-2xl shadow-2xl hover:border-vitality-coral hover:text-vitality-coral transition-all cursor-pointer flex items-center justify-center"
+          className="p-3 bg-white/80 dark:bg-[#1a1f2c]/80 backdrop-blur-xl border border-white/60 dark:border-white/15 text-[#0f172a] dark:text-white rounded-2xl shadow-xl hover:border-vitality-coral hover:text-vitality-coral transition-all cursor-pointer flex items-center justify-center"
           title="Reset Bearing to North"
           aria-label="Reset Bearing to North"
         >
@@ -1957,21 +1964,21 @@ export const SpacesMap: React.FC<SpacesMapProps> = ({
         </button>
 
         {/* Zoom Controls */}
-        <div className="flex flex-col rounded-2xl overflow-hidden border border-surface-dim dark:border-white/20 shadow-2xl bg-clay/90 dark:bg-earth-container/90 backdrop-blur-xl">
+        <div className="flex flex-col rounded-2xl overflow-hidden border border-white/60 dark:border-white/15 shadow-xl bg-white/80 dark:bg-[#1a1f2c]/80 backdrop-blur-xl">
           <button
             type="button"
             onClick={handleZoomIn}
-            className="p-3 text-earth-indigo hover:bg-surface-dim dark:hover:bg-white/10 hover:text-vitality-coral transition-all cursor-pointer flex items-center justify-center"
+            className="p-3 text-[#0f172a] dark:text-white hover:bg-black/5 dark:hover:bg-white/10 hover:text-vitality-coral transition-all cursor-pointer flex items-center justify-center"
             title="Zoom In"
             aria-label="Zoom In"
           >
             <Plus className="w-5 h-5" />
           </button>
-          <div className="h-[1px] bg-surface-dim dark:bg-white/10 w-full" />
+          <div className="h-[1px] bg-black/10 dark:bg-white/10 w-full" />
           <button
             type="button"
             onClick={handleZoomOut}
-            className="p-3 text-earth-indigo hover:bg-surface-dim dark:hover:bg-white/10 hover:text-vitality-coral transition-all cursor-pointer flex items-center justify-center"
+            className="p-3 text-[#0f172a] dark:text-white hover:bg-black/5 dark:hover:bg-white/10 hover:text-vitality-coral transition-all cursor-pointer flex items-center justify-center"
             title="Zoom Out"
             aria-label="Zoom Out"
           >
