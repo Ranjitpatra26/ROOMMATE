@@ -34,16 +34,16 @@ export const LandingPage: React.FC = () => {
     <div className="bg-clay text-earth-indigo min-h-screen selection:bg-vitality-coral selection:text-white transition-colors duration-200">
       {/* 1. Hero Masthead with Clean Ambient 3D Scene & Editorial Cover */}
       <header className="relative min-h-screen flex flex-col justify-center items-center pt-24 px-6 overflow-hidden">
-        {/* Background Editorial Cover Image with Atmospheric Overlays */}
+        {/* Background Editorial Cover Image with Dual Light/Dark Ambient Treatments */}
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
           <img
             src="/images/editorial/roommate_hero_cover.jpg"
             alt="ROOMMATE Architectural Living"
-            className="w-full h-full object-cover opacity-40 scale-105"
+            className="w-full h-full object-cover opacity-25 dark:opacity-40 scale-105 transition-opacity duration-300"
           />
-          {/* Deep atmospheric gradient overlay for maximum contrast and theme cohesion */}
-          <div className="absolute inset-0 bg-gradient-to-b from-clay/85 via-clay/65 to-clay" />
-          <div className="absolute inset-0 bg-radial-at-c from-transparent via-clay/30 to-clay/90" />
+          {/* Dual Theme Atmospheric Gradient Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-b from-clay/90 via-clay/70 to-clay transition-colors duration-300" />
+          <div className="absolute inset-0 bg-radial-at-c from-transparent via-clay/40 to-clay/95 transition-colors duration-300" />
         </div>
 
         {/* Subtle WebGL R3F Scene */}
@@ -60,9 +60,12 @@ export const LandingPage: React.FC = () => {
         {/* Hero Content */}
         <div className="relative z-10 text-center max-w-4xl mx-auto space-y-6">
           <ScrollReveal direction="up" delay={0.1}>
-            <span className="font-sans text-label-caps text-secondary uppercase tracking-widest block mb-2">
-              Art Directed Living OS
-            </span>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container/70 dark:bg-surface-dim/50 backdrop-blur-md border border-surface-dim/60 shadow-sm mb-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-vitality-coral animate-pulse" />
+              <span className="font-sans text-xs uppercase tracking-widest text-earth-indigo/80 dark:text-earth-fixed font-semibold">
+                Art Directed Living OS
+              </span>
+            </div>
           </ScrollReveal>
 
           <ScrollReveal direction="up" delay={0.2}>
@@ -72,7 +75,7 @@ export const LandingPage: React.FC = () => {
           </ScrollReveal>
 
           <ScrollReveal direction="up" delay={0.3}>
-            <p className="font-sans text-body-lg text-secondary max-w-2xl mx-auto leading-relaxed">
+            <p className="font-sans text-body-lg text-secondary dark:text-text-secondary max-w-2xl mx-auto leading-relaxed">
               A new paradigm in shared living, designed for connection, compatibility, and peace of mind.
             </p>
           </ScrollReveal>
@@ -91,7 +94,7 @@ export const LandingPage: React.FC = () => {
                 variant="ghost"
                 size="lg"
                 onClick={() => navigate('/login')}
-                className="text-earth-indigo font-semibold cursor-pointer"
+                className="text-earth-indigo font-semibold cursor-pointer hover:bg-surface-dim/30"
               >
                 Sign In
               </Button>
