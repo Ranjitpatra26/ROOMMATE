@@ -152,7 +152,6 @@ export const ParallaxImage: React.FC<ParallaxImageProps> = ({
   alt,
   className = '',
   speed = 1,
-  ...props
 }) => {
   const imgRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
@@ -166,7 +165,7 @@ export const ParallaxImage: React.FC<ParallaxImageProps> = ({
   const innerScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.18, 1.06, 1.18]);
 
   if (shouldReduceMotion) {
-    return <img src={src} alt={alt} className={className} {...props} />;
+    return <img src={src} alt={alt} className={className} />;
   }
 
   return (
@@ -179,7 +178,6 @@ export const ParallaxImage: React.FC<ParallaxImageProps> = ({
           scale: innerScale,
         }}
         className={`w-full h-full object-cover will-change-transform ${className}`}
-        {...props}
       />
     </div>
   );

@@ -4,6 +4,7 @@ import { PublicLayout, AuthLayout, AppLayout, SpatialLayout } from '../layouts';
 
 // Lazy-loaded Page Components for Performance & Code Splitting
 const LandingPage = lazy(() => import('../pages/LandingPage').then(m => ({ default: m.LandingPage })));
+const RevealShowcasePage = lazy(() => import('../pages/RevealShowcasePage').then(m => ({ default: m.RevealShowcasePage })));
 const LoginPage = lazy(() => import('../pages/AuthPages').then(m => ({ default: m.LoginPage })));
 const RegisterPage = lazy(() => import('../pages/AuthPages').then(m => ({ default: m.RegisterPage })));
 const OnboardingChapter1Page = lazy(() => import('../pages/OnboardingPages').then(m => ({ default: m.OnboardingChapter1Page })));
@@ -38,6 +39,23 @@ const PageLoader: React.FC = () => (
 );
 
 const router = createBrowserRouter([
+  // Pre-Auth Showcase Reveal Experience
+  {
+    path: '/showcase',
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <RevealShowcasePage />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/reveal',
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <RevealShowcasePage />
+      </Suspense>
+    ),
+  },
   // Public Section
   {
     element: <PublicLayout />,
