@@ -70,9 +70,6 @@ export const GlobalNavbar: React.FC<GlobalNavbarProps> = ({ variant = 'auto' }) 
               <span className="font-serif text-headline-sm font-bold tracking-tight text-earth-indigo">
                 ROOMMATE
               </span>
-              <span className="text-label-caps text-vitality-coral font-bold tracking-[0.15em] hidden sm:inline px-2 py-0.5 rounded-full bg-vitality-coral/10 border border-vitality-coral/20">
-                Living OS
-              </span>
             </Link>
 
             {/* Center: Desktop Canonical Navigation Links (App Mode) */}
