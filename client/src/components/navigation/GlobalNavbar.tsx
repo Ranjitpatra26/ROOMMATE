@@ -200,13 +200,11 @@ export const GlobalNavbar: React.FC<GlobalNavbarProps> = ({ variant = 'auto' }) 
         {/* Small Circular Button at the VERY Right Corner of Global Navbar */}
         <Link
           to="/reveal"
-          className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border border-vitality-coral/40 bg-vitality-coral/10 hover:bg-vitality-coral text-vitality-coral hover:text-white transition-all duration-200 shadow-sm hover:shadow-vitality-coral/30 hover:scale-110 cursor-pointer group z-20"
+          className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border border-surface-dim/80 dark:border-white/10 bg-surface-low/80 dark:bg-white/5 hover:bg-surface-dim dark:hover:bg-white/10 text-secondary dark:text-earth-fixed/60 hover:text-earth-indigo dark:hover:text-white transition-all duration-200 shadow-sm hover:scale-105 cursor-pointer group z-20"
           title="Explore Living OS Reveal"
           aria-label="Explore Living OS Reveal"
         >
           <Sparkles className="w-3.5 h-3.5 group-hover:rotate-12 transition-transform" />
-          <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-vitality-coral animate-ping opacity-75" />
-          <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-vitality-coral" />
         </Link>
       </header>
 
