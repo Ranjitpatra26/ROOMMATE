@@ -144,6 +144,18 @@ export const AuthLayout: React.FC = () => {
       {/* RIGHT AUTHENTICATION FORM COLUMN */}
       {/* ============================================================ */}
       <div className="flex-1 flex flex-col justify-between p-6 sm:p-10 lg:p-12 xl:p-16 relative bg-clay dark:bg-earth-container transition-colors duration-200 overflow-y-auto">
+        {/* Framer CanvasFlame Interactive Particle Canvas for Right Side */}
+        <CanvasFlame
+          preset="Custom"
+          backgroundFill="transparent"
+          haloColor="rgba(224, 109, 83, 0.35)"
+          intensity={1.3}
+          useMouse={true}
+          listenToWindow={true}
+          performanceMode="High"
+          className="z-0 pointer-events-none"
+        />
+
         {/* Subtle Warm Ambient Glow */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-radial-at-tr from-vitality-coral/10 via-trust-teal/5 to-transparent pointer-events-none blur-3xl z-0" />
 
