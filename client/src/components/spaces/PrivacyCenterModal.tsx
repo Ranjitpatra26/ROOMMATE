@@ -58,7 +58,7 @@ export const PrivacyCenterModal: React.FC<PrivacyCenterModalProps> = ({ isOpen, 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="w-full max-w-lg bg-clay dark:bg-earth-container border border-surface-dim dark:border-white/20 rounded-3xl p-6 shadow-2xl space-y-5 animate-in zoom-in-95 duration-200 text-left max-h-[90vh] overflow-y-auto">
+      <div className="w-full max-w-lg spatial-glass-card rounded-3xl p-6 space-y-5 animate-in zoom-in-95 duration-200 text-left max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-surface-dim dark:border-white/10 pb-4">
           <div className="flex items-center gap-2.5">

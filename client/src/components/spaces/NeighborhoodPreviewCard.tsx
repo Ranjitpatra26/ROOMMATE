@@ -26,7 +26,7 @@ export const NeighborhoodPreviewCard: React.FC<NeighborhoodPreviewCardProps> = (
   onDirections,
 }) => {
   return (
-    <div className="bg-clay/95 dark:bg-earth-container/95 backdrop-blur-2xl border border-surface-dim dark:border-white/20 rounded-3xl p-5 shadow-2xl space-y-4 max-w-sm sm:max-w-md w-full animate-in fade-in slide-in-from-bottom-4 duration-200 text-left pointer-events-auto">
+    <div className="spatial-glass-card rounded-3xl p-5 space-y-4 max-w-sm sm:max-w-md w-full animate-in fade-in slide-in-from-bottom-4 duration-200 text-left pointer-events-auto">
       {/* Header with Close */}
       <div className="flex items-start justify-between gap-3 border-b border-surface-dim/40 dark:border-white/10 pb-3">
         <div>

@@ -56,7 +56,7 @@ export const LiveLocationControlPanel: React.FC = () => {
         <button
           type="button"
           onClick={() => setIsCollapsed(false)}
-          className="px-3.5 py-2 bg-[#fcf8fa]/90 dark:bg-[#1e2433]/90 backdrop-blur-xl border border-[#dcd9db]/60 dark:border-white/20 rounded-full shadow-2xl flex items-center gap-2 font-sans text-xs font-bold text-earth-indigo dark:text-white hover:border-vitality-coral transition-all cursor-pointer"
+          className="px-3.5 py-2 spatial-glass rounded-full flex items-center gap-2 font-sans text-xs font-bold text-earth-indigo dark:text-white hover:border-vitality-coral transition-all cursor-pointer"
           aria-label="Expand live location panel"
         >
           {isGhostMode ? (
@@ -90,7 +90,7 @@ export const LiveLocationControlPanel: React.FC = () => {
   }
 
   return (
-    <div className="absolute bottom-6 right-4 md:bottom-8 md:right-8 z-20 w-[calc(100vw-2rem)] max-w-xs sm:max-w-sm md:w-80 bg-[#fcf8fa]/95 dark:bg-[#1e2433]/95 backdrop-blur-2xl border border-[#dcd9db]/60 dark:border-white/20 rounded-3xl p-4 shadow-2xl space-y-3 animate-in fade-in zoom-in-95 duration-200 pointer-events-auto text-left">
+    <div className="absolute bottom-6 right-4 md:bottom-8 md:right-8 z-20 w-[calc(100vw-2rem)] max-w-xs sm:max-w-sm md:w-80 spatial-glass-card rounded-3xl p-4 space-y-3 animate-in fade-in zoom-in-95 duration-200 pointer-events-auto text-left">
       {/* Header with Status Indicator, Privacy Center CTA & Collapse */}
       <div className="flex items-center justify-between border-b border-surface-dim/40 dark:border-white/10 pb-2.5">
         <div className="flex items-center gap-2">

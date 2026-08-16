@@ -52,7 +52,7 @@ export const NeighborhoodComparisonModal: React.FC<NeighborhoodComparisonModalPr
       aria-labelledby="comparison-modal-title"
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-200"
     >
-      <div className="bg-[#fcf8fa] dark:bg-[#1e2433] border border-[#dcd9db] dark:border-white/20 rounded-3xl p-6 shadow-2xl max-w-lg w-full space-y-5 text-left font-sans animate-in zoom-in-95 duration-200">
+      <div className="spatial-glass-card rounded-3xl p-6 max-w-lg w-full space-y-5 text-left font-sans animate-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-[#dcd9db] dark:border-white/10 pb-4">
           <div className="flex items-center gap-2">

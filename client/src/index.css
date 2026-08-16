@@ -44,6 +44,15 @@
   /* Motion Easing */
   --ease-editorial: cubic-bezier(0.19, 1, 0.22, 1);
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Spatial Frosted Glass Material Tokens - Light Mode */
+  --spatial-glass-bg: rgba(252, 248, 250, 0.85);
+  --spatial-glass-card-bg: rgba(252, 248, 250, 0.88);
+  --spatial-glass-blur: 16px;
+  --spatial-glass-card-blur: 20px;
+  --spatial-glass-border: rgba(220, 217, 219, 0.65);
+  --spatial-glass-shadow: 0 10px 30px -5px rgba(26, 31, 44, 0.08), 0 4px 12px -2px rgba(26, 31, 44, 0.04);
+  --spatial-glass-shadow-lg: 0 20px 40px -10px rgba(26, 31, 44, 0.12), 0 8px 16px -4px rgba(26, 31, 44, 0.06);
 }
 
 [data-theme="dark"],
@@ -79,6 +88,34 @@
   --color-text-muted: #9ba3b8;
   --color-text-on-dark: #fcf8fa;
   --color-text-on-dark-secondary: #c6c6cc;
+
+  /* Spatial Frosted Glass Material Tokens - Dark Mode */
+  --spatial-glass-bg: rgba(30, 36, 51, 0.85);
+  --spatial-glass-card-bg: rgba(30, 36, 51, 0.88);
+  --spatial-glass-blur: 16px;
+  --spatial-glass-card-blur: 20px;
+  --spatial-glass-border: rgba(255, 255, 255, 0.14);
+  --spatial-glass-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.35), 0 4px 12px -2px rgba(0, 0, 0, 0.2);
+  --spatial-glass-shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 8px 16px -4px rgba(0, 0, 0, 0.3);
+}
+
+/* Spatial Frosted Glass Utility Classes */
+@layer utilities {
+  .spatial-glass {
+    background-color: var(--spatial-glass-bg);
+    backdrop-filter: blur(var(--spatial-glass-blur));
+    -webkit-backdrop-filter: blur(var(--spatial-glass-blur));
+    border: 1px solid var(--spatial-glass-border);
+    box-shadow: var(--spatial-glass-shadow);
+  }
+
+  .spatial-glass-card {
+    background-color: var(--spatial-glass-card-bg);
+    backdrop-filter: blur(var(--spatial-glass-card-blur));
+    -webkit-backdrop-filter: blur(var(--spatial-glass-card-blur));
+    border: 1px solid var(--spatial-glass-border);
+    box-shadow: var(--spatial-glass-shadow-lg);
+  }
 }
 
 /* Contrast Safety Utility Overrides for Dark Mode */

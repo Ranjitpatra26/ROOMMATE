@@ -26,7 +26,7 @@ export const LivePermissionModal: React.FC<LivePermissionModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="w-full max-w-md bg-clay dark:bg-earth-container border border-surface-dim dark:border-white/20 rounded-3xl p-6 shadow-2xl space-y-4 animate-in zoom-in-95 duration-200 text-left">
+      <div className="w-full max-w-md spatial-glass-card rounded-3xl p-6 space-y-4 animate-in zoom-in-95 duration-200 text-left">
         {/* Header Icon & Security Badge */}
         <div className="flex items-center justify-between">
           <div className="w-12 h-12 rounded-2xl bg-vitality-coral/15 text-vitality-coral flex items-center justify-center border border-vitality-coral/30">

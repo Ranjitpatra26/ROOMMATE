@@ -7,7 +7,7 @@ export const MapLegend: React.FC<{ className?: string }> = ({ className = '' }) 
   return (
     <div className={`relative pointer-events-auto text-left hidden sm:block ${className}`}>
       {isOpen ? (
-        <div className="absolute bottom-full mb-2 left-0 bg-[#fcf8fa]/95 dark:bg-[#1e2433]/95 backdrop-blur-2xl border border-[#dcd9db]/60 dark:border-white/20 rounded-3xl p-3.5 shadow-2xl space-y-2.5 w-64 animate-in fade-in zoom-in-95 duration-200 z-40">
+        <div className="absolute bottom-full mb-2 left-0 spatial-glass-card rounded-3xl p-3.5 space-y-2.5 w-64 animate-in fade-in zoom-in-95 duration-200 z-40">
           <div className="flex items-center justify-between border-b border-surface-dim dark:border-white/10 pb-2">
             <span className="font-sans text-[11px] font-bold text-earth-indigo dark:text-white uppercase tracking-wider flex items-center gap-1.5">
               <Info className="w-3.5 h-3.5 text-vitality-coral" />
@@ -85,7 +85,7 @@ export const MapLegend: React.FC<{ className?: string }> = ({ className = '' }) 
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="px-3.5 py-2.5 bg-[#fcf8fa]/90 dark:bg-[#1e2433]/90 backdrop-blur-xl border border-[#dcd9db]/60 dark:border-white/20 rounded-full shadow-lg font-sans text-xs font-bold text-secondary dark:text-surface-dim hover:text-earth-indigo dark:hover:text-white hover:border-vitality-coral flex items-center gap-1.5 transition-all cursor-pointer"
+          className="px-3.5 py-2.5 spatial-glass rounded-full font-sans text-xs font-bold text-secondary dark:text-surface-dim hover:text-earth-indigo dark:hover:text-white hover:border-vitality-coral flex items-center gap-1.5 transition-all cursor-pointer"
           title="Open Map Legend"
           aria-label="Map Legend"
         >

@@ -71,7 +71,7 @@ export const MapFilterModal: React.FC<MapFilterModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-clay dark:bg-earth-container border border-surface-dim dark:border-white/20 rounded-3xl p-6 shadow-2xl max-w-md w-full space-y-6 text-earth-indigo dark:text-clay text-left animate-in zoom-in-95 duration-200">
+      <div className="spatial-glass-card rounded-3xl p-6 max-w-md w-full space-y-6 text-earth-indigo dark:text-clay text-left animate-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-surface-dim dark:border-white/10 pb-4">
           <div className="flex items-center gap-2.5">
