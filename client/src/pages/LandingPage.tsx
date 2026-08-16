@@ -57,8 +57,8 @@ export const LandingPage: React.FC = () => {
           </Canvas>
         </div>
 
-        {/* Hero Content with Frosted Backdrop for Crystal Clear Legibility */}
-        <div className="relative z-10 text-center max-w-4xl mx-auto space-y-6 p-6 sm:p-10 rounded-3xl bg-clay/45 dark:bg-clay/10 backdrop-blur-md border border-white/50 dark:border-white/5 shadow-2xl shadow-earth-indigo/5">
+        {/* Hero Content - Clean & Open Layout without bounding box */}
+        <div className="relative z-10 text-center max-w-4xl mx-auto space-y-6">
           <ScrollReveal direction="up" delay={0.1}>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container/80 dark:bg-surface-dim/50 backdrop-blur-md border border-surface-dim/60 shadow-sm mb-2">
               <span className="w-1.5 h-1.5 rounded-full bg-vitality-coral animate-pulse" />
@@ -69,24 +69,24 @@ export const LandingPage: React.FC = () => {
           </ScrollReveal>
 
           <ScrollReveal direction="up" delay={0.2}>
-            <h1 className="font-serif text-headline-lg-mobile md:text-display-hero text-earth-indigo leading-tight tracking-tight font-bold drop-shadow-sm">
+            <h1 className="font-serif text-headline-lg-mobile md:text-display-hero text-earth-indigo leading-tight tracking-tight font-bold">
               Who you live with changes how you live.
             </h1>
           </ScrollReveal>
 
           <ScrollReveal direction="up" delay={0.3}>
-            <p className="font-sans text-body-lg text-earth-indigo/85 dark:text-text-secondary max-w-2xl mx-auto leading-relaxed font-medium">
+            <p className="font-sans text-body-lg text-earth-indigo/90 dark:text-text-secondary max-w-2xl mx-auto leading-relaxed font-medium drop-shadow-[0_1px_8px_rgba(255,255,255,0.85)] dark:drop-shadow-none">
               A new paradigm in shared living, designed for connection, compatibility, and peace of mind.
             </p>
           </ScrollReveal>
 
           <ScrollReveal direction="up" delay={0.4}>
-            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
                 variant="primary"
                 size="lg"
                 onClick={() => navigate('/onboarding/chapter-1')}
-                className="px-8 py-4 shadow-lg shadow-earth-indigo/20 cursor-pointer font-bold tracking-wider"
+                className="px-8 py-4 shadow-lg shadow-earth-indigo/15 cursor-pointer font-bold tracking-wider"
               >
                 ENTER VISUAL DNA
               </Button>
@@ -94,7 +94,7 @@ export const LandingPage: React.FC = () => {
                 variant="ghost"
                 size="lg"
                 onClick={() => navigate('/login')}
-                className="text-earth-indigo font-bold cursor-pointer hover:bg-surface-dim/40 border border-surface-dim/50 dark:border-transparent"
+                className="text-earth-indigo font-semibold cursor-pointer hover:bg-surface-dim/30"
               >
                 Sign In
               </Button>
