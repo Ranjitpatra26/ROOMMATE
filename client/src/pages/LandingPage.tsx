@@ -34,16 +34,16 @@ export const LandingPage: React.FC = () => {
     <div className="bg-clay text-earth-indigo min-h-screen selection:bg-vitality-coral selection:text-white transition-colors duration-200">
       {/* 1. Hero Masthead with Clean Ambient 3D Scene & Editorial Cover */}
       <header className="relative min-h-screen flex flex-col justify-center items-center pt-24 px-6 overflow-hidden">
-        {/* Background Editorial Cover Image with Dual Light/Dark Ambient Treatments */}
+        {/* Background Editorial Cover Image with High Visibility & Subtle Gradients */}
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
           <img
             src="/images/editorial/roommate_hero_cover.jpg"
             alt="ROOMMATE Architectural Living"
-            className="w-full h-full object-cover opacity-25 dark:opacity-40 scale-105 transition-opacity duration-300"
+            className="w-full h-full object-cover opacity-85 dark:opacity-40 scale-100 transition-opacity duration-300"
           />
-          {/* Dual Theme Atmospheric Gradient Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-b from-clay/90 via-clay/70 to-clay transition-colors duration-300" />
-          <div className="absolute inset-0 bg-radial-at-c from-transparent via-clay/40 to-clay/95 transition-colors duration-300" />
+          {/* Subtle Atmospheric Gradient Overlays that keep image visible while ensuring smooth section blend */}
+          <div className="absolute inset-0 bg-gradient-to-b from-clay/40 via-transparent to-clay dark:from-clay/85 dark:via-clay/60 dark:to-clay transition-colors duration-300" />
+          <div className="absolute inset-0 bg-radial-at-c from-clay/50 via-clay/20 to-transparent dark:from-clay/70 dark:via-clay/40 dark:to-transparent transition-colors duration-300" />
         </div>
 
         {/* Subtle WebGL R3F Scene */}
@@ -57,36 +57,36 @@ export const LandingPage: React.FC = () => {
           </Canvas>
         </div>
 
-        {/* Hero Content */}
-        <div className="relative z-10 text-center max-w-4xl mx-auto space-y-6">
+        {/* Hero Content with Frosted Backdrop for Crystal Clear Legibility */}
+        <div className="relative z-10 text-center max-w-4xl mx-auto space-y-6 p-6 sm:p-10 rounded-3xl bg-clay/45 dark:bg-clay/10 backdrop-blur-md border border-white/50 dark:border-white/5 shadow-2xl shadow-earth-indigo/5">
           <ScrollReveal direction="up" delay={0.1}>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container/70 dark:bg-surface-dim/50 backdrop-blur-md border border-surface-dim/60 shadow-sm mb-2">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container/80 dark:bg-surface-dim/50 backdrop-blur-md border border-surface-dim/60 shadow-sm mb-2">
               <span className="w-1.5 h-1.5 rounded-full bg-vitality-coral animate-pulse" />
-              <span className="font-sans text-xs uppercase tracking-widest text-earth-indigo/80 dark:text-earth-fixed font-semibold">
+              <span className="font-sans text-xs uppercase tracking-widest text-earth-indigo/90 dark:text-earth-fixed font-bold">
                 Art Directed Living OS
               </span>
             </div>
           </ScrollReveal>
 
           <ScrollReveal direction="up" delay={0.2}>
-            <h1 className="font-serif text-headline-lg-mobile md:text-display-hero text-earth-indigo leading-tight tracking-tight font-bold">
+            <h1 className="font-serif text-headline-lg-mobile md:text-display-hero text-earth-indigo leading-tight tracking-tight font-bold drop-shadow-sm">
               Who you live with changes how you live.
             </h1>
           </ScrollReveal>
 
           <ScrollReveal direction="up" delay={0.3}>
-            <p className="font-sans text-body-lg text-secondary dark:text-text-secondary max-w-2xl mx-auto leading-relaxed">
+            <p className="font-sans text-body-lg text-earth-indigo/85 dark:text-text-secondary max-w-2xl mx-auto leading-relaxed font-medium">
               A new paradigm in shared living, designed for connection, compatibility, and peace of mind.
             </p>
           </ScrollReveal>
 
           <ScrollReveal direction="up" delay={0.4}>
-            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
                 variant="primary"
                 size="lg"
                 onClick={() => navigate('/onboarding/chapter-1')}
-                className="px-8 py-4 shadow-lg shadow-earth-indigo/15 cursor-pointer"
+                className="px-8 py-4 shadow-lg shadow-earth-indigo/20 cursor-pointer font-bold tracking-wider"
               >
                 ENTER VISUAL DNA
               </Button>
@@ -94,7 +94,7 @@ export const LandingPage: React.FC = () => {
                 variant="ghost"
                 size="lg"
                 onClick={() => navigate('/login')}
-                className="text-earth-indigo font-semibold cursor-pointer hover:bg-surface-dim/30"
+                className="text-earth-indigo font-bold cursor-pointer hover:bg-surface-dim/40 border border-surface-dim/50 dark:border-transparent"
               >
                 Sign In
               </Button>
