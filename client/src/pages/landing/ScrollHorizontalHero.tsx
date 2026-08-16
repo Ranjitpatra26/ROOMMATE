@@ -47,6 +47,7 @@ const ITEMS = [
 
 export const ScrollHorizontalHero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== 'undefined' ? window.innerWidth : 1200
@@ -59,10 +60,10 @@ export const ScrollHorizontalHero: React.FC = () => {
   }, []);
 
   const isMobile = windowWidth < 640;
-  const cardWidth = isMobile ? 280 : 380;
-  const gap = isMobile ? 16 : 30;
+  const cardWidth = isMobile ? 290 : 380;
+  const gap = isMobile ? 16 : 28;
 
-  // Exact total distance from 1st item centered to 5th item centered
+  // Exact total distance from 1st item start to 5th item visible
   const totalDistance = (ITEMS.length - 1) * (cardWidth + gap);
 
   const { scrollYProgress } = useScroll({
@@ -70,10 +71,9 @@ export const ScrollHorizontalHero: React.FC = () => {
     offset: ['start start', 'end end'],
   });
 
-  // Smooth 1:1 horizontal translation matching the scroll distance
   const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
 
-  const startPadding = Math.max(20, (windowWidth - cardWidth) / 2);
+  const startPadding = Math.max(24, isMobile ? 20 : (windowWidth - cardWidth) / 2);
 
   return (
     <div
@@ -81,8 +81,8 @@ export const ScrollHorizontalHero: React.FC = () => {
       style={{ height: `calc(100vh + ${totalDistance}px)` }}
       className="relative w-full overflow-visible"
     >
-      {/* 100vh Sticky Viewport with Perfect Vertical Centering */}
-      <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden">
+      {/* 100vh Sticky Viewport with Perfect Centering and Navbar Clearance */}
+      <div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center overflow-hidden pt-16 pb-8">
         {/* Section Label */}
         <div className="w-full px-6 md:px-12 max-w-7xl mx-auto mb-4 md:mb-6 shrink-0 z-10">
           <span className="font-sans text-label-caps text-vitality-coral uppercase tracking-widest block font-bold text-xs md:text-sm">
@@ -94,7 +94,8 @@ export const ScrollHorizontalHero: React.FC = () => {
         <div className="w-full overflow-hidden flex items-center">
           {shouldReduceMotion ? (
             <div
-              className="flex gap-4 sm:gap-8 overflow-x-auto w-full py-4"
+              ref={galleryRef}
+              className="flex gap-4 sm:gap-7 overflow-x-auto w-full py-4"
               style={{ paddingLeft: `${startPadding}px`, paddingRight: `${startPadding}px` }}
             >
               {ITEMS.map((item) => (
@@ -104,7 +105,7 @@ export const ScrollHorizontalHero: React.FC = () => {
                     width: `${cardWidth}px`,
                     backgroundImage: `url(${item.image})`,
                   }}
-                  className="shrink-0 h-[380px] sm:h-[460px] md:h-[500px] max-h-[65vh] rounded-2xl relative overflow-hidden shadow-2xl border border-surface-dim/40 bg-cover bg-center"
+                  className="shrink-0 h-[400px] sm:h-[460px] md:h-[500px] rounded-2xl relative overflow-hidden shadow-2xl border border-surface-dim/40 bg-cover bg-center"
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
                   <div className="absolute bottom-6 left-6 right-6 z-10 text-white space-y-1.5">
@@ -127,6 +128,7 @@ export const ScrollHorizontalHero: React.FC = () => {
             </div>
           ) : (
             <motion.div
+              ref={galleryRef}
               style={{
                 x,
                 paddingLeft: `${startPadding}px`,
@@ -142,12 +144,12 @@ export const ScrollHorizontalHero: React.FC = () => {
                     width: `${cardWidth}px`,
                     backgroundImage: `url(${item.image})`,
                   }}
-                  className="shrink-0 h-[380px] sm:h-[460px] md:h-[500px] max-h-[65vh] rounded-2xl relative overflow-hidden shadow-2xl border border-surface-dim/40 bg-cover bg-center group transition-transform duration-500 hover:scale-[1.02]"
+                  className="shrink-0 h-[400px] sm:h-[460px] md:h-[500px] rounded-2xl relative overflow-hidden shadow-2xl border border-surface-dim/40 bg-cover bg-center group transition-transform duration-500 hover:scale-[1.02]"
                 >
-                  {/* Subtle Gradient Scrim */}
+                  {/* Subtle Bottom Gradient */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
 
-                  {/* Corner Accent Glow */}
+                  {/* Corner Glow Highlight */}
                   <div
                     className="absolute top-0 right-0 w-32 h-32 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity"
                     style={{
