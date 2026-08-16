@@ -39,10 +39,10 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
   return (
     <>
       {/* Mobile Bottom Sheet (390px - 768px) */}
-      <div className="md:hidden fixed inset-x-0 bottom-0 z-40 bg-[#1e2433]/90 dark:bg-[#121620]/95 backdrop-blur-2xl border-t border-white/20 rounded-t-3xl p-5 space-y-4 animate-in slide-in-from-bottom duration-300 pointer-events-auto text-white text-left font-sans shadow-2xl">
+      <div className="md:hidden fixed inset-x-0 bottom-0 z-40 bg-white/90 dark:bg-[#181d29]/95 backdrop-blur-2xl border-t border-white/60 dark:border-white/15 rounded-t-3xl p-5 space-y-4 animate-in slide-in-from-bottom duration-300 pointer-events-auto text-left font-sans shadow-2xl">
         {/* Dismiss drag handle */}
         <div className="flex justify-center -mt-2 pb-1">
-          <div className="w-10 h-1 rounded-full bg-white/20" />
+          <div className="w-10 h-1 rounded-full bg-black/15 dark:bg-white/20" />
         </div>
 
         <div className="flex items-start justify-between gap-3">
@@ -55,7 +55,7 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
               <MapPin className="w-3 h-3 shrink-0" />
               <span className="truncate">{room.neighborhood}, {room.city}</span>
             </button>
-            <h3 className="font-serif text-base font-bold text-white truncate">
+            <h3 className="font-serif text-base font-bold text-earth-indigo dark:text-white truncate">
               {room.title}
             </h3>
           </div>
@@ -63,7 +63,7 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-slate-300 hover:text-white cursor-pointer transition-colors border border-white/10"
+            className="w-7 h-7 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 flex items-center justify-center text-secondary dark:text-surface-dim hover:text-earth-indigo dark:hover:text-white cursor-pointer transition-colors border border-black/5 dark:border-white/10"
             title="Close Preview"
           >
             <X className="w-3.5 h-3.5" />
@@ -73,7 +73,7 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
         {/* Thumbnail & Meta */}
         <div className="flex gap-3.5 items-center">
           {room.imageUrl ? (
-            <div className="w-20 h-20 rounded-2xl overflow-hidden shrink-0 bg-earth-indigo border border-white/15">
+            <div className="w-20 h-20 rounded-2xl overflow-hidden shrink-0 bg-earth-indigo border border-black/10 dark:border-white/15">
               <img
                 src={room.imageUrl}
                 alt={room.title}
@@ -81,20 +81,20 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
               />
             </div>
           ) : (
-            <div className="w-20 h-20 rounded-2xl bg-white/10 flex items-center justify-center shrink-0 border border-white/15">
-              <Home className="w-6 h-6 text-slate-300" />
+            <div className="w-20 h-20 rounded-2xl bg-black/5 dark:bg-white/10 flex items-center justify-center shrink-0 border border-black/10 dark:border-white/15">
+              <Home className="w-6 h-6 text-secondary dark:text-surface-dim" />
             </div>
           )}
 
           <div className="flex-1 min-w-0 space-y-1 text-left font-sans">
-            <div className="font-serif text-base font-bold text-white">
-              {formatINR(room.monthlyRent)} <span className="text-[10px] font-normal text-slate-300">/ month</span>
+            <div className="font-serif text-base font-bold text-earth-indigo dark:text-white">
+              {formatINR(room.monthlyRent)} <span className="text-[10px] font-normal text-secondary dark:text-surface-dim">/ month</span>
             </div>
             <div className="flex items-center gap-1 text-[11px] font-bold text-trust-teal">
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>Available for Co-Living</span>
             </div>
-            <p className="text-[11px] text-slate-300 line-clamp-2 leading-snug">
+            <p className="text-[11px] text-secondary dark:text-surface-dim line-clamp-2 leading-snug">
               {room.description}
             </p>
           </div>
@@ -105,7 +105,7 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
           <button
             type="button"
             onClick={handleChatWithHost}
-            className="py-3 bg-white/10 hover:bg-white/20 text-white rounded-xl border border-white/15 flex items-center justify-center gap-1.5 cursor-pointer uppercase tracking-wider transition-all"
+            className="py-3 bg-black/[0.05] dark:bg-white/10 hover:bg-black/[0.08] dark:hover:bg-white/20 text-earth-indigo dark:text-white rounded-xl border border-black/10 dark:border-white/15 flex items-center justify-center gap-1.5 cursor-pointer uppercase tracking-wider transition-all"
             title="Chat with Host / Roommates"
           >
             <MessageSquare className="w-3.5 h-3.5 text-trust-teal" />
@@ -116,7 +116,7 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
             <button
               type="button"
               onClick={() => onDirections(room)}
-              className="py-3 bg-white/10 hover:bg-white/20 text-white rounded-xl border border-white/15 flex items-center justify-center gap-1.5 cursor-pointer uppercase tracking-wider transition-all"
+              className="py-3 bg-black/[0.05] dark:bg-white/10 hover:bg-black/[0.08] dark:hover:bg-white/20 text-earth-indigo dark:text-white rounded-xl border border-black/10 dark:border-white/15 flex items-center justify-center gap-1.5 cursor-pointer uppercase tracking-wider transition-all"
               title="Directions"
             >
               <Navigation className="w-3.5 h-3.5 text-vitality-coral" />
@@ -136,9 +136,9 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
       </div>
 
       {/* Desktop Floating Preview Card (>= 768px) */}
-      <div className="hidden md:block fixed top-24 right-8 z-40 w-88 bg-[#1e2433]/85 dark:bg-[#121620]/90 backdrop-blur-2xl border border-white/20 rounded-3xl p-5 space-y-4 animate-in fade-in zoom-in-95 duration-200 pointer-events-auto text-left text-white shadow-2xl font-sans">
+      <div className="hidden md:block fixed top-24 right-8 z-40 w-88 bg-white/85 dark:bg-[#181d29]/85 backdrop-blur-2xl border border-white/60 dark:border-white/15 rounded-3xl p-5 space-y-4 animate-in fade-in zoom-in-95 duration-200 pointer-events-auto text-left shadow-2xl font-sans">
         <div className="flex justify-between items-start">
-          <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-vitality-coral/20 text-vitality-coral font-sans text-[10px] font-bold border border-vitality-coral/30">
+          <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-vitality-coral/15 text-vitality-coral font-sans text-[10px] font-bold border border-vitality-coral/20">
             <Home className="w-3 h-3" />
             <span>Available Room</span>
           </div>
@@ -146,7 +146,7 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-slate-300 hover:text-white cursor-pointer transition-colors border border-white/10"
+            className="w-7 h-7 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 flex items-center justify-center text-secondary dark:text-surface-dim hover:text-earth-indigo dark:hover:text-white cursor-pointer transition-colors border border-black/5 dark:border-white/10"
             title="Close Preview"
           >
             <X className="w-3.5 h-3.5" />
@@ -154,7 +154,7 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
         </div>
 
         {room.imageUrl && (
-          <div className="w-full h-36 rounded-2xl overflow-hidden relative shadow-inner bg-earth-indigo border border-white/10">
+          <div className="w-full h-36 rounded-2xl overflow-hidden relative shadow-inner bg-earth-indigo border border-black/10 dark:border-white/10">
             <img
               src={room.imageUrl}
               alt={room.title}
@@ -173,19 +173,19 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
         )}
 
         <div className="space-y-1">
-          <h4 className="font-serif text-base font-bold text-white leading-snug truncate">
+          <h4 className="font-serif text-base font-bold text-earth-indigo dark:text-white leading-snug truncate">
             {room.title}
           </h4>
-          <p className="font-sans text-xs text-slate-300 line-clamp-2 leading-relaxed">
+          <p className="font-sans text-xs text-secondary dark:text-surface-dim line-clamp-2 leading-relaxed">
             {room.description}
           </p>
         </div>
 
-        <div className="pt-3 border-t border-white/15 flex items-center justify-between font-sans">
+        <div className="pt-3 border-t border-black/[0.06] dark:border-white/10 flex items-center justify-between font-sans">
           <div>
-            <span className="text-[10px] text-slate-300 block">Monthly Rent</span>
-            <span className="font-serif text-base font-bold text-white">
-              {formatINR(room.monthlyRent)} <span className="text-[10px] font-normal text-slate-300">/ mo</span>
+            <span className="text-[10px] text-secondary dark:text-surface-dim block">Monthly Rent</span>
+            <span className="font-serif text-base font-bold text-earth-indigo dark:text-white">
+              {formatINR(room.monthlyRent)} <span className="text-[10px] font-normal text-secondary dark:text-surface-dim">/ mo</span>
             </span>
           </div>
 
@@ -193,7 +193,7 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
             <button
               type="button"
               onClick={handleChatWithHost}
-              className="px-3 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl border border-white/15 flex items-center gap-1 cursor-pointer transition-all hover:border-trust-teal"
+              className="px-3 py-2 bg-black/[0.05] dark:bg-white/10 hover:bg-black/[0.08] dark:hover:bg-white/20 text-earth-indigo dark:text-white rounded-xl border border-black/10 dark:border-white/15 flex items-center gap-1 cursor-pointer transition-all hover:border-trust-teal"
               title="Chat with Host / Roommates"
             >
               <MessageSquare className="w-3.5 h-3.5 text-trust-teal" />
@@ -204,7 +204,7 @@ export const RoomPreviewCard: React.FC<RoomPreviewCardProps> = ({
               <button
                 type="button"
                 onClick={() => onDirections(room)}
-                className="px-3 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl border border-white/15 flex items-center gap-1 cursor-pointer transition-all hover:border-vitality-coral"
+                className="px-3 py-2 bg-black/[0.05] dark:bg-white/10 hover:bg-black/[0.08] dark:hover:bg-white/20 text-earth-indigo dark:text-white rounded-xl border border-black/10 dark:border-white/15 flex items-center gap-1 cursor-pointer transition-all hover:border-vitality-coral"
                 title="Get Directions to this room"
               >
                 <Navigation className="w-3.5 h-3.5 text-vitality-coral" />
