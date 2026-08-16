@@ -46,15 +46,14 @@ const ITEMS = [
 ];
 
 export const ScrollHorizontalHero: React.FC = () => {
-  const containerRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
   const [scrollDistance, setScrollDistance] = useState(0);
   const shouldReduceMotion = useReducedMotion();
 
-  // Dynamically calculate the real total distance to travel based on rendered layout
   useEffect(() => {
     const updateDistance = () => {
-      if (galleryRef.current) {
+      if (galleryRef.current && containerRef.current) {
         const galleryWidth = galleryRef.current.scrollWidth;
         const viewportWidth = window.innerWidth;
         const distance = Math.max(0, galleryWidth - viewportWidth);
@@ -63,13 +62,14 @@ export const ScrollHorizontalHero: React.FC = () => {
     };
 
     updateDistance();
+    const timer = setTimeout(updateDistance, 300);
 
     window.addEventListener('resize', updateDistance);
     const ro = new ResizeObserver(updateDistance);
     if (galleryRef.current) ro.observe(galleryRef.current);
-    if (containerRef.current) ro.observe(containerRef.current);
 
     return () => {
+      clearTimeout(timer);
       window.removeEventListener('resize', updateDistance);
       ro.disconnect();
     };
@@ -83,8 +83,8 @@ export const ScrollHorizontalHero: React.FC = () => {
   const x = useTransform(scrollYProgress, [0, 1], [0, -scrollDistance]);
 
   return (
-    <section ref={containerRef} className="relative h-[260vh] md:h-[300vh] w-full">
-      {/* Full-width Vertically Centered Sticky Viewport */}
+    <div ref={containerRef} className="relative h-[250vh] md:h-[300vh] w-full">
+      {/* 100vh Sticky Viewport */}
       <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden">
         {/* Section Label */}
         <div className="w-full px-6 md:px-16 max-w-7xl mx-auto mb-4 md:mb-6 shrink-0 z-10">
@@ -98,7 +98,7 @@ export const ScrollHorizontalHero: React.FC = () => {
           {shouldReduceMotion ? (
             <div
               ref={galleryRef}
-              className="flex gap-6 md:gap-10 px-6 md:px-16 overflow-x-auto w-full py-4"
+              className="flex gap-6 md:gap-8 px-6 md:px-16 overflow-x-auto w-full py-4"
             >
               {ITEMS.map((item) => (
                 <div
@@ -129,7 +129,7 @@ export const ScrollHorizontalHero: React.FC = () => {
             <motion.div
               ref={galleryRef}
               style={{ x }}
-              className="flex gap-6 md:gap-10 px-6 md:px-16 will-change-transform shrink-0"
+              className="flex gap-6 md:gap-8 px-6 md:px-16 will-change-transform shrink-0"
             >
               {ITEMS.map((item) => (
                 <div
@@ -148,7 +148,7 @@ export const ScrollHorizontalHero: React.FC = () => {
                     }}
                   />
 
-                  {/* Card Typography & Details */}
+                  {/* Card Content */}
                   <div className="absolute bottom-6 left-6 right-6 z-10 text-white space-y-1.5">
                     <span
                       className="font-mono text-xs tracking-wider uppercase block font-bold"
@@ -170,6 +170,6 @@ export const ScrollHorizontalHero: React.FC = () => {
           )}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
