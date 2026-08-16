@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+[data-theme="light"] {
+  /* Kinship Editorial Core Palette - Light Mode */
+  --color-earth-indigo: #1a1f2c;
+  --color-earth-container: #242a38;
+  --color-earth-fixed: #dee2f4;
+
+  --color-human-clay: #fcf8fa;
+  --color-surface-dim: #dcd9db;
+  --color-surface-low: #f6f2f4;
+  --color-surface-container: #f0edee;
+  --color-surface-high: #eae7e8;
+  --color-surface-highest: #e5e2e3;
+  --color-surface-lowest: #ffffff;
+
+  --color-vitality-coral: #f05a5a;
+  --color-vitality-dark: #190001;
+  --color-vitality-container: #480007;
+  --color-vitality-fixed: #ffdad8;
+
+  --color-trust-teal: #476253;
+  --color-trust-container: #5f7b6b;
+  --color-trust-light: #ccead6;
+
+  --color-outline: #76777c;
+  --color-outline-variant: #c6c6cc;
+
+  /* Semantic Contrast Tokens */
+  --color-text-primary: #1a1f2c;
+  --color-text-secondary: #525763;
+  --color-text-muted: #6e737e;
+  --color-text-on-dark: #fcf8fa;
+  --color-text-on-dark-secondary: #c6c6cc;
+
+  /* Spacing and Layout */
+  --spacing-gutter-desktop: 80px;
+  --spacing-gutter-mobile: 20px;
+  --max-width-desktop: 1440px;
+
+  /* Motion Easing */
+  --ease-editorial: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"],
+.dark {
+  /* Kinship Editorial Core Palette - Dark Mode (Earth Indigo World) */
+  --color-earth-indigo: #fcf8fa;
+  --color-earth-container: #1e2433;
+  --color-earth-fixed: #2e364a;
+
+  --color-human-clay: #121620;
+  --color-surface-dim: #2c3345;
+  --color-surface-low: #181d29;
+  --color-surface-container: #202636;
+  --color-surface-high: #262d3e;
+  --color-surface-highest: #2e364a;
+  --color-surface-lowest: #141822;
+
+  --color-vitality-coral: #ff6e6e;
+  --color-vitality-dark: #ffdad8;
+  --color-vitality-container: #521217;
+  --color-vitality-fixed: #ffdad8;
+
+  --color-trust-teal: #6db08c;
+  --color-trust-container: #22372c;
+  --color-trust-light: #22372c;
+
+  --color-outline: #8c919e;
+  --color-outline-variant: #3a4154;
+
+  /* Semantic Contrast Tokens */
+  --color-text-primary: #fcf8fa;
+  --color-text-secondary: #c5cbd8;
+  --color-text-muted: #9ba3b8;
+  --color-text-on-dark: #fcf8fa;
+  --color-text-on-dark-secondary: #c6c6cc;
+}
+
+/* Contrast Safety Utility Overrides for Dark Mode */
+.dark .dark\:text-clay,
+[data-theme="dark"] .dark\:text-clay {
+  color: #fcf8fa !important;
+}
+
+.dark .dark\:text-surface-dim,
+[data-theme="dark"] .dark\:text-surface-dim {
+  color: #c5cbd8 !important;
+}
+
+.dark .dark\:text-secondary,
+[data-theme="dark"] .dark\:text-secondary {
+  color: #c5cbd8 !important;
+}
+
+.dark .dark\:text-earth-indigo,
+[data-theme="dark"] .dark\:text-earth-indigo {
+  color: #fcf8fa !important;
+}
+
+.dark .dark\:placeholder-surface-dim\/60::placeholder,
+[data-theme="dark"] .dark\:placeholder-surface-dim\/60::placeholder,
+.dark .dark\:placeholder-surface-dim::placeholder,
+[data-theme="dark"] .dark\:placeholder-surface-dim::placeholder {
+  color: #9ba3b8 !important;
+}
+
+@layer base {
+  * {
+    border-color: rgba(128, 138, 158, 0.15);
+  }
+
+  html {
+    color-scheme: light dark;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-human-clay);
+    color: var(--color-earth-indigo);
+    font-family: 'Public Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    min-height: 100vh;
+    min-height: 100dvh;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  h1, h2, h3, .font-editorial {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+}
+
+/* Custom Editorial Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-human-clay);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-dim);
+  border-radius: 9999px;
+  border: 2px solid var(--color-human-clay);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-outline);
+}
+
+/* Editorial Focus Ring */
+*:focus-visible {
+  outline: 2px solid var(--color-vitality-coral);
+  outline-offset: 4px;
+}
+
+/* Reduced Motion Safety */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
