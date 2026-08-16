@@ -32,10 +32,22 @@ export const LandingPage: React.FC = () => {
 
   return (
     <div className="bg-clay text-earth-indigo min-h-screen selection:bg-vitality-coral selection:text-white transition-colors duration-200">
-      {/* 1. Hero Masthead with Clean Ambient 3D Scene */}
+      {/* 1. Hero Masthead with Clean Ambient 3D Scene & Editorial Cover */}
       <header className="relative min-h-screen flex flex-col justify-center items-center pt-24 px-6 overflow-hidden">
-        {/* Subtle WebGL R3F Scene */}
+        {/* Background Editorial Cover Image with Atmospheric Overlays */}
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
+          <img
+            src="/images/editorial/roommate_hero_cover.jpg"
+            alt="ROOMMATE Architectural Living"
+            className="w-full h-full object-cover opacity-40 scale-105"
+          />
+          {/* Deep atmospheric gradient overlay for maximum contrast and theme cohesion */}
+          <div className="absolute inset-0 bg-gradient-to-b from-clay/85 via-clay/65 to-clay" />
+          <div className="absolute inset-0 bg-radial-at-c from-transparent via-clay/30 to-clay/90" />
+        </div>
+
+        {/* Subtle WebGL R3F Scene */}
+        <div className="absolute inset-0 w-full h-full pointer-events-none z-[1]">
           <Canvas
             camera={{ position: [0, 0, 8], fov: 45 }}
             gl={{ alpha: true, antialias: true }}
@@ -44,9 +56,6 @@ export const LandingPage: React.FC = () => {
             <HeroScene mouseX={mousePos.x} mouseY={mousePos.y} />
           </Canvas>
         </div>
-
-        {/* Ambient Radial Contrast Scrim behind Hero Text */}
-        <div className="absolute inset-0 bg-radial-at-c from-clay/80 via-clay/40 to-transparent pointer-events-none z-[1]" />
 
         {/* Hero Content */}
         <div className="relative z-10 text-center max-w-4xl mx-auto space-y-6">
