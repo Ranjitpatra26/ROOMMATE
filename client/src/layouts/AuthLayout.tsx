@@ -29,33 +29,31 @@ export const AuthLayout: React.FC = () => {
       {/* LEFT EDITORIAL COLUMN (Desktop & Tablet) */}
       {/* ============================================================ */}
       <div className="hidden md:flex flex-col justify-between w-1/2 lg:w-[48%] xl:w-[45%] p-10 lg:p-16 xl:p-20 bg-[#121620] text-[#fcf8fa] relative overflow-hidden shrink-0 select-none">
-        {/* Ambient Photographic Background Layer with Parallax */}
+        {/* Exact Architectural Hero Photography */}
         <motion.div
           animate={shouldReduceMotion ? {} : { x: mouseOffset.x, y: mouseOffset.y }}
           transition={{ type: 'spring', damping: 40, stiffness: 90 }}
-          className="absolute -inset-8 pointer-events-none z-0 overflow-hidden"
+          className="absolute -inset-6 pointer-events-none z-0 overflow-hidden"
         >
           <img
             src="/images/editorial/roommate_hero_cover.jpg"
-            alt="Roommate Penthouse Loft"
-            className="w-full h-full object-cover opacity-25 mix-blend-luminosity scale-105"
+            alt="Roommate Penthouse Sanctuary"
+            className="w-full h-full object-cover scale-105"
           />
-          {/* Subtle Gradient & Atmospheric Scrims */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#121620] via-[#121620]/80 to-[#121620]/95" />
-          <div className="absolute inset-0 bg-radial-at-tl from-vitality-coral/15 via-transparent to-transparent" />
-          <div className="absolute inset-0 bg-radial-at-br from-trust-teal/10 via-transparent to-transparent" />
+          {/* Subtle Scrim to ensure crisp typography over photography */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/40" />
         </motion.div>
 
         {/* Framer CanvasFlame Interactive Particle Canvas Background */}
         <CanvasFlame
-          preset="Molten Red Steel"
-          backgroundFill="#121620"
-          haloColor="rgba(224, 109, 83, 0.5)"
-          intensity={1.5}
+          preset="Custom"
+          backgroundFill="transparent"
+          haloColor="rgba(224, 109, 83, 0.4)"
+          intensity={1.4}
           useMouse={true}
           listenToWindow={true}
           performanceMode="High"
-          className="z-1 pointer-events-none opacity-85"
+          className="z-1 pointer-events-none"
         />
 
         {/* Top: ROOMMATE Brand Logo */}

@@ -278,10 +278,13 @@ export const CanvasFlame: React.FC<CanvasFlameProps> = ({
     }
 
     const clearCanvas = (base: string) => {
-      ctx.globalCompositeOperation = 'source-over';
-      ctx.globalAlpha = 1;
-      ctx.fillStyle = base || '#121620';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (base && base !== 'transparent') {
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = base;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
     };
 
     const drawHalo = (hc: string) => {
