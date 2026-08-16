@@ -25,15 +25,15 @@ export const TrustPillars: React.FC = () => {
       {pillars.map((p, idx) => (
         <div
           key={idx}
-          className="p-8 rounded-2xl bg-white/[0.07] dark:bg-white/[0.04] border border-white/15 dark:border-white/10 backdrop-blur-sm hover:bg-white/[0.12] hover:border-vitality-coral/40 transition-all duration-300 group"
+          className="p-8 rounded-2xl bg-white/[0.08] dark:bg-black/[0.04] border border-white/15 dark:border-black/10 backdrop-blur-sm hover:bg-white/[0.12] dark:hover:bg-black/[0.07] hover:border-vitality-coral/40 transition-all duration-300 group"
         >
           <div className="transform group-hover:scale-110 transition-transform duration-300">
             {p.icon}
           </div>
-          <h4 className="font-serif text-headline-sm text-white mb-2 font-semibold">
+          <h4 className="font-serif text-headline-sm text-white dark:text-[#1a1f2c] mb-2 font-semibold transition-colors">
             {p.title}
           </h4>
-          <p className="font-sans text-body-md text-white/80 text-sm leading-relaxed">
+          <p className="font-sans text-body-md text-white/80 dark:text-[#525763] text-sm leading-relaxed transition-colors">
             {p.description}
           </p>
         </div>
