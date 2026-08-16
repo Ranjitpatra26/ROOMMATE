@@ -14,31 +14,51 @@ import {
 export const getActiveStayDetails = async (req: Request, res: Response): Promise<void> => {
   try {
     const dbStay = await StayModel.findOne({ status: 'active' }).lean();
+    let room = null;
+    let cohabitants: Array<{ id: string; name: string; avatarUrl: string; role: string; cleanlinessScore: number }> = [];
 
-    const stay = dbStay || {
-      id: 'stay-indiranagar-loft',
-      title: 'The Indiranagar Garden Penthouse',
+    if (dbStay) {
+      const { RoomModel, ProfileModel } = await import('../models/index.js');
+      room = await RoomModel.findById(dbStay.roomId).lean();
+      const profiles = await ProfileModel.find({ userId: { $in: dbStay.participants } }).lean();
+      cohabitants = profiles.map((p) => ({
+        id: p.userId?.toString() || p._id.toString(),
+        name: p.displayName,
+        avatarUrl: p.avatarUrl || '',
+        role: p.headline || 'Resident',
+        cleanlinessScore: p.lifestyleDNA?.cleanlinessLevel ? p.lifestyleDNA.cleanlinessLevel * 20 : 96,
+      }));
+    }
+
+    const stay = {
+      id: dbStay?._id.toString() || 'stay-indiranagar-loft',
+      title: room?.title || 'The Indiranagar Garden Penthouse',
       daysActive: 168,
       status: 'active',
-      address: '100ft Road, Indiranagar, Bengaluru, KA 560038',
-      cohabitants: [
-        {
-          id: 'user-ananya',
-          name: 'Ananya Sharma',
-          avatarUrl:
-            'https://lh3.googleusercontent.com/aida-public/AB6AXuBTwHP-dedcvHuy1rko6qYkrmV_43Hl2to-1vH2SnFApVj2UEXDeSUeX4FvgXIQHRoEcY-aOfxeIkHlzdQMV1HiJXcdJ2CvOZxKi9CcoJsjXU9GR1HM0R4zdpv9tCAA3IIUHOhhoJ83PVw-njK-O8KGd4bPYUSBMtARJdTDO9sDF5F5UI25dy25hEN6nasZd2YYMKv2usKhBIcS7o9vzno75rGzkLGPC9Tn3L_gnbKiO4_4JbIWEMDZ8A',
-          role: 'Spatial Architect',
-          cleanlinessScore: 98,
-        },
-        {
-          id: 'user-rohan',
-          name: 'Rohan Patil',
-          avatarUrl:
-            'https://lh3.googleusercontent.com/aida-public/AB6AXuBNsMeqsJzF1-Ew6pA6f1m3eXv2b0o9yPq4t8R7u5W3v1kL9jHgF8d2S4a7Z6x5c3V2b1n0m9q8w7e6r5t4y3u2i1o0p9a8s7d6f5g4h3j2k1l',
-          role: 'Creative Technologist',
-          cleanlinessScore: 94,
-        },
-      ],
+      address: room?.address
+        ? `${room.address.street || ''}, ${room.address.city || 'Bengaluru'}, ${room.address.state || 'KA'}`
+        : '100ft Road, Indiranagar, Bengaluru, KA 560038',
+      cohabitants:
+        cohabitants.length > 0
+          ? cohabitants
+          : [
+              {
+                id: 'user-ananya',
+                name: 'Ananya Sharma',
+                avatarUrl:
+                  'https://lh3.googleusercontent.com/aida-public/AB6AXuBTwHP-dedcvHuy1rko6qYkrmV_43Hl2to-1vH2SnFApVj2UEXDeSUeX4FvgXIQHRoEcY-aOfxeIkHlzdQMV1HiJXcdJ2CvOZxKi9CcoJsjXU9GR1HM0R4zdpv9tCAA3IIUHOhhoJ83PVw-njK-O8KGd4bPYUSBMtARJdTDO9sDF5F5UI25dy25hEN6nasZd2YYMKv2usKhBIcS7o9vzno75rGzkLGPC9Tn3L_gnbKiO4_4JbIWEMDZ8A',
+                role: 'Spatial Architect',
+                cleanlinessScore: 98,
+              },
+              {
+                id: 'user-rohan',
+                name: 'Rohan Patil',
+                avatarUrl:
+                  'https://lh3.googleusercontent.com/aida-public/AB6AXuBNsMeqsJzF1-Ew6pA6f1m3eXv2b0o9yPq4t8R7u5W3v1kL9jHgF8d2S4a7Z6x5c3V2b1n0m9q8w7e6r5t4y3u2i1o0p9a8s7d6f5g4h3j2k1l',
+                role: 'Creative Technologist',
+                cleanlinessScore: 94,
+              },
+            ],
       todayResponsibilities: [
         {
           id: 'resp-1',

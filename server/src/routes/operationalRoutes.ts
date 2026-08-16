@@ -11,7 +11,7 @@ import { authenticate } from '../middleware/auth.js';
 
 export const discoverRouter = Router();
 discoverRouter.get('/featured', getFeatured);
-discoverRouter.get('/', authenticate, queryDiscover);
+discoverRouter.get('/', queryDiscover);
 
 export const compatibilityRouter = Router();
 compatibilityRouter.post('/calculate', authenticate, calculateCompatibility);

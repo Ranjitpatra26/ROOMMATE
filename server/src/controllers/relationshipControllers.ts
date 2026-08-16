@@ -17,7 +17,12 @@ import { TrustService } from '../services/trustService.js';
 export const getMatchById = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
-    const dbMatch = await MatchModel.findById(id).lean();
+    let dbMatch = null;
+    const mongoose = await import('mongoose');
+
+    if (mongoose.default.isValidObjectId(id)) {
+      dbMatch = await MatchModel.findById(id).lean();
+    }
 
     const mockMatch = dbMatch || {
       id: id || 'match-ananya-sharma',
@@ -60,6 +65,37 @@ export const getMatchById = async (req: Request, res: Response): Promise<void> =
 export const getConversations = async (req: Request, res: Response): Promise<void> => {
   try {
     const dbConversations = await ConversationModel.find().sort({ updatedAt: -1 }).lean();
+    const { ProfileModel, RoomModel, MessageModel } = await import('../models/index.js');
+
+    const populatedConversations = await Promise.all(
+      dbConversations.map(async (conv) => {
+        const otherParticipantId = conv.participants[1] || conv.participants[0];
+        const profile = await ProfileModel.findOne({ userId: otherParticipantId }).lean();
+        const room = conv.context?.roomId ? await RoomModel.findById(conv.context.roomId).lean() : null;
+        const lastMsg = await MessageModel.findOne({ conversationId: conv._id.toString() }).sort({ createdAt: -1 }).lean();
+
+        return {
+          id: conv._id.toString(),
+          participant: {
+            id: otherParticipantId?.toString() || 'user-ananya',
+            name: profile?.displayName || 'Ananya Sharma',
+            avatarUrl: profile?.avatarUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuBTwHP-dedcvHuy1rko6qYkrmV_43Hl2to-1vH2SnFApVj2UEXDeSUeX4FvgXIQHRoEcY-aOfxeIkHlzdQMV1HiJXcdJ2CvOZxKi9CcoJsjXU9GR1HM0R4zdpv9tCAA3IIUHOhhoJ83PVw-njK-O8KGd4bPYUSBMtARJdTDO9sDF5F5UI25dy25hEN6nasZd2YYMKv2usKhBIcS7o9vzno75rGzkLGPC9Tn3L_gnbKiO4_4JbIWEMDZ8A',
+            isOnline: true,
+            compatibilityScore: 98,
+          },
+          lastMessage: (lastMsg as any)?.content || (lastMsg as any)?.body || 'I think the second floor corner room gets the best morning sunlight in Indiranagar.',
+          lastMessageTime: '10:42 AM',
+          unreadCount: 0,
+          roomContext: room
+            ? {
+                title: room.title,
+                price: `₹${room.pricing?.monthlyRent?.toLocaleString('en-IN') || '28,500'}/mo`,
+                imageUrl: room.photos?.[0] || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDYbWd_pE2tWjXwK0sE7g_Fq1yH3kJ8lN5vM4oP6rT8uA2cB7xZ9eD0fG1hI3jK5lM7nO9pQ1rS3tU5vW7xY9zA1bC3dE5fG7hI9jK1lM3nO5pQ7r',
+              }
+            : undefined,
+        };
+      })
+    );
 
     const fallbackConversations = [
       {
@@ -82,23 +118,9 @@ export const getConversations = async (req: Request, res: Response): Promise<voi
             'https://lh3.googleusercontent.com/aida-public/AB6AXuDYbWd_pE2tWjXwK0sE7g_Fq1yH3kJ8lN5vM4oP6rT8uA2cB7xZ9eD0fG1hI3jK5lM7nO9pQ1rS3tU5vW7xY9zA1bC3dE5fG7hI9jK1lM3nO5pQ7r',
         },
       },
-      {
-        id: 'conversation-rohan',
-        participant: {
-          id: 'user-rohan',
-          name: 'Rohan Patil',
-          avatarUrl:
-            'https://lh3.googleusercontent.com/aida-public/AB6AXuBNsMeqsJzF1-Ew6pA6f1m3eXv2b0o9yPq4t8R7u5W3v1kL9jHgF8d2S4a7Z6x5c3V2b1n0m9q8w7e6r5t4y3u2i1o0p9a8s7d6f5g4h3j2k1l',
-          isOnline: false,
-          compatibilityScore: 94,
-        },
-        lastMessage: 'Are you bringing any acoustic gear? I have sound-dampening acoustic curtains for our living suite.',
-        lastMessageTime: 'Yesterday',
-        unreadCount: 0,
-      },
     ];
 
-    const conversations = dbConversations && dbConversations.length > 0 ? dbConversations : fallbackConversations;
+    const conversations = populatedConversations.length > 0 ? populatedConversations : fallbackConversations;
 
     res.status(200).json({
       success: true,
@@ -113,7 +135,12 @@ export const getConversations = async (req: Request, res: Response): Promise<voi
 export const getConversationById = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
-    const dbMessages = await MessageModel.find({ conversationId: id }).sort({ createdAt: 1 }).lean();
+    let dbMessages = null;
+    const mongoose = await import('mongoose');
+
+    if (mongoose.default.isValidObjectId(id)) {
+      dbMessages = await MessageModel.find({ conversationId: id }).sort({ createdAt: 1 }).lean();
+    }
 
     const fallbackMessages = [
       {
@@ -164,7 +191,16 @@ export const getConversationById = async (req: Request, res: Response): Promise<
       },
     ];
 
-    const messages = dbMessages && dbMessages.length > 0 ? dbMessages : fallbackMessages;
+    const messages = dbMessages && dbMessages.length > 0
+      ? dbMessages.map((m: any) => ({
+          id: m._id?.toString(),
+          senderId: m.senderId?.toString(),
+          senderName: m.senderName || 'Resident',
+          body: m.content || m.body || '',
+          createdAt: m.createdAt,
+          isMe: m.isMe || false,
+        }))
+      : fallbackMessages;
 
     res.status(200).json({
       success: true,
@@ -200,15 +236,26 @@ export const sendMessage = async (req: Request, res: Response): Promise<void> =>
   try {
     const { id } = req.params;
     const { body } = req.body;
+    const mongoose = await import('mongoose');
 
-    const newMessage = await MessageModel.create({
+    const newMessage = {
+      id: `msg-${Date.now()}`,
       conversationId: id || 'conversation-ananya',
       senderId: 'user-current',
       senderName: 'You',
       body: body || '',
-      createdAt: new Date(),
+      createdAt: 'Just now',
       isMe: true,
-    });
+    };
+
+    if (id && mongoose.default.isValidObjectId(String(id))) {
+      await MessageModel.create({
+        conversationId: new mongoose.default.Types.ObjectId(String(id)),
+        senderId: new mongoose.default.Types.ObjectId(),
+        content: body || '',
+        attachments: [],
+      });
+    }
 
     res.status(201).json({ success: true, data: newMessage, message: newMessage });
   } catch (error) {
