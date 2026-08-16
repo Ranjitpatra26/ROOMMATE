@@ -28,6 +28,7 @@ import {
   createSharedExpense,
   submitSafetyReport,
 } from '../controllers/livingControllers.js';
+import { LiveLocationService } from '../services/liveLocationService.js';
 
 const apiRouter = Router();
 

@@ -25,6 +25,18 @@ export const authService = {
     const res = await apiClient.post('/auth/register', payload);
     return res.data;
   },
+  googleLogin: async (payload: { email: string; name?: string; picture?: string; googleId?: string }): Promise<ApiResponse<{ token: string; user: User }>> => {
+    const res = await apiClient.post('/auth/google', payload);
+    return res.data;
+  },
+  forgotPassword: async (email: string): Promise<ApiResponse<{ message: string; otp?: string; email: string }>> => {
+    const res = await apiClient.post('/auth/forgot-password', { email });
+    return res.data;
+  },
+  resetPassword: async (payload: { email: string; otp: string; newPassword: string }): Promise<ApiResponse<{ message: string }>> => {
+    const res = await apiClient.post('/auth/reset-password', payload);
+    return res.data;
+  },
   getMe: async (): Promise<ApiResponse<User>> => {
     const res = await apiClient.get('/auth/me');
     return res.data;

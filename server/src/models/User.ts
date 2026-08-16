@@ -2,7 +2,11 @@ import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IUser extends Document {
   email: string;
-  passwordHash: string;
+  passwordHash?: string;
+  googleId?: string;
+  authProvider?: 'local' | 'google';
+  resetPasswordOtp?: string;
+  resetPasswordExpires?: Date;
   role: 'member' | 'host' | 'verified_resident';
   status: 'active' | 'onboarding' | 'suspended';
   createdAt: Date;
@@ -12,7 +16,11 @@ export interface IUser extends Document {
 const UserSchema = new Schema<IUser>(
   {
     email: { type: String, required: true, unique: true, index: true, lowercase: true, trim: true },
-    passwordHash: { type: String, required: true },
+    passwordHash: { type: String, required: false },
+    googleId: { type: String, sparse: true, index: true },
+    authProvider: { type: String, enum: ['local', 'google'], default: 'local' },
+    resetPasswordOtp: { type: String },
+    resetPasswordExpires: { type: Date },
     role: { type: String, enum: ['member', 'host', 'verified_resident'], default: 'member' },
     status: { type: String, enum: ['active', 'onboarding', 'suspended'], default: 'onboarding' },
   },
@@ -21,3 +29,4 @@ const UserSchema = new Schema<IUser>(
 
 export const UserModel = mongoose.model<IUser>('User', UserSchema);
 export default UserModel;
+
